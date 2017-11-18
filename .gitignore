@@ -1,0 +1,8 @@
+*~
+/_site/
+/.bundle/
+/tmp/
+*.bundle
+Gemfile.lock
+.sass-cache/
+css/asciidoc-pygments.css

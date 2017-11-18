@@ -1,0 +1,152 @@
+// TODO: écrire environ 1200 mots au total.
+
+= Rust+GNOME Hackfest (November 2017)
+:page-navtitle: Rust+GNOME Hackfest (November 2017)
+
+This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin.
+The Hackfest was generously hosted by Kinvolk.
+I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source projects related to gtk-rs.
+
+The Rust+GNOME Hackfest is an event to work on integrating Rust into the GNOME ecosystem.
+The idea of this event is to progressively allow using more Rust for developing Rust softwares.
+On the first Hackfest in Mexico, I worked on integrating glib with futures, resulting in the https://github.com/antoyo/futures-glib-rs[futures-glib crate].
+
+During this event, I met new people, some that I have talked to online, like https://github.com/sdroege[Sebastian Dröge aka sdroege] and some that I didn't know like https://github.com/philn[Philippe Normand aka philn].
+It was awesome to meet new people that weren't in the first Hackfest in Mexico, and also to meet the ones that were there.
+This event allowed me to do a task in a few days, while it would have taken me months to do in my spare time, so this kind of events is very nice to quickly improve the Rust and GNOME integration.
+
+== Gir, the code generator
+
+During this Hackfest, I worked on https://github.com/gtk-rs/gir[`gir`], the tool we use to generate most of the code for the Rust bindings of the GNOME libraries.
+This tool can generate both the `*-sys` crates (like `gtk-sys`) which is a direct Rust mapping to the C functions and types and the idiomatic and safe Rust wrapper (i.e. `gtk`).
+It uses both a `.gir` file (like `Gtk-3.0.gir`) which contains the classes, methods and functions for a GNOME library and a custom `toml` file to palliate the issues of the `.gir` file and customize the code generation.
+
+While `gir` can currently generate most of the code, one area that was still missing was the asynchronous methods.
+
+== Asynchronous functions
+
+In GTK+, you can start operations asynchronously and get notified in a callback when it is done.
+This can be done this way:
+
+[source,c]
+----
+void load_callback(GObject *source_object, GAsyncResult *res, gpointer user_data) {
+    char *contents = NULL;
+    gsize length;
+    char *etag_out = NULL;
+    GError *error = NULL;
+    if (!g_file_load_contents_finish((GFile*) source_object, res, &contents, &length, &etag_out, &error)) {
+        // Handle error.
+    }
+    else {
+        // Use contents.
+    }
+}
+
+void main() {
+    g_file_load_contents_async(file, NULL, load_callback, NULL);
+}
+----
+
+This involves some boilerplate and surely we can do better in Rust, by using at least closures and the `Result` type.
+
+So my task consisted of generating a safe and convenient Rust wrapper by updating the `gir` tool to support asynchronous functions.
+
+== Rust wrapper for asynchronous methods
+
+Before we dive into what I worked on, let's look at the expected API we want to use in Rust.
+
+Here's an example of using the generated code for the `gio` crate:
+
+[source,rust]
+----
+let app_launch_context = AppLaunchContext::new();
+
+let cancellable = AppInfo::launch_default_for_uri_async("file:///tmp/test.png", &app_launch_context, |result| {
+    if let Err(error) = result {
+        println!("Error: {}", error);
+    }
+    println!("Finish");
+});
+
+cancellable.cancel();
+----
+
+The signature of this method is:
+
+[source,rust]
+----
+pub fn launch_default_for_uri_async<P: Fn(Result<(), Error>) + Send + Sync>(uri: &str, launch_context: &AppLaunchContext, callback: P) -> Cancellable;
+----
+
+This takes a closure that receive a `Result` type because asynchronous operations can always fail.
+It also have other parameters that are required for this specific method.
+Moreover, it returns a `Cancellable` structure that you can use to control the asynchronous task, for example by cancelling it.
+
+Now, let's see how we use this method line by line:
+
+[source,rust]
+----
+let app_launch_context = AppLaunchContext::new();
+----
+
+First, we create an object that is required as a parameter for the method.
+
+[source,rust]
+----
+let cancellable = AppInfo::launch_default_for_uri_async("file:///tmp/test.png", &app_launch_context, |result| {
+    // …
+});
+----
+
+Here, we call the method and send it the required parameters and a callback that will receive the result as a parameter.
+Let's see the content of this callback:
+
+[source,rust]
+----
+let cancellable = AppInfo::launch_default_for_uri_async("file:///tmp/test.png", &app_launch_context, |result| {
+    if let Err(error) = result {
+        println!("Error: {}", error);
+    }
+    println!("Finish");
+});
+----
+
+Here, we first check the error of the asynchronous operation.
+If there's an error, we print it to the terminal.
+In any case, we print `Finish` to the terminal.
+Since there's no result (it is `()`) for this method, we do nothing with it.
+
+[source,rust]
+----
+cancellable.cancel();
+----
+
+Finally, we cancel the task so that it will print the following:
+
+[source]
+----
+Error: Operation was cancelled
+Finish
+----
+
+== Implementation in gir
+
+The task to generate asynchronous methods and functions is quite involved:
+we need to modify many parts of `gir` and we need to access two different methods when generating a single one.
+This is to get the types of the output parameters from the `*_finish` function when we generate the `*_async` one.
+
+== Future plan
+
+There's still some work to add in `gir` regarding asynchronous methods.
+The first one is to fix some issues and edge cases:
+some gnome libraries do not follow the convention of `*_async`, like GDBus where functions are asynchronous by default (with a `*_sync` variant for the asynchronous version).
+After these are fixed, I'll merge the work into the master branch.
+
+Another interesting feature to implement would be to generate the asynchronous methods to return a https://github.com/alexcrichton/futures-rs[`futures`] so that we can run futures on the https://github.com/antoyo/futures-glib-rs[glib event loop with futures-glib].
+
+== Thanks to the GNOME foundation
+
+I'd like to thank the GNOME foundation for funding my trip to Berlin and which allowed me to work on open source projects with nice people for a few days.
+
+image::img/gnome-foundation.png
