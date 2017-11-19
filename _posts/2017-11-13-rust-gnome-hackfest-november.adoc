@@ -159,4 +159,4 @@ Another interesting feature to implement would be to generate the asynchronous m
 
 I'd like to thank the GNOME foundation for funding my trip to Berlin and which allowed me to work on open source projects with nice people for a few days.
 
-image::img/gnome-foundation.png[GNOME Foundation]
+image::gnome-foundation.png[GNOME Foundation]
