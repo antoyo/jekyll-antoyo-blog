@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>Relm Blog</title>
- <link href="http://relm.ml/atom.xml" rel="self"/>
- <id>http://relm.ml</id>
- <updated>2017-11-19T15:31:05+00:00</updated>
+ <title>Antoyo's Blog</title>
+ <link href="http://antoyo.ml/atom.xml" rel="self"/>
+ <id>http://antoyo.ml</id>
+ <updated>2017-11-19T15:51:32+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
-   <uri>http://relm.ml</uri>
+   <uri>http://antoyo.ml</uri>
    <email>bouanto@zoho.com</email>
  </author>
 
  
 
  <entry>
-   <title>Rust Gnome Hackfest November</title>
-   <link href="http://relm.ml/rust-gnome-hackfest-november"/>
-   <id>http://relm.ml/rust-gnome-hackfest-november</id>
+   <title>Rust+GNOME Hackfest (November 2017)</title>
+   <link href="http://antoyo.ml/rust-gnome-hackfest-november"/>
+   <id>http://antoyo.ml/rust-gnome-hackfest-november</id>
    <updated>2017-11-13T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin. The Hackfest was generously hosted by Kinvolk. I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source...</content>
  </entry>
