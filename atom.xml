@@ -4,12 +4,22 @@
  <title>Antoyo's Blog</title>
  <link href="http://antoyo.ml/atom.xml" rel="self"/>
  <id>http://antoyo.ml</id>
- <updated>2017-12-12T02:47:49+00:00</updated>
+ <updated>2017-12-12T03:06:06+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>http://antoyo.ml</uri>
    <email>bouanto@zoho.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>TQL, an easy-to-use ORM for Rust</title>
+   <link href="http://antoyo.ml/tql-easy-orm"/>
+   <id>http://antoyo.ml/tql-easy-orm</id>
+   <updated>2017-12-11T00:00:00+00:00</updated>
+   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use &lt;code&gt;proc-macro&lt;/code&gt; and benefit from the same features as the original version, while also...</content>
+ </entry>
 
  
 
