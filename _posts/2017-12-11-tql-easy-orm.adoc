@@ -3,7 +3,7 @@
 
 Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use `proc-macro` and benefit from the same features as the original version, while also working on the stable version of Rust!
 
-https://github.com/antoyo/tql[`TQL`] is an ORM inspired by the Django ORM:
+https://github.com/antoyo/tql[TQL] is an ORM inspired by the Django ORM:
 it provides an easy-to-use syntax that is similar to the Django ORM.
 However, as it is implemented as a procedural macro, I improved it in some cases to get a better syntax.
 For instance, while in Django you'd need something like this to use conditions and operators:
@@ -17,7 +17,7 @@ In `tql`, you can use the normal Rust syntax:
 
 [source,rust]
 ----
-Table.filter(field1 == "value1" \|\| field2 < 100)
+Table.filter(field1 == "value1" || field2 < 100)
 ----
 
 which is more convenient.
@@ -29,7 +29,7 @@ Actually, the above code should be written inside a `sql!()` macro like this:
 
 [source,rust]
 ----
-let items = sql!(Table.filter(field1 == "value1" \|\| field2 < 100));
+let items = sql!(Table.filter(field1 == "value1" || field2 < 100));
 ----
 
 This procedural macro will analyze the query to make sure that the fields exist and the type of the expressions match.
@@ -77,7 +77,7 @@ To do a `SELECT` query, with `WHERE`, `ORDER BY` and `LIMIT` clauses, we can use
 let items = sql!(TodoItem.filter(done == false).sort(-date_added)[..10]);
 ----
 
-This will select the first 10 `TodoItem`s, sorted from the newest date to the latest and select only the items where the field `done` is equal to `false`.
+This will select the first 10 `TodoItem`, sorted from the newest date to the latest and select only the items where the field `done` is equal to `false`.
 Selecting all items can be done with `TodoItem.all()` and selecting one item by primary key can be done with `TodoItem.get(primary_key)`.
 We can do even more complex queries with aggregates, for instance:
 
@@ -113,7 +113,7 @@ Finally, you can insert rows with the `insert()` method:
 sql!(TodoItem.insert(text = &text, date_added = Utc::now(), done = false));
 ----
 
-You can find more details of the supported syntax and examples in the https://github.com/antoyo/tql[`tql` repository].
+You can find more details of the supported syntax and examples in the https://github.com/antoyo/tql[tql repository].
 
 == How good are error messages?
 
@@ -183,7 +183,7 @@ warning: delete() without filters
 
 Nothing is perfect, however.
 Currently, this only works on nightly and the error messages are not as precise when you use `tql` on the stable version of the compiler.
-However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you're not supposed to have compiler errors when you're ready to deploy.
+However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you're not supposed to have compiler errors when you're ready to deploy (and you will still see them anyway on stable).
 
 == Optimizations
 
@@ -194,7 +194,7 @@ But nothing prevents it to support other and more useful optimizations in the fu
 
 As I said earlier, I plan to add support for other databases to `tql` and more SQL features.
 Also, I will improve some rough edges like the connection management and the error handling of the generated code.
-Take not that `tql` is not ready for production use, it's alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.
+Take note that `tql` is not ready for production use, it's alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.
 
 This version has not been published yet, because it depends on the master branch of the `syn` crate, but I'll publish it as soon as it is possible.
 
