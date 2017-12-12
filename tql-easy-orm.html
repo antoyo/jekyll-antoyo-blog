@@ -126,7 +126,7 @@
 <p>Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use <code>proc-macro</code> and benefit from the same features as the original version, while also working on the stable version of Rust!</p>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/antoyo/tql"><code>TQL</code></a> is an ORM inspired by the Django ORM:
+<p><a href="https://github.com/antoyo/tql">TQL</a> is an ORM inspired by the Django ORM:
 it provides an easy-to-use syntax that is similar to the Django ORM.
 However, as it is implemented as a procedural macro, I improved it in some cases to get a better syntax.
 For instance, while in Django you&#8217;d need something like this to use conditions and operators:</p>
@@ -141,7 +141,7 @@ For instance, while in Django you&#8217;d need something like this to use condit
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-err">\</span><span class="tok-o">|</span><span class="tok-err">\</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">)</span><span class="tok-w"></span></code></pre>
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-o">||</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">)</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -158,7 +158,7 @@ Actually, the above code should be written inside a <code>sql!()</code> macro li
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">items</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-err">\</span><span class="tok-o">|</span><span class="tok-err">\</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">items</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-o">||</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -218,7 +218,7 @@ To do a <code>SELECT</code> query, with <code>WHERE</code>, <code>ORDER BY</code
 </div>
 </div>
 <div class="paragraph">
-<p>This will select the first 10 <code>TodoItem`s, sorted from the newest date to the latest and select only the items where the field `done</code> is equal to <code>false</code>.
+<p>This will select the first 10 <code>TodoItem</code>, sorted from the newest date to the latest and select only the items where the field <code>done</code> is equal to <code>false</code>.
 Selecting all items can be done with <code>TodoItem.all()</code> and selecting one item by primary key can be done with <code>TodoItem.get(primary_key)</code>.
 We can do even more complex queries with aggregates, for instance:</p>
 </div>
@@ -260,7 +260,7 @@ We can do even more complex queries with aggregates, for instance:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can find more details of the supported syntax and examples in the <a href="https://github.com/antoyo/tql"><code>tql</code> repository</a>.</p>
+<p>You can find more details of the supported syntax and examples in the <a href="https://github.com/antoyo/tql">tql repository</a>.</p>
 </div>
 </div>
 </div>
@@ -340,7 +340,7 @@ It can do that because the procedural macro is actually doing a whole semantic a
 <div class="paragraph">
 <p>Nothing is perfect, however.
 Currently, this only works on nightly and the error messages are not as precise when you use <code>tql</code> on the stable version of the compiler.
-However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you&#8217;re not supposed to have compiler errors when you&#8217;re ready to deploy.</p>
+However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you&#8217;re not supposed to have compiler errors when you&#8217;re ready to deploy (and you will still see them anyway on stable).</p>
 </div>
 </div>
 </div>
@@ -359,7 +359,7 @@ But nothing prevents it to support other and more useful optimizations in the fu
 <div class="paragraph">
 <p>As I said earlier, I plan to add support for other databases to <code>tql</code> and more SQL features.
 Also, I will improve some rough edges like the connection management and the error handling of the generated code.
-Take not that <code>tql</code> is not ready for production use, it&#8217;s alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.</p>
+Take note that <code>tql</code> is not ready for production use, it&#8217;s alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.</p>
 </div>
 <div class="paragraph">
 <p>This version has not been published yet, because it depends on the master branch of the <code>syn</code> crate, but I&#8217;ll publish it as soon as it is possible.</p>
