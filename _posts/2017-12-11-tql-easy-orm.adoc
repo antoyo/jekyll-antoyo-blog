@@ -1,0 +1,202 @@
+= TQL, an easy-to-use ORM for Rust
+:page-navtitle: TQL, an easy-to-use ORM for Rust
+
+Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use `proc-macro` and benefit from the same features as the original version, while also working on the stable version of Rust!
+
+https://github.com/antoyo/tql[`TQL`] is an ORM inspired by the Django ORM:
+it provides an easy-to-use syntax that is similar to the Django ORM.
+However, as it is implemented as a procedural macro, I improved it in some cases to get a better syntax.
+For instance, while in Django you'd need something like this to use conditions and operators:
+
+[source,python]
+----
+Table.objects.filter(Q(field1="value1") | Q(field2__lt=100))
+----
+
+In `tql`, you can use the normal Rust syntax:
+
+[source,rust]
+----
+Table.filter(field1 == "value1" \|\| field2 < 100)
+----
+
+which is more convenient.
+
+== Implementation
+
+All of this is possible thanks to the use of procedural macros.
+Actually, the above code should be written inside a `sql!()` macro like this:
+
+[source,rust]
+----
+let items = sql!(Table.filter(field1 == "value1" \|\| field2 < 100));
+----
+
+This procedural macro will analyze the query to make sure that the fields exist and the type of the expressions match.
+It will also generate the SQL query at compile-time, so there's no run-time cost associated with creating a query.
+Thus, it is the perfect example of a zero-cost abstraction.
+
+== Database support
+
+Currently, `tql` only supports PostgreSQL, but it will soon support Sqlite.
+Other database backends might be added in the future if people are interested.
+Also, some features of SQL are not yet supported and these will be added in the future.
+
+== Usage
+
+It is very easy to use `tql`.
+First of all, you need to annotate your model with the `#[derive(SqlTable)]` attribute:
+
+[source,rust]
+----
+#[derive(SqlTable)]
+struct TodoItem {
+    id: PrimaryKey,
+    text: String,
+    date_added: DateTime<Utc>,
+    done: bool,
+}
+----
+
+The fields are of normal Rust types, except for `PrimaryKey` and `ForeignKey<T>`.
+Next, you can simply use the `sql!()` macro to execute queries.
+For instance, this will create the table in the database:
+
+[source,rust]
+----
+sql!(TodoItem.create());
+----
+
+This macro assumes that there's a variable named `connection` in scope and will use it to execute the query.
+This variable should be of type `postgres::Connection`.
+Let's see the other queries we can do.
+To do a `SELECT` query, with `WHERE`, `ORDER BY` and `LIMIT` clauses, we can use the methods `filter()`, `sort()` and indexing:
+
+[source,rust]
+----
+let items = sql!(TodoItem.filter(done == false).sort(-date_added)[..10]);
+----
+
+This will select the first 10 `TodoItem`s, sorted from the newest date to the latest and select only the items where the field `done` is equal to `false`.
+Selecting all items can be done with `TodoItem.all()` and selecting one item by primary key can be done with `TodoItem.get(primary_key)`.
+We can do even more complex queries with aggregates, for instance:
+
+[source,rust]
+----
+Person.filter(age < 50).values(name)
+  .aggregate(age_average = avg(age))
+  .filter(age_average > 30)
+----
+
+Of course, `tql` supports `JOIN` with the `join()` method.
+
+To update a row, simply use the `update()` method, optionally with some filters:
+
+[source,rust]
+----
+sql!(TodoItem.get(id).update(done = true));
+----
+
+Here, we set the field `done` to `true` for the row where the primary key is equal to the content of the variable `id`.
+
+Deleting rows can be done by calling the method `delete()`:
+
+[source,rust]
+----
+sql!(TodoItem.get(id).delete());
+----
+
+Finally, you can insert rows with the `insert()` method:
+
+[source,rust]
+----
+sql!(TodoItem.insert(text = &text, date_added = Utc::now(), done = false));
+----
+
+You can find more details of the supported syntax and examples in the https://github.com/antoyo/tql[`tql` repository].
+
+== How good are error messages?
+
+One issue people have with such tools in Rust is the error messages.
+For instance, here's part of a message you can get when you do a type error with `diesel`:
+
+[source]
+----
+error[E0277]: the trait bound `str: diesel::Expression` is not satisfied
+  --> src/main.rs:69:41
+   |
+69 |         diesel::update(sql_table::table.find("id"))
+   |                                         ^^^^ the trait `diesel::Expression` is not implemented for `str`
+   |
+   = note: required because of the requirements on the impl of `diesel::Expression` for `&str`
+   = note: required because of the requirements on the impl of `diesel::Expression` for `diesel::expression::operators::Eq<schema::__diesel_infer_schema::infer_sql_table::sql_table::columns::id, &str>`
+   = note: required because of the requirements on the impl of `diesel::EqAll<&str>` for `schema::__diesel_infer_schema::infer_sql_table::sql_table::columns::id`
+   = note: required because of the requirements on the impl of `diesel::query_dsl::filter_dsl::FindDsl<&str>` for `schema::__diesel_infer_schema::infer_sql_table::sql_table::table`
+
+…
+----
+
+(there are actually 3 other error messages caused by the simple mistake of writing `"id"` instead of `id`)
+
+Here's the error message provided by `tql` for the very same error:
+
+[source]
+----
+error: mismatched types:
+ expected `i32`,
+    found `String`
+  --> src/main.rs:87:39
+   |
+87 |         let table = sql!(SqlTable.get("id")).unwrap();
+   |                                       ^^^^
+   |
+   = note: in this expansion of sql! (defined in tql)
+----
+
+How can `tql` show good error messages?
+It can do that because the procedural macro is actually doing a whole semantic analysis, like a compiler would do.
+`TQL` will also provide help message like the Rust compiler can do:
+
+[source]
+----
+error: `SlTable` does not name an SQL table
+  --> src/main.rs:83:23
+   |
+83 |         let id = sql!(SlTable.insert(field1 = &string, field2 = number));
+   |                       ^^^^^^^
+   |
+   = help: did you mean SqlTable?
+----
+
+Here, `tql` proposed a name that is similar to the one written in this example.
+
+This macro can even warn you when you do something dubious, like deleting your whole table:
+
+[source]
+----
+warning: delete() without filters
+  --> examples/todo.rs:60:32
+   |
+60 |     let result = sql!(TodoItem.delete());
+   |                                ^^^^^^
+----
+
+Nothing is perfect, however.
+Currently, this only works on nightly and the error messages are not as precise when you use `tql` on the stable version of the compiler.
+However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you're not supposed to have compiler errors when you're ready to deploy.
+
+== Optimizations
+
+Currently, `tql` support a very basic query optimization: constant propagation.
+But nothing prevents it to support other and more useful optimizations in the future.
+
+== Future
+
+As I said earlier, I plan to add support for other databases to `tql` and more SQL features.
+Also, I will improve some rough edges like the connection management and the error handling of the generated code.
+Take not that `tql` is not ready for production use, it's alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.
+
+This version has not been published yet, because it depends on the master branch of the `syn` crate, but I'll publish it as soon as it is possible.
+
+If you want more information about `tql`, you can find http://antoyo.ml/rapport_tql.pdf[my school report here] and http://tql.tuxfamily.org/presentation/[the slides of the talk I gave about it], both of which are in french and slightly outdated (these date back from 2015, when `tql` was a compiler plugin).
+(Don't be afraid my the size of the report, it contains the whole code of `tql`.)
