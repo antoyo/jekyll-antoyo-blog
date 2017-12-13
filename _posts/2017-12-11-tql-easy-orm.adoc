@@ -199,4 +199,6 @@ Take note that `tql` is not ready for production use, it's alpha quality and not
 This version has not been published yet, because it depends on the master branch of the `syn` crate, but I'll publish it as soon as it is possible.
 
 If you want more information about `tql`, you can find http://antoyo.ml/rapport_tql.pdf[my school report here] and http://tql.tuxfamily.org/presentation/[the slides of the talk I gave about it], both of which are in french and slightly outdated (these date back from 2015, when `tql` was a compiler plugin).
-(Don't be afraid my the size of the report, it contains the whole code of `tql`.)
+(Don't be afraid by the size of the report, it contains the whole code of `tql`.)
+
+Please comment on https://www.reddit.com/r/rust/comments/7j7sc7/tql_an_easytouse_orm_for_rust/[reddit].
