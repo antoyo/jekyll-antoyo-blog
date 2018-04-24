@@ -4,12 +4,22 @@
  <title>Antoyo's Blog</title>
  <link href="http://antoyo.ml/atom.xml" rel="self"/>
  <id>http://antoyo.ml</id>
- <updated>2017-12-13T03:23:54+00:00</updated>
+ <updated>2018-04-24T23:19:58+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>http://antoyo.ml</uri>
    <email>bouanto@zoho.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Rust+GNOME Hackfest #3</title>
+   <link href="http://antoyo.ml/rust-gnome-hackfest-madrid"/>
+   <id>http://antoyo.ml/rust-gnome-hackfest-madrid</id>
+   <updated>2018-04-24T00:00:00+00:00</updated>
+   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improvement_of_the_position_of_error_messages&quot;&gt;Improvement of the position of error messages&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Thanks to my...</content>
+ </entry>
 
  
 
