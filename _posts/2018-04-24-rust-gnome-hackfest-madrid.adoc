@@ -1,0 +1,84 @@
+= Rust+GNOME Hackfest #3
+:page-navtitle: Rust+GNOME Hackfest #3
+
+Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.
+
+== Improvement of the position of error messages
+
+Thanks to my experience in http://relm.ml/relm-better-error-message[improving the error messages in relm], I was able to help Federico improving the error message of https://gitlab.gnome.org/federico/gnome-class[gnome-class] which is a project providing a procedural macro to create new GTK classes from Rust.
+With this project, these new classes written in Rust could be used in other languages as well because it follows the conventions of GObject.
+What is interesting with gnome-class is that it generates all the boilerplate that is required so that the users of this crate only need to write the code that really matters and is specific to a new class.
+In the future, it will be possible to create new widgets with gnome-class in Rust and it will be possible to use these new widgets from other languages as well.
+
+One possibility which would be very interesting would be to create a new widget for servo.
+While it's currently possible https://github.com/antoyo/servo-gtk[to use it with `gtk-rs` already], this will have multiple benefits:
+
+ * We will be able to use Servo from another language.
+ * The users won't have to compile Servo themselves as we will be able to create a shared library with a C API (which is a huge benefit).
+
+So, Federico and I first made https://gitlab.gnome.org/federico/gnome-class/commit/083d68dcb5b4cddbbb73265e06edc0cdf95a31e0[some fixes] to show the errors at the good position.
+This commit shows how we now use the `Diagnostic` API instead of panic to show the error at the correct span (think of a span as the position and the context of a token).
+
+Then, we worked on https://gitlab.gnome.org/federico/gnome-class/commit/1ff8b460c2417f4bae3cebbeced9360f7206d8d8[showing better syntax error].
+As you may have guessed by now, gnome-class is similar to a compiler:
+it has a parser, an analyzer and a code generator.
+And in this commit, we see that we do something similar to the Rust compiler itself:
+if we see an unexpected token, we show an error (with the Diagnostic API again) and, importantly, we https://gitlab.gnome.org/federico/gnome-class/commit/60e7877e0c11ec10143db2bb36337b5ca4aaf8ea[skip some tokens] in order to avoid having other useless parsing errors afterward.
+
+While it's not fixed everywhere, we now have the basic things working and will be able to have better errors everywhere in the future.
+
+== Experiments with creating custom widgets
+
+During the Hackfest, I tried to create custom widgets with gnome-class, but we're not there yet.
+My goal was to get a basic Servo widget by the end of the Hackfest, but it was too optimistic, unfortunately.
+Indeed, I faced two issues and one of them requires a good amount of work to fix.
+But let's first talk about the more simple issue.
+
+`gnome-class` not only emit the code with the C ABI, but also the Rust wrapper.
+To do so, it uses the https://github.com/gtk-rs/glib/blob/master/src/wrapper.rs#L243[`glib_wrapper`] macro.
+When inheriting from another Widget, it generates a code like:
+
+[source,rust]
+----
+glib_wrapper!(pub struct MyWidget(Object<MyWidgetFFI>): Widget;
+// …
+)
+----
+
+The problem is that this is trying to implement traits of another crate on types defined in another crate (`Widget` is from the `gtk` crate) and we cannot do that.
+I took me some time to understand that this issue was already known and fixed within this macro:
+we need to use the alternate syntax:
+
+[source,rust]
+----
+glib_wrapper!(pub struct MyWidget(Object<MyWidgetFFI>): [Widget => GtkWidget];)
+----
+
+where `GtkWidget` is the "ffi" struct, meaning that it's the structure representing the one in C (i.e. not the wrapper).
+The problem we faced is that we don't want the user to specify both `Widget` and `GtkWidget` when inheriting from a widget.
+But, we cannot really guessed that `Widget` maps to `GtkWidget` as it could come from another library.
+However, this should be easy to solve thanks to the work of https://blog.guillaume-gomez.fr/articles/2018-04-21+Rust%2BGNOME+Hackfest+in+Madrid[Guillaume Gomez]:
+now that `gir` was separated into a library, we will be able to query this info from `gir` itself and the user won't have to specify the ffi struct.
+
+The bigger problem is that we don't generate complete "ffi" struct.
+Indeed, as https://github.com/rust-lang/rfcs/issues/314[Rust does not support bit fields], we don't generate these fields in the structures that has some.
+And this causes a problem because we need to know the size of these structs in order to allocate them, which is useful for inheritence (I'm skipping the explanations about why it's needed for the ABI, but trust me, we need the size).
+So, I started to change `gir` to generate dummy fields for the bit fields in order to have the right struct size.
+However, I quickly ran into some issue:
+bit fields are implementation dependant, so I had many issues to get the correct sizes and alignment.
+Thus, I started the bigger work of computing the alignment of the fields by looking at the types.
+We might end up with a working solution, but it will be a lot of work to support all the platforms we support.
+
+== Relm tests
+
+Finally, I had some time to finish the work of my https://github.com/antoyo/relm/pull/100[`relm-test` crate].
+This is a crate to be able to write UI tests for relm applications.
+Now, all examples have a test to make sure they actually work.
+What this crate allows us to do is simulating user input like a mouse click or keyboard key press to check that the view is updated accordingly.
+In the future, we will extract some features from `relm-test` to create `gtk-test` which will only contain the gtk-only (i.e. non-relm specific) features of `relm-test`.
+
+== Thanks
+
+A big thank to https://github.com/aruiz[Alberto Ruiz] for organizing the Hackfest, to https://www.openshine.com/[OpenShine] for hosting the event and a **huge** thank to the GNOME foundation for sponsoring my flight and accomodation to allow me to participate to this Hackfest.
+
+image:img/gnome-foundation.png[GNOME Foundation]
