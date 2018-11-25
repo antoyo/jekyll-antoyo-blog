@@ -1,0 +1,90 @@
+= Rust+GNOME Hackfest #4
+:page-navtitle: Rust+GNOME Hackfest #4
+
+Less than 2 weeks ago, I was working on improving the integration of Rust with GNOME libraries at the fourth Hackfest, which happened this time in Thessaloniki.
+
+== Improving ergonomics of gnome-class
+
+As I said in http://antoyo.ml/rust-gnome-hackfest-madrid[my previous blog post], there is a issue when inheriting from a `gtk::Widget`:
+
+As a reminder, we need to specify both the wrapper widget and its ffi counterpart.
+
+[source,rust]
+----
+glib_wrapper!(pub struct MyWidget(Object<MyWidgetFFI>): [Widget => GtkWidget];)
+----
+
+What I did not specify last time is that we also need to specify all parents.
+So, if we were to inherit from a `gtk::Button`, we would need something like:
+
+[source,rust]
+----
+glib_wrapper!(pub struct MyWidget(Object<MyWidgetFFI>): [Button => GtkButton, Widget => GtkWidget];)
+----
+
+But, we do not want the user to have to specify all of this extra information; it would be more ergonomic if the user has to write only `Button` and the proc-macro would figure the rest.
+During this Hackfest, I worked on this issue:
+thanks to the work of https://blog.guillaume-gomez.fr/articles/2018-04-21+Rust%2BGNOME+Hackfest+in+Madrid[Guillaume Gomez] during the previous Hackfest, I was able to use `gir` as a library and with it, I was able to query the needed info.
+https://gitlab.gnome.org/federico/gnome-class/merge_requests/40[Here] is the pull request for this ergonomic improvement.
+
+I also https://gitlab.gnome.org/federico/gnome-class/merge_requests/36[updated the dependencies of gnome-class] and https://gitlab.gnome.org/federico/gnome-class/merge_requests/42[fixed it to be able to use it in an older nightly which was needed in order to combine it with Servo].
+
+== Creating GNOME class for Servo Web View
+
+As I said in my previous blog article, it would be awesome to have a GNOME class for the Servo web view for these reasons:
+
+ * We will be able to use Servo from another language.
+ * The users won't have to compile Servo themselves as we will be able to create a shared library with a C API (which is a huge benefit).
+
+Since I fixed the issues we had in gnome-class that were blocking us from creating such a GNOME class, I also worked on creating a GNOME class for the Servo web view.
+My work is in https://github.com/antoyo/servo-gtk/tree/feature/gnome-class[this branch] and you can see the almost working example https://github.com/antoyo/servo-gtk/blob/feature/gnome-class/examples/gnome-class.rs[here].
+For some reason, Servo broke after this change, perhaps because I had to update a dependency in order to make it work with `gnome-class`:
+the code compiles but the widget remains black.
+So, we're nearly there and when this branch and the one in `gnome-class` will be merged, we will have the opportunity to have this cool servo GNOME class!
+
+== Relm improvements
+
+I've also worked on https://github.com/antoyo/relm[`relm`] during the Hackfest.
+
+One of the biggest improvement is https://github.com/antoyo/relm/pull/147[the switch to `syn` 0.15] which dramatically improved the error messages.
+Before this update, a syntax error in `relm` looked this way:
+
+----
+error: custom attribute panicked
+  --> examples/buttons-attribute.rs:58:1
+   |
+58 | #[widget]
+   | ^^^^^^^^^
+   |
+   = help: message: parse() Widget: ParseError(None)
+----
+
+Now, it looks like this:
+
+----
+error: expected `,`
+  --> examples/buttons-attribute.rs:93:26
+   |
+93 |                     text &self.model.counter.to_string(),
+   |                          ^
+----
+
+(the message could be better, but at least we know where the error is)
+
+I also fixed a https://github.com/antoyo/relm/issues/20[long standing issue] in `relm` which was that the only way to distinguish a `gtk` widget from a `relm` widget in the `view!` macro was whether its name was a path or an identifier.
+This was limiting because you needed to import every `relm` widget you created in order to use them in your views.
+Now, you can use the https://github.com/antoyo/relm/pull/149[`$` symbol in order to specify that it is a `relm` widget].
+
+There was also a bug with https://github.com/antoyo/relm/issues/137[`EventStream` that could panic because of a BorrowMut error] if shared between multiple threads.
+http://relm.ml/relm-intro#state_mutation[Remember that it was `relm` was created to have no error of this kind], so it was a bit of a shame to still have that kind of issues.
+But, it was a very easy fix because it was caused by the Rust compiler to wrongly auto-generate a `Send impl` for this type that should not be shared with other threads.
+Indeed, when you want to send a message from another thread in `relm`, you should not use an `EventStream` but a https://github.com/antoyo/relm/blob/master/examples/multithread.rs#L62[Channel].
+So https://github.com/antoyo/relm/pull/148[the fix] was simply to make this type non-Send.
+
+I also https://github.com/antoyo/relm/commit/83f518f2b59843a232ecfd5ad25216e599eb3cb0[fixed some links in the documentation].
+
+== Thanks
+
+A big thank to https://github.com/sdroege[Sebastian Dröge] and Vivia for organizing the Hackfest and a **huge** thank to the GNOME foundation for sponsoring my flight and accommodation to allow me to participate to this Hackfest.
+
+image:img/gnome-foundation.png[GNOME Foundation]
