@@ -1,0 +1,5 @@
+digit = { '0'..'9' }
+
+num = { digit+ }
+
+nums = { (num ~ " "+)* ~ num }

@@ -1,0 +1,6 @@
+[package]
+name = "_1_freshman"
+version = "0.1.0"
+authors = ["Antoni Boucher <antoni.boucher@samsung.com>"]
+
+[dependencies]

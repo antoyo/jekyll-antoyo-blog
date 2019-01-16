@@ -1,0 +1,7 @@
+[package]
+name = "_17_rayon"
+version = "0.1.0"
+authors = ["Antoni Boucher <bouanto@zoho.com>"]
+
+[dependencies]
+rayon = "1.0.3"

@@ -1,0 +1,163 @@
+= The Evolution of a Rust Programmer
+:source-highlighter: pygments
+
+== Freshman Rust Programmer
+
+[source,rust]
+----
+include::_1_freshman/src/main.rs[]
+----
+
+== Sophomore Rust Programmer
+=== (studied C as a freshman)
+
+[source,rust]
+----
+include::_2_sophomore/src/main.rs[]
+----
+
+== Junior Rust Programmer
+=== (read that `unwrap()` foils rust's error management philosophy and joined the "It should be removed in favor of `expect()`"-movement)
+
+[source,rust]
+----
+include::_3_junior/src/main.rs[]
+----
+
+== Senior Rust Programmer
+=== (learned proper error management)
+
+[source,rust]
+----
+include::_4_error_management/src/main.rs[]
+----
+
+== Functional Rust Programmer
+=== (studied Haskell as a freshman and loathes mutability)
+
+[source,rust]
+----
+include::_5_functional/src/main.rs[]
+----
+
+== Object-oriented Programmer
+=== (studied Java as a freshman)
+
+[source,rust]
+----
+include::_6_oo/src/main.rs[]
+----
+
+== Macro-man
+=== (misses Lisp macros)
+
+[source,rust]
+----
+include::_7_macroman/src/main.rs[]
+----
+
+== Macroceptor
+=== (watched Inception)
+
+[source,rust]
+----
+include::_8_macroceptor/src/main.rs[]
+----
+
+== Procedural Macro God
+=== (needs more power)
+
+[source,rust]
+.main.rs
+----
+include::_9_procmacro_god/src/main.rs[]
+----
+
+[source,rust]
+.lib.rs
+----
+include::_9_procmacro_god/src/lib.rs[]
+----
+
+== Another senior Rust programmer
+=== (learned to reduce boilerplate with macros)
+
+[source,rust]
+----
+include::_10_errorchain/src/main.rs[]
+----
+
+== Yet another senior Rust programmer
+=== (switched from error-chain to stay up-to-date)
+
+[source,rust]
+----
+include::_11_failure/src/main.rs[]
+----
+
+== Hyper-Functional Rust Programmer
+=== (misses Haskell so much that he needs an additional library for more functional power)
+
+[source,rust]
+----
+include::_12_iter_tools/src/main.rs[]
+----
+
+== Combinative Rust Programmer
+=== (learned that nom is faster than parsec)
+
+[source,rust]
+----
+include::_13_nom/src/main.rs[]
+----
+
+== Rust Fast and Elegant Parser Writer
+=== (learned that pest is faster than nom)
+
+[source,rust]
+----
+include::_14_pest/src/main.rs[]
+----
+
+== Outdated Rust Programmer
+=== (learned Rust in 2009)
+
+[source,rust]
+----
+include::_15_rustc_serialize/src/main.rs[]
+----
+
+== Hyped Rust Programmer
+=== (learned that serde is the new shiny thing for serialization)
+
+[source,rust]
+----
+include::_16_serde/src/main.rs[]
+----
+
+== Blazingly Concurrent Programmer
+=== (wanted a proof that Rust indeed prevents data races)
+
+[source,rust]
+----
+include::_17_rayon/src/main.rs[]
+----
+
+== Outdated Async Rust Programmer
+=== (learned Rust async library in 2009)
+
+[source,rust]
+----
+include::_18_mio/src/main.rs[]
+----
+
+== Senior Dependenciely-Typed Rust Programmer
+=== (learned to use all the best crates of the Rust ecosystem)
+
+[source,rust]
+----
+include::_19_dependenciely_typed/src/main.rs[]
+----
+
+Copyright © 2019 Antoni Boucher
+All rights reserved

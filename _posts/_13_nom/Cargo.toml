@@ -1,0 +1,7 @@
+[package]
+name = "_12_nom"
+version = "0.1.0"
+authors = ["Antoni Boucher <bouanto@zoho.com>"]
+
+[dependencies]
+nom = "4.1.1"
