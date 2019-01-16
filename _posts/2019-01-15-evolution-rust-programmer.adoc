@@ -17,7 +17,7 @@ include::_2_sophomore/src/main.rs[]
 ----
 
 == Junior Rust Programmer
-=== (read that `unwrap()` foils rust's error management philosophy and joined the "It should be removed in favor of `expect()`"-movement)
+=== (read that `unwrap()` foils rust's error management philosophy and joined the "It should be removed in favor of `expect()` "-movement)
 
 [source,rust]
 ----
