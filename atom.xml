@@ -4,12 +4,22 @@
  <title>Antoyo's Blog</title>
  <link href="http://antoyo.ml/atom.xml" rel="self"/>
  <id>http://antoyo.ml</id>
- <updated>2018-11-25T15:14:10+00:00</updated>
+ <updated>2019-01-16T03:49:05+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>http://antoyo.ml</uri>
    <email>bouanto@zoho.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>The Evolution of a Rust Programmer</title>
+   <link href="http://antoyo.ml/evolution-rust-programmer"/>
+   <id>http://antoyo.ml/evolution-rust-programmer</id>
+   <updated>2019-01-15T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;freshman_rust_programmer&quot;&gt;Freshman Rust Programmer&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;listingblock&quot;&gt; &lt;div class=&quot;content&quot;&gt; &lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;rust&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;tok-nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-kd&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;mut&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;io&lt;/span&gt;&lt;span...</content>
+ </entry>
 
  
 
