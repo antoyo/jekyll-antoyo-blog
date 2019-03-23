@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>{%if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+        <link rel="stylesheet" href="{{ "/css/rustblog.css" | prepend: site.baseurl }}">
+        <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+        <link rel="shortcut icon" type="image/png" href="img/rust-favicon.png">
+    </head>
+    <body>
+        <div id="header">
+            Rust Blog
+        </div>
+        <nav>
+            <span>
+                <a href="https://www.rust-lang.org/">Rust</a>
+            </span>
+            <span>
+                <a href="https://www.rust-lang.org/tools/install">Install</a>
+            </span>
+            <span>
+                <a href="https://www.rust-lang.org/learn">Learn</a>
+            </span>
+            <span>
+                <a href="https://www.rust-lang.org/tools">Tools</a>
+            </span>
+            <span>
+                <a href="https://www.rust-lang.org/governance">Governance</a>
+            </span>
+            <span>
+                <a href="https://www.rust-lang.org/community">Community</a>
+            </span>
+        </nav>
+        <div id="wrap">
+            <div id="container">
+                <main>
+
+                    <article id="post-page">
+                        <h2>{{ page.title }}</h2>
+                        <time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
+                        · The Rust Core Team
+                        <div class="content">
+                            {{ content }}
+                        </div>
+                    </article>
+                </main>
+            </div>
+    </body>
+</html>

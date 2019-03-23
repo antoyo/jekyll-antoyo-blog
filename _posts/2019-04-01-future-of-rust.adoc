@@ -1,0 +1,228 @@
+= The future of Rust
+:page-layout: rustblog
+:source-highlighter: pygments
+
+We had many meetings during the past months to
+talk about the future of Rust.
+It's time to think about Rust 2.0 and how it will keep the many
+advantages of the language, without its drawback.
+
+First of all, we wanted to thank you for your contributions, your
+comments and your support. We really appreciate the time you spend to
+make this language the best language of the world.
+
+Of course, we cannot please everybody and we had to take difficult
+decisions to make the language better and ensure its future as the
+fastest and safest programming language.
+
+== The crate ecosystem
+
+One big advantage of Rust is its ecosystem of crates. It's easy to
+create new ones and to share them with everybody and there are many,
+many crates that we can easily use in our projects.
+This big advantage is also one of its greatest drawback:
+by having so many crates, it's very hard to find the one that are of
+good quality.
+
+So how can one attest the qualify of a library?
+There's only one want to do so: by reading its source code.
+By doing so, not only one can see how many unsafe code, tests and
+documentation there are in the library, but one can also see if the
+crate is too complex for its own good:
+if you do not feel comfortable to contribute or maintain a crate
+you're evaluating, it might not be a good idea to use it. Too much
+complexity is usually a bad sign.
+Take for example serde: we decided to deprecate rustc-serialize in
+favor of serde because it provides so many new features. However,
+serde grew into a very complex crate. Please read the source code of
+both crates and you'll quickly see what we mean.
+To fix this, we'll simplify serde as much as we can so that it's code
+become easy to read and maintain, while retaining all features of
+serde, of course.
+
+Another very useful and nice crate that we work on is tokio. Again, it
+started very simple and became highly complex.
+We tried many approaches for tokio, but many users are still having
+trouble to use it because it's not so simple and the error messages
+can be very confusing.
+We thought a long time about this issue and we experimented with
+another approach that is already successful in a language that has a
+reference system somewhat similar to Rust: https://www.ponylang.io/[Pony].
+Instead of using async/await, it will be a very simple model with https://stdlib.ponylang.org/net-TCPConnectionNotify/[some]
+https://stdlib.ponylang.org/net-TCPListenNotify/[interfaces] and an actor system.
+We're confident this will result in a system that is easy to use and
+that you'll be able to understand its source code fairly easily.
+
+Another interesting metric to attest the quality of a crate is its
+number of dependencies.
+Since it's so easy to add a new crate to our project, we tend to
+include too much dependencies in our own project.
+But that's not always a good idea?
+Why is that?
+Well, remember: to evaluate a crate, you must read its source code. If
+a crate has 100 transitive dependencies, will you really read the
+source code of these 100 crates? Surely not!
+There's much more risk of bugs and the compilation time will be
+exponentially longer (we'll talk about this issue later).
+That's why we'll start a new initiative: Remove Its Inessential Rust.
+We'll help people evaluate which dependencies they can remove from
+their own crate.
+
+To help people further in choosing a crate, we'll that using the tool
+https://github.com/dpc/crev/tree/master/cargo-crev[crev] and do code
+reviews of the most popular crate.
+We won't write in our reviews things like:
+
+ * is the crate well documented?
+ * is it well tested?
+ * does it contain too much unsafe code?
+
+Because of resources are limited and because other people can easily
+write such reviews, we'll mostly focus of what we consider more
+important:
+
+ * is the code simple to understand?
+ * does it contain useless dependencies?
+ * is the crate useful at all?
+
+The last point might seem weird, but some very popular crates do not
+provide much features and since we want to reduce the number of
+dependencies in our ecosystem, it makes sense to flag these crates in
+order to reduce their usage.
+
+== Language simplifications
+
+Over the years, we added many cool features in Rust, but this came at
+a cost: the complexity of the language has increased dramatically.
+For Rust 2.0, we decided to do a cleanup and remove some features that
+makes the language more complex.
+
+One feature we had a very hard time to decide to remove was the
+procedural macros. It was a very hard choose because we've been
+working very hard on time and it greatly enhanced meta-programming in
+Rust.
+But we had to face it: we were adding hacks over hacks to
+make them produce good error messages and they deteriorate the
+compilation time dramatically.
+So, what will we have instead of them?
+Well, once again, we were inspired by another language: https://ziglang.org/[Zig].
+In Zig, the power of constant functions is huge thanks to compile-time
+reflection.
+By replacing procedural macros by constant functions, plus
+compile-time reflection and some useful directives like
+https://ziglang.org/documentation/master/#export[this one], we will
+retain the power of procedural macros, but with less complexity.
+We're already working very hard on constant functions and we've
+stabilized many of them recently. We'll continue in this direction to
+make this dream happen.
+
+Another feature that we've added that have increased the complexity is
+match ergonomics. We wanted to make the code simpler to write for the
+new users, but it turns out the error messages this feature can cause
+are far from being easy to understand. And we cannot fix this since
+the errors messages are bad because of the assumptions the compiler
+makes about where to put `ref` or `mut`.
+Match ergonomics was also the cause of https://blog.rust-lang.org/2018/06/05/Rust-1.26.2.html[some]
+https://blog.rust-lang.org/2018/07/10/Rust-1.27.1.html[bugs] that made it to
+stable Rust and that's not something we can afford anymore.
+That's broken by design and
+that's why we'll remove this feature in Rust 2.0.
+
+We apologize for these changes: we really wanted to release these new
+cool features quickly because we believed in them, but it turns out it
+was a mistake.
+In the future, we'll take more time to experiment and gather feedback
+from the users instead of rushing for stabilizing the features in the
+language. That's what is best for the future of the language.
+
+== Even more safety
+
+We won't only remove features in the language: we'll also add new
+features.
+We feel these new features are necessary because they will improve the
+safety of the language.
+Some time ago, a soundness bug was https://blog.rust-lang.org/2017/02/09/Rust-1.15.1.html[discovered]
+in the standard library and we all know how unsafe code can be
+dangerous.
+Thus, we will add two new features that will help remove a lot of
+unsafe code from the standard library and make it safer:
+dependent types and stateful views.
+Dependent types will help to prove that some invariants hold which
+will greatly improve the safety of the code.
+
+For instance, how many times have you created an `Some(value)` to
+`unwrap()` it immediately after?
+
+[source,rust]
+----
+let value = Some("string");
+value.unwrap();
+----
+
+Thanks to dependent types, this code will never fail at run-time
+anymore: all the checks will be done at compile-time thanks to
+dependent types.
+The dependent `Option` type will be declared in a way similar to:
+
+[source,rust]
+----
+enum Option<T, bool> {
+    Some<true>(T),
+    None<false>(),
+}
+----
+
+These values, `true` and `false` will only exists at compile-time and
+thus will not make using optional values slower: it will only make
+them safer.
+The `unwrap()` method will now be declared in a syntax similar to:
+
+[source,rust]
+----
+impl<T> Option<T, true> {
+    fn unwrap(self) -> T {
+        let Some(value) = self; // This is now valid since the pattern is refutable thanks to dependent types.
+        value
+    }
+}
+----
+
+With this, code like the following will result in **compile**-time
+error:
+
+[source,rust]
+----
+let value = None;
+value.unwrap();
+----
+
+Moreover, the `expect()` method will now become useless.
+
+https://www.cs.bu.edu/~hwxi/academic/papers/padl05.pdf[Stateful views]
+will allow us to do safe pointer arithmetic which will
+greatly reduce the usage of unsafe code in the standard library,
+especially in the collections.
+I encourage you to read the paper to learn more about it.
+
+Hopefully, stateful views will mostly be hidden from most users like
+unsafe code right now so that you will mostly remain unaffected by
+them.
+
+== Compiler improvement
+
+As you might have seen https://github.com/dpc/crev/tree/master/cargo-crev[recently],
+the rust compiler is known to perform very poorly. We've been working
+for a long time to improve this issue, but not enough.
+Of course, removing some of the features we have just talked about
+will help a great deal to improve the compile time, but we'll do even
+more:
+it will be our priority to make Rust compile code faster than gcc and
+we'll do so by profiling and make it more parallel. It will become
+blazingly fast: trust us.
+
+== Conclusion
+
+We hope you'll enjoy these changes. As always, we welcome your
+feedback.
+
+The Rust core team
