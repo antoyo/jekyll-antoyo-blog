@@ -189,10 +189,10 @@ First of all, you need to annotate your model with the <code>#[derive(SqlTable)]
 <div class="content">
 <pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-cp">#[derive(SqlTable)]</span><span class="tok-w"></span>
 <span class="tok-k">struct</span> <span class="tok-nc">TodoItem</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
-<span class="tok-w">    </span><span class="tok-n">id</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-n">PrimaryKey</span><span class="tok-p">,</span><span class="tok-w"></span>
-<span class="tok-w">    </span><span class="tok-n">text</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-nb">String</span><span class="tok-p">,</span><span class="tok-w"></span>
-<span class="tok-w">    </span><span class="tok-n">date_added</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-n">DateTime</span><span class="tok-o">&lt;</span><span class="tok-n">Utc</span><span class="tok-o">&gt;</span><span class="tok-p">,</span><span class="tok-w"></span>
-<span class="tok-w">    </span><span class="tok-n">done</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-kt">bool</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">id</span>: <span class="tok-nc">PrimaryKey</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">text</span>: <span class="tok-nb">String</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">date_added</span>: <span class="tok-nc">DateTime</span><span class="tok-o">&lt;</span><span class="tok-n">Utc</span><span class="tok-o">&gt;</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">done</span>: <span class="tok-kt">bool</span><span class="tok-p">,</span><span class="tok-w"></span>
 <span class="tok-p">}</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
@@ -256,7 +256,7 @@ We can do even more complex queries with aggregates, for instance:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">insert</span><span class="tok-p">(</span><span class="tok-n">text</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">text</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">date_added</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">Utc</span><span class="tok-o">::</span><span class="tok-n">now</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">done</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-kc">false</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">insert</span><span class="tok-p">(</span><span class="tok-n">text</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">text</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">date_added</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">Utc</span>::<span class="tok-n">now</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">done</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-kc">false</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -273,10 +273,10 @@ For instance, here&#8217;s part of a message you can get when you do a type erro
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>error[E0277]: the trait bound `str: diesel::Expression` is not satisfied
+<pre class="pygments highlight"><code><span></span>error[E0277]: the trait bound `str: diesel::Expression` is not satisfied
   --&gt; src/main.rs:69:41
    |
-69 |         diesel::update(sql_table::table.find("id"))
+69 |         diesel::update(sql_table::table.find(&quot;id&quot;))
    |                                         ^^^^ the trait `diesel::Expression` is not implemented for `str`
    |
    = note: required because of the requirements on the impl of `diesel::Expression` for `&amp;str`
@@ -295,12 +295,12 @@ For instance, here&#8217;s part of a message you can get when you do a type erro
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>error: mismatched types:
+<pre class="pygments highlight"><code><span></span>error: mismatched types:
  expected `i32`,
     found `String`
   --&gt; src/main.rs:87:39
    |
-87 |         let table = sql!(SqlTable.get("id")).unwrap();
+87 |         let table = sql!(SqlTable.get(&quot;id&quot;)).unwrap();
    |                                       ^^^^
    |
    = note: in this expansion of sql! (defined in tql)</code></pre>
@@ -313,7 +313,7 @@ It can do that because the procedural macro is actually doing a whole semantic a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>error: `SlTable` does not name an SQL table
+<pre class="pygments highlight"><code><span></span>error: `SlTable` does not name an SQL table
   --&gt; src/main.rs:83:23
    |
 83 |         let id = sql!(SlTable.insert(field1 = &amp;string, field2 = number));
@@ -330,7 +330,7 @@ It can do that because the procedural macro is actually doing a whole semantic a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>warning: delete() without filters
+<pre class="pygments highlight"><code><span></span>warning: delete() without filters
   --&gt; examples/todo.rs:60:32
    |
 60 |     let result = sql!(TodoItem.delete());

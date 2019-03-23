@@ -4,7 +4,7 @@
  <title>Antoyo's Blog</title>
  <link href="http://antoyo.ml/atom.xml" rel="self"/>
  <id>http://antoyo.ml</id>
- <updated>2019-01-16T03:54:39+00:00</updated>
+ <updated>2019-04-01T01:13:18+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>http://antoyo.ml</uri>
@@ -14,11 +14,21 @@
  
 
  <entry>
+   <title>The future of Rust</title>
+   <link href="http://antoyo.ml/future-of-rust"/>
+   <id>http://antoyo.ml/future-of-rust</id>
+   <updated>2019-04-01T00:00:00+00:00</updated>
+   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;We had many meetings during the past months to talk about the future of Rust. It&amp;#8217;s time to think about Rust 2.0 and how it will keep the many advantages of the language, without its drawbacks.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;First of all, we wanted...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>The Evolution of a Rust Programmer</title>
    <link href="http://antoyo.ml/evolution-rust-programmer"/>
    <id>http://antoyo.ml/evolution-rust-programmer</id>
    <updated>2019-01-15T00:00:00+00:00</updated>
-   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;freshman_rust_programmer&quot;&gt;Freshman Rust Programmer&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;listingblock&quot;&gt; &lt;div class=&quot;content&quot;&gt; &lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;rust&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;tok-nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-kd&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;mut&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;io&lt;/span&gt;&lt;span...</content>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;freshman_rust_programmer&quot;&gt;Freshman Rust Programmer&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;listingblock&quot;&gt; &lt;div class=&quot;content&quot;&gt; &lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;rust&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;tok-nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-kd&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;mut&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-nb&quot;&gt;String&lt;/span&gt;::&lt;span class=&quot;tok-n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;std&lt;/span&gt;::&lt;span class=&quot;tok-n&quot;&gt;io&lt;/span&gt;::&lt;span class=&quot;tok-n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;().&lt;/span&gt;&lt;span...</content>
  </entry>
 
  
