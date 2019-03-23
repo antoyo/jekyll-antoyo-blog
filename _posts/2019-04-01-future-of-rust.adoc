@@ -5,7 +5,7 @@
 We had many meetings during the past months to
 talk about the future of Rust.
 It's time to think about Rust 2.0 and how it will keep the many
-advantages of the language, without its drawback.
+advantages of the language, without its drawbacks.
 
 First of all, we wanted to thank you for your contributions, your
 comments and your support. We really appreciate the time you spend to
@@ -20,12 +20,12 @@ fastest and safest programming language.
 One big advantage of Rust is its ecosystem of crates. It's easy to
 create new ones and to share them with everybody and there are many,
 many crates that we can easily use in our projects.
-This big advantage is also one of its greatest drawback:
+This big advantage is also one of its greatest drawbacks:
 by having so many crates, it's very hard to find the one that are of
 good quality.
 
 So how can one attest the qualify of a library?
-There's only one want to do so: by reading its source code.
+There's only one way to do so: by reading its source code.
 By doing so, not only one can see how many unsafe code, tests and
 documentation there are in the library, but one can also see if the
 crate is too complex for its own good:
@@ -37,8 +37,8 @@ favor of serde because it provides so many new features. However,
 serde grew into a very complex crate. Please read the source code of
 both crates and you'll quickly see what we mean.
 To fix this, we'll simplify serde as much as we can so that it's code
-become easy to read and maintain, while retaining all features of
-serde, of course.
+become easy to read and maintain, while retaining all of its features,
+of course.
 
 Another very useful and nice crate that we work on is tokio. Again, it
 started very simple and became highly complex.
@@ -57,7 +57,7 @@ Another interesting metric to attest the quality of a crate is its
 number of dependencies.
 Since it's so easy to add a new crate to our project, we tend to
 include too much dependencies in our own project.
-But that's not always a good idea?
+But that's not always a good idea.
 Why is that?
 Well, remember: to evaluate a crate, you must read its source code. If
 a crate has 100 transitive dependencies, will you really read the
@@ -77,8 +77,8 @@ We won't write in our reviews things like:
  * is it well tested?
  * does it contain too much unsafe code?
 
-Because of resources are limited and because other people can easily
-write such reviews, we'll mostly focus of what we consider more
+Because our resources are limited and because other people can easily
+write such reviews, we'll mostly focus of what we consider the most
 important:
 
  * is the code simple to understand?
@@ -98,8 +98,8 @@ For Rust 2.0, we decided to do a cleanup and remove some features that
 makes the language more complex.
 
 One feature we had a very hard time to decide to remove was the
-procedural macros. It was a very hard choose because we've been
-working very hard on time and it greatly enhanced meta-programming in
+procedural macros. It was a very hard choice because we've been
+working very hard on them and it greatly enhanced meta-programming in
 Rust.
 But we had to face it: we were adding hacks over hacks to
 make them produce good error messages and they deteriorate the
@@ -117,7 +117,7 @@ stabilized many of them recently. We'll continue in this direction to
 make this dream happen.
 
 Another feature that we've added that have increased the complexity is
-match ergonomics. We wanted to make the code simpler to write for the
+match ergonomics. We wanted to make the code simpler to write for
 new users, but it turns out the error messages this feature can cause
 are far from being easy to understand. And we cannot fix this since
 the errors messages are bad because of the assumptions the compiler
@@ -150,7 +150,7 @@ dependent types and stateful views.
 Dependent types will help to prove that some invariants hold which
 will greatly improve the safety of the code.
 
-For instance, how many times have you created an `Some(value)` to
+For instance, how many times have you created a `Some(value)` to
 `unwrap()` it immediately after?
 
 [source,rust]
@@ -181,7 +181,9 @@ The `unwrap()` method will now be declared in a syntax similar to:
 ----
 impl<T> Option<T, true> {
     fn unwrap(self) -> T {
-        let Some(value) = self; // This is now valid since the pattern is refutable thanks to dependent types.
+        // This is now valid since the pattern is
+        // refutable thanks to dependent types.
+        let Some(value) = self;
         value
     }
 }
@@ -202,7 +204,7 @@ https://www.cs.bu.edu/~hwxi/academic/papers/padl05.pdf[Stateful views]
 will allow us to do safe pointer arithmetic which will
 greatly reduce the usage of unsafe code in the standard library,
 especially in the collections.
-I encourage you to read the paper to learn more about it.
+We encourage you to read the paper to learn more about it.
 
 Hopefully, stateful views will mostly be hidden from most users like
 unsafe code right now so that you will mostly remain unaffected by
@@ -210,7 +212,7 @@ them.
 
 == Compiler improvement
 
-As you might have seen https://github.com/dpc/crev/tree/master/cargo-crev[recently],
+As you might have seen https://vlang.io/compilation_speed[recently],
 the rust compiler is known to perform very poorly. We've been working
 for a long time to improve this issue, but not enough.
 Of course, removing some of the features we have just talked about
@@ -224,5 +226,3 @@ blazingly fast: trust us.
 
 We hope you'll enjoy these changes. As always, we welcome your
 feedback.
-
-The Rust core team
