@@ -68,7 +68,7 @@ That's why we'll start a new initiative: Remove Its Inessential Rust.
 We'll help people evaluate which dependencies they can remove from
 their own crate.
 
-To help people further in choosing a crate, we'll that using the tool
+To help people further in choosing a crate, we'll be using the tool
 https://github.com/dpc/crev/tree/master/cargo-crev[crev] and do code
 reviews of the most popular crate.
 We won't write in our reviews things like:
