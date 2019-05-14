@@ -724,3 +724,7 @@ pre.pygments.highlight {
 
 li > p {
   margin-bottom: 0; }
+
+.patreon {
+  display: inline;
+  margin: 0; }
