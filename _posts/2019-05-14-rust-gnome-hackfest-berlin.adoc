@@ -1,0 +1,103 @@
+= Rust+GNOME Hackfest #5
+:page-navtitle: Rust+GNOME Hackfest #5
+
+Last week and weekend, I went to the fifth Rust+GNOME hackfest which
+was in Berlin again.
+
+== Generate builder for widgets
+
+My goal for this hackfest was to fix this https://github.com/gtk-rs/gir/issues/286[issue] I opened nearly three years ago.
+The problem is that sometimes you want to create a widget or an object
+and set some properties at *construction time*.
+This might be needed when you want to set construct-only properties.
+For instance, you might want to create a `webkit2gtk::WebView` with a
+`WebContext` and a `UserContentManager` at the same time.
+That's why a https://github.com/gtk-rs/webkit2gtk-rs/blob/master/src/web_view.rs#L42[constructor] was manually written for this use case.
+
+Now, these manual implementations will become useless thanks to https://github.com/gtk-rs/gir/pull/757[work] I
+did during the Hackfest.
+
+Now, whenever we tell `gir` to generate a specific builder, it will,
+so for the `WebView`, we'll be able to do something like this:
+
+[source,rust]
+----
+let webview = WebViewBuilder::new()
+    .user_content_manager(user_content_manager)
+    .web_context(context)
+    .build();
+----
+
+This PR allows generating builders for construct, construct-only and
+writable properties as well as the properties of any of the ancestors
+of the object.
+
+Another good point of this work is that all of this is type-safe. If
+you look at the https://github.com/gtk-rs/webkit2gtk-rs/blob/master/src/web_view.rs#L44[manual implementation]
+more closely, you'll see that it uses strings to specify which
+properties to set. That means the previous code was error-prone as
+there were no way to check at compile-time that the right type was
+used for the values.
+
+A builder setter method looks like this:
+
+[source,rust]
+----
+pub fn text_lock(mut self, text_lock: &str) -> Self {
+    self.text_lock = Some(text_lock.to_string());
+    self
+}
+----
+
+So the user must provide the correct type.
+
+We will generate the builders on a case-by-case basis: for instance,
+the next version of `webkit2gtk` will have a `WebViewBuilder`.
+
+== Progress on relm
+
+I also worked on `relm` to fix two long-standing issues:
+reduce the number of crates and remove a reference cycle.
+
+=== Merge crates.
+
+The `relm` project had a very big number of crates which was confusing
+for users: it used to have 9 crates.
+Now, the number is reduced to 3:
+`relm` itself, `relm-derive` which provides the procedural macros and
+`relm-test` to do GUI testing.
+The reason `relm` had such a big number of crates was because
+sometimes you might want to use it in a `glib` context without a
+graphical user interface.
+That's what I did in a https://github.com/antoyo/titanium/tree/master/titanium-web-extension[web browser extension].
+In this case, since there is no GUI, you don't want to use all
+features of `relm`.
+
+One remaining thing I need to do is to make some crates like `gtk`
+optional for this use case.
+
+=== Reference cycle
+
+Another issue I wanted to fix was the https://github.com/antoyo/relm/issues/127[reference cycle issue].
+Since the https://github.com/antoyo/relm/blob/4ade1dc8b4530d579c81774a2910b3ce06cab0d9/src/core/mod.rs#L162[`EventStream`]
+type contains a `Rc<T>` and it was cloned in GTK+ callbacks without
+downgrading them to a https://doc.rust-lang.org/stable/std/rc/struct.Weak.html[`Weak`] reference,
+this stream was never released.
+
+This https://github.com/antoyo/relm/pull/171[pull request] now uses a
+https://github.com/antoyo/relm/pull/171/files#diff-ad369e8c88b22ab972c1c24ccad4d22fR51[weak reference]
+which fixes the issue.
+
+I also simplified the way the messages are processed which will also
+make the integration with other toolkits (like `Qt`) much simpler.
+
+This pull request is not merged yet because there's still an issue to
+fix, but it will be hopefully resolved soon.
+
+== Thanks
+
+A big thank to https://github.com/zeenix[Zeeshan Ali] for organizing the
+Hackfest and a **huge** thank to the GNOME foundation for sponsoring my
+flight and accommodation to allow me to participate to this Hackfest.
+
+image:img/gnome-foundation.png[GNOME Foundation]
