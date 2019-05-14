@@ -97,7 +97,8 @@ fix, but it will be hopefully resolved soon.
 == Thanks
 
 A big thank to https://github.com/zeenix[Zeeshan Ali] for organizing the
-Hackfest and a **huge** thank to the GNOME foundation for sponsoring my
-flight and accommodation to allow me to participate to this Hackfest.
+Hackfest, a big thank to https://kinvolk.io/[Kinvolk] for the venue and a
+**huge** thank to the GNOME foundation for sponsoring my flight and
+accommodation to allow me to participate to this Hackfest.
 
 image:img/gnome-foundation.png[GNOME Foundation]
