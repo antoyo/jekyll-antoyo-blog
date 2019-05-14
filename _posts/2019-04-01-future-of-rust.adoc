@@ -1,5 +1,4 @@
 = The future of Rust
-:page-layout: rustblog
 :source-highlighter: pygments
 
 We had many meetings during the past months to
