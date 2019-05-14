@@ -1,8 +1,8 @@
 = Rust+GNOME Hackfest #5
 :page-navtitle: Rust+GNOME Hackfest #5
 
-Last week and weekend, I went to the fifth Rust+GNOME hackfest which
-was in Berlin again.
+Last week, I went to the fifth Rust+GNOME hackfest which was in Berlin
+again.
 
 == Generate builder for widgets
 
