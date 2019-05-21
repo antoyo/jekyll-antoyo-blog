@@ -186,6 +186,10 @@ in this https://github.com/FTP-rs/ftp-server-mini-aio[github repository].
 Please note that this library is in alpha stage and may contain bugs;
 it was not optimized yet and may be rough around the edge for error
 handling and resource cleanup.
+Also, there's no documentation for now, but you can look at the
+documentation of Pony for more details, for instance
+https://stdlib.ponylang.org/net-TCPListenNotify/[this page for
+TcpListenNotify].
 I invite you to try it anyway in order to tell me if it works well for
 you and if you find it simple to use.
 You can find the code https://github.com/adgear/mini-rs/tree/master/src/aio[here].
