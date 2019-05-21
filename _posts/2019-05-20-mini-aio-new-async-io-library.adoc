@@ -111,7 +111,7 @@ Simple, isn't?
 == More complex usage
 
 For more complex use cases, `mini-aio` provides the `Handler` trait,
-inspired the trait from my https://github.com/antoyo/relm[relm crate].
+inspired by the trait from my https://github.com/antoyo/relm[relm crate].
 This trait allows you to receive messages that can be sent from
 anywhere else in your code.
 
