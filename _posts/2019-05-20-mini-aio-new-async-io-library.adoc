@@ -1,0 +1,191 @@
+= mini-aio: the new async IO library for Rust
+:page-navtitle: mini-aio: the new async IO library for Rust
+
+During my work at Adgear, I've been working for a while on an async IO
+library for Rust.
+This post will present this new library.
+
+== mini-aio
+
+This library takes a very different approach than most other async IO
+libraries in Rust:
+it is actually inspired by the https://www.ponylang.io/[Pony
+programming language].
+So, it does not use futures, it does not use async/await: it just
+provides simple traits.
+
+== Usage
+
+For instance, if you want to write an HTTP server, you'll just
+implement the trait `TcpListenNotify`:
+
+[source,rust]
+----
+struct Listener {
+}
+
+impl TcpListenNotify for Listener {
+    fn listening(&mut self, listener: &net::TcpListener) {
+        match listener.local_addr() {
+            Ok(address) =>
+                println!("Listening on {}:{}.", address.ip(), address.port()),
+            Err(error) =>
+                eprintln!("Could not get local address: {}.", error),
+        }
+    }
+
+    fn not_listening(&mut self) {
+        eprintln!("Could not listen.");
+    }
+
+    fn connected(&mut self, _listener: &net::TcpListener) -> Box<TcpConnectionNotify> {
+        Box::new(Server {})
+    }
+}
+----
+
+The idea is that the trait methods are called according to some events
+like when the socket started listening and when a connection was
+accepted.
+In the `connected` method, we create an implementation of the
+`TcpConnectionNotify` trait that we implement next:
+
+[source,rust]
+----
+struct Server {
+}
+
+impl TcpConnectionNotify for Server {
+    fn accepted(&mut self, _connection: &mut TcpConnection) {
+    }
+
+    fn received(&mut self, connection: &mut TcpConnection, data: Vec<u8>) {
+        let request = String::from_utf8(data).unwrap_or_else(|_| String::new());
+        let mut lines = request.lines();
+        let first_line = lines.next().unwrap_or("GET");
+        let mut parts = first_line.split_whitespace();
+        let _method = parts.next().unwrap_or("GET");
+        let url = parts.next().unwrap_or("/");
+        let mut url_parts = url.split('?');
+        let path = url_parts.next().unwrap_or("/");
+        let query_string = url_parts.next().unwrap_or("");
+        let content = format!("You're on page {} and you queried {}", path, query_string);
+        let len = content.len();
+        let response = format!("HTTP/1.1 200 OK\r\nContent-Length: {}\r\nContent-Type: text/html\r\n\r\n{}", len, content);
+        let _ = connection.write(response.into_bytes()); // TODO: handle errors.
+    }
+
+    fn closed(&mut self, _connection: &mut TcpConnection) {
+    }
+}
+----
+
+Here again, we have methods that corresponds to network events.
+The `received` method is call when we received data on the socket.
+
+After implementing these two traits, we can simply start the server:
+
+[source,rust]
+----
+extern crate mini;
+
+use std::net;
+
+use mini::aio::handler::Loop;
+use mini::aio::net::{
+    TcpConnection,
+    TcpConnectionNotify,
+    TcpListenNotify,
+};
+use mini::aio::net::TcpListener;
+
+fn main() {
+    let mut event_loop = Loop::new().expect("event loop");
+    TcpListener::ip4(&mut event_loop, "127.0.0.1:1337", Listener {}).expect("listen");
+    event_loop.run().expect("event loop run");
+}
+----
+
+Simple, isn't?
+
+== More complex usage
+
+For more complex use cases, `mini-aio` provides the `Handler` trait,
+inspired the trait from my https://github.com/antoyo/relm[relm crate].
+This trait allows you to receive messages that can be sent from
+anywhere else in your code.
+
+For instance, if you were to develop a
+https://github.com/adgear/mini-rs/blob/master/examples/chat_server.rs[chat
+server], you could create a handler to manage the clients in order to
+be able to send the message you receive to all clients.
+
+[source,rust]
+----
+enum Msg {
+    Accepted(TcpConnection),
+    Received(Vec<u8>),
+    Closed(TcpConnection),
+}
+
+struct ChatHandler {
+    clients: Vec<TcpConnection>,
+    event_loop: Loop,
+}
+
+impl ChatHandler {
+    fn new(event_loop: &Loop) -> Self {
+        Self {
+            clients: vec![],
+            event_loop: event_loop.clone(),
+        }
+    }
+}
+
+impl Handler for ChatHandler {
+    type Msg = Msg;
+
+    fn update(&mut self, _stream: &Stream<Msg>, msg: Self::Msg) {
+        match msg {
+            Accepted(tcp_connection) => self.clients.push(tcp_connection),
+            Received(data) => {
+                for client in &self.clients {
+                    if let Err(error) = client.write(data.clone()) {
+                        eprintln!("Error send message: {}", error);
+                    }
+                }
+                if data == b"/quit\n" {
+                    self.event_loop.stop();
+                }
+            },
+            Closed(tcp_connection) => {
+                self.clients.retain(|client| client.as_raw_fd() != tcp_connection.as_raw_fd());
+            },
+        }
+    }
+}
+----
+
+Then, you can just spawn this handler on the event loop:
+
+[source,rust]
+----
+let stream = event_loop.spawn(handler);
+----
+
+And the returned stream is what you use to send messages to the
+handler.
+
+== Conclusion
+
+There are many other https://github.com/adgear/mini-rs/tree/master/examples[examples here]
+and there's even a reimplementation of the FTP server shown in my book
+https://www.packtpub.com/application-development/rust-programming-example[Rust Programming by Example]
+in this https://github.com/FTP-rs/ftp-server-mini-aio[github repository].
+
+Please note that this library is in alpha stage and may contain bugs;
+it was not optimized yet and may be rough around the edge for error
+handling and resource cleanup.
+I invite you to try it anyway in order to tell me if it works well for
+you and if you find it simple to use.
+You can find the code https://github.com/adgear/mini-rs/tree/master/src/aio[here].
