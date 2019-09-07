@@ -1,5 +1,5 @@
-= Compilation time of dependencies
-:page-navtitle: Compilation time of dependencies
+= Improvement to the compile time of a crate
+:page-navtitle: Improvement to the compile time of a crate
 
 For one of my projects, I need to use LLVM so I tried this cool `inkwell` crate that provides a mostly safe wrapper over LLVM.
 
