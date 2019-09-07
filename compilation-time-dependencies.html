@@ -201,31 +201,31 @@ Here&#8217;s the patch, which removed the usage of the crate, which was only use
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="patch"><span></span> impl StringRadix {
+<pre class="pygments highlight"><code data-lang="diff"><span></span> impl StringRadix {
      /// Create a Regex that matches valid strings for the given radix.
--    pub fn to_regex(&amp;self) -&gt; Regex {
-+    pub fn is_match(&amp;self, slice: &amp;str) -&gt; bool {
-+        if slice.is_empty() {
-+            return false;
-+        }
-+        let mut chars = slice.chars();
-+        if slice.starts_with(&amp;[&#39;-&#39;, &#39;+&#39;] as &amp;[char]) {
-+            if slice.len() == 1 {
-+                return false;
-+            }
-+            chars.next();
-+        }
+<span class="tok-gd">-    pub fn to_regex(&amp;self) -&gt; Regex {</span>
+<span class="tok-gi">+    pub fn is_match(&amp;self, slice: &amp;str) -&gt; bool {</span>
+<span class="tok-gi">+        if slice.is_empty() {</span>
+<span class="tok-gi">+            return false;</span>
+<span class="tok-gi">+        }</span>
+<span class="tok-gi">+        let mut chars = slice.chars();</span>
+<span class="tok-gi">+        if slice.starts_with(&amp;[&#39;-&#39;, &#39;+&#39;] as &amp;[char]) {</span>
+<span class="tok-gi">+            if slice.len() == 1 {</span>
+<span class="tok-gi">+                return false;</span>
+<span class="tok-gi">+            }</span>
+<span class="tok-gi">+            chars.next();</span>
+<span class="tok-gi">+        }</span>
          match self {
--            StringRadix::Binary =&gt; Regex::new(r&quot;^[-+]?[01]+$&quot;).unwrap(),
--            StringRadix::Octal =&gt; Regex::new(r&quot;^[-+]?[0-7]+$&quot;).unwrap(),
--            StringRadix::Decimal =&gt; Regex::new(r&quot;^[-+]?[0-9]+$&quot;).unwrap(),
--            StringRadix::Hexadecimal =&gt; Regex::new(r&quot;^[-+]?[0-9abcdefABCDEF]+$&quot;).unwrap(),
--            StringRadix::Alphanumeric =&gt; Regex::new(r&quot;^[-+]?[0-9[:alpha:]]+$&quot;).unwrap(),
-+            StringRadix::Binary =&gt; chars.all(|char| char.is_digit(2)),
-+            StringRadix::Octal =&gt; chars.all(|char| char.is_digit(8)),
-+            StringRadix::Decimal =&gt; chars.all(|char| char.is_digit(10)),
-+            StringRadix::Hexadecimal =&gt; chars.all(|char| char.is_digit(16)),
-+            StringRadix::Alphanumeric =&gt; chars.all(|char| char.is_ascii_alphanumeric()),
+<span class="tok-gd">-            StringRadix::Binary =&gt; Regex::new(r&quot;^[-+]?[01]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Octal =&gt; Regex::new(r&quot;^[-+]?[0-7]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Decimal =&gt; Regex::new(r&quot;^[-+]?[0-9]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Hexadecimal =&gt; Regex::new(r&quot;^[-+]?[0-9abcdefABCDEF]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Alphanumeric =&gt; Regex::new(r&quot;^[-+]?[0-9[:alpha:]]+$&quot;).unwrap(),</span>
+<span class="tok-gi">+            StringRadix::Binary =&gt; chars.all(|char| char.is_digit(2)),</span>
+<span class="tok-gi">+            StringRadix::Octal =&gt; chars.all(|char| char.is_digit(8)),</span>
+<span class="tok-gi">+            StringRadix::Decimal =&gt; chars.all(|char| char.is_digit(10)),</span>
+<span class="tok-gi">+            StringRadix::Hexadecimal =&gt; chars.all(|char| char.is_digit(16)),</span>
+<span class="tok-gi">+            StringRadix::Alphanumeric =&gt; chars.all(|char| char.is_ascii_alphanumeric()),</span>
          }
      }
  }</code></pre>
@@ -257,7 +257,7 @@ In my opinion, the clarity is roughly the same, even though the code is a bit lo
 </div>
 </div>
 <div class="paragraph">
-<p>I&#8217;ve never really seen a use case for this crate, because I used the <code>Result</code> type for errors and I simply crate a new type when I need a <code>Either</code> type, which will have a clearer name than <code>Either</code> anyway.</p>
+<p>I&#8217;ve never really seen a use case for this crate, because I used the <code>Result</code> type for errors and I simply create a new type when I need a <code>Either</code> type, which will have a clearer name than <code>Either</code> anyway.</p>
 </div>
 </div>
 </div>
@@ -288,22 +288,21 @@ Release build: 16.57s</pre>
 That&#8217;s enormous.</p>
 </div>
 <div class="paragraph">
-<p>I know sometimes its hard to remove dependencies from a project.
+<p>I know sometimes it&#8217;s hard to remove dependencies from a project.
 But, one thing I want to mention is that it only took me a couple of hours, in a code base I didn&#8217;t even know, in order to vastly improve the compilation time and reduce the complexity.
 Which means that sometimes it&#8217;s really easy and you, as a crate author, will be able to do it even more quickly for your own crate.</p>
 </div>
 <div class="paragraph">
 <p>One thing to remember is to avoid procedural macros in order to reduce compile time and code complexity.
-Also, avoid using crate with many dependencies (like <code>regex</code>), especially if you only use it once or twice.
+Also, avoid using crates with many dependencies (like <code>regex</code>), especially if you only use it once or twice.
 Moreover, some crates, like <code>either</code> are so simple you can recreate it in your code in a few minutes.</p>
 </div>
 <div class="paragraph">
-<p>People tell me to not reinvent the wheel.
-But I vastly prefer to reinvent a small wheel than to create a whole new big truck.</p>
+<p>People tell me to not reinvent the wheel, but I vastly prefer to reinvent a small wheel than to create a whole new big truck.</p>
 </div>
 <div class="paragraph">
 <p>Why am I telling you that?
-Simply because the resulting code is smaller than the origin, as GitHub says:</p>
+Simply because the resulting code is smaller than the original, as GitHub says:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -322,7 +321,8 @@ One might not even notice this file, because some people decided to hide it by d
 Perhaps we should show it by default…</p>
 </div>
 <div class="paragraph">
-<p>Maybe we could think of some goals for a 2020 roadmap for Rust…</p>
+<p>Maybe we could think of some goals for a 2020 roadmap for Rust…
+<a href="https://github.com/rust-lang/crates.io/pull/1455">One step was attempted in the past</a>, but that was rejected. Perhaps it&#8217;s time to bring it back…</p>
 </div>
 </div>
 </div>
