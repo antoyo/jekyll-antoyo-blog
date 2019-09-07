@@ -51,7 +51,7 @@ It's not much faster because `regex` is still a transitive dependency: don't wor
 One thing I do want to mention, though, is to avoid pulling a crate, especially if it has many dependencies and increase compile time, for a one-time usage that you could write with a few more lines of code.
 Here's the patch, which removed the usage of the crate, which was only used in a single function:
 
-[source,patch]
+[source,diff]
 ----
  impl StringRadix {
      /// Create a Regex that matches valid strings for the given radix.
@@ -100,7 +100,7 @@ Then, https://github.com/TheDan64/inkwell/commit/43f7ebb4f74b611d8324c9da7c41948
 Debug build: 22.07s
 ----
 
-I've never really seen a use case for this crate, because I used the `Result` type for errors and I simply crate a new type when I need a `Either` type, which will have a clearer name than `Either` anyway.
+I've never really seen a use case for this crate, because I used the `Result` type for errors and I simply create a new type when I need a `Either` type, which will have a clearer name than `Either` anyway.
 
 == Regex (continued)
 
@@ -120,19 +120,18 @@ First of all, the code might be slightly different than the original, might miss
 Overall, it's a 13x improvement in compile time in a release build.
 That's enormous.
 
-I know sometimes its hard to remove dependencies from a project.
+I know sometimes it's hard to remove dependencies from a project.
 But, one thing I want to mention is that it only took me a couple of hours, in a code base I didn't even know, in order to vastly improve the compilation time and reduce the complexity.
 Which means that sometimes it's really easy and you, as a crate author, will be able to do it even more quickly for your own crate.
 
 One thing to remember is to avoid procedural macros in order to reduce compile time and code complexity.
-Also, avoid using crate with many dependencies (like `regex`), especially if you only use it once or twice.
+Also, avoid using crates with many dependencies (like `regex`), especially if you only use it once or twice.
 Moreover, some crates, like `either` are so simple you can recreate it in your code in a few minutes.
 
-People tell me to not reinvent the wheel.
-But I vastly prefer to reinvent a small wheel than to create a whole new big truck.
+People tell me to not reinvent the wheel, but I vastly prefer to reinvent a small wheel than to create a whole new big truck.
 
 Why am I telling you that?
-Simply because the resulting code is smaller than the origin, as GitHub says:
+Simply because the resulting code is smaller than the original, as GitHub says:
 
 ----
 680 additions and 1,110 deletions.
@@ -148,3 +147,4 @@ One might not even notice this file, because some people decided to hide it by d
 Perhaps we should show it by default…
 
 Maybe we could think of some goals for a 2020 roadmap for Rust…
+https://github.com/rust-lang/crates.io/pull/1455[One step was attempted in the past], but that was rejected. Perhaps it's time to bring it back…
