@@ -188,7 +188,7 @@ When inheriting from another Widget, it generates a code like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-nc">Widget</span><span class="tok-p">;</span><span class="tok-w"></span>
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-n">Widget</span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-c1">// …</span>
 <span class="tok-p">)</span><span class="tok-w"></span></code></pre>
 </div>
@@ -200,7 +200,7 @@ we need to use the alternate syntax:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-p">[</span><span class="tok-n">Widget</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkWidget</span><span class="tok-p">];)</span><span class="tok-w"></span></code></pre>
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-p">[</span><span class="tok-n">Widget</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkWidget</span><span class="tok-p">];)</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
