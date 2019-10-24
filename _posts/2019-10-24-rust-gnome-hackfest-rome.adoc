@@ -8,7 +8,7 @@ Rust and the GNOME libraries.
 
 == Improvement for builders
 
-In the previous {{ site.baseurl }}/rust-gnome-hackfest-berlin#generate_builder_for_widgets[Hackfest, I added the code generation for builders], but there was something that was not convenient.
+In the previous link:{{ site.baseurl }}/rust-gnome-hackfest-berlin#generate_builder_for_widgets[Hackfest, I added the code generation for builders], but there was something that was not convenient.
 The builder methods had the specific type like in:
 
 [source,rust]
