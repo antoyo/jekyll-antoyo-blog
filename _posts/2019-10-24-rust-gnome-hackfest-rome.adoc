@@ -1,0 +1,136 @@
+= Rust+GNOME Hackfest #6
+:page-navtitle: Rust+GNOME Hackfest #6
+:page-liquid:
+
+Last week, I went to the sixth Rust+GNOME hackfest which was in Rome.
+During these hackfests, we work on improving the integration between
+Rust and the GNOME libraries.
+
+== Improvement for builders
+
+In the previous {{ site.baseurl }}/rust-gnome-hackfest-berlin#generate_builder_for_widgets[Hackfest, I added the code generation for builders], but there was something that was not convenient.
+The builder methods had the specific type like in:
+
+[source,rust]
+----
+pub fn application(mut self, application: &Application) -> Self {
+    self.application = Some(application.clone());
+    self
+}
+----
+
+Here, the type `Application` could be the parent type of the type of
+the variable we have (remember, `GTK+` is object-oriented), which
+required explicit upcast from the call as in:
+
+[source,rust]
+----
+builder.application(&app.upcast());
+----
+
+https://github.com/gtk-rs/gir/pull/853[I fixed this issue to accept instances of the trait `IsA<_>`:]
+
+[source,rust]
+----
+pub fn application<P: IsA<Application>>(mut self, application: &P) -> Self {
+    self.application = Some(application.clone().upcast());
+    self
+}
+----
+
+So, now we can do:
+
+[source,rust]
+----
+builder.application(&app);
+----
+
+which is way more convenient.
+
+== Compile time improvement to `gir`
+
+The code generator we use to generate most of the code for `GTK+` Rust
+bindings, `gir`, was really slow to compile.
+On my computer, it used to take 4m15 for a clean release build and
+1m30 for a rebuild.
+So, making changes to it was annoying since we had to wait a very long
+time.
+https://github.com/gtk-rs/gir/pull/855[I started to make this better by removing dependencies.]
+Now, a clean build takes 1m28 and a rebuild, 55s.
+There's still a lot of room for improvement, but this requires
+significant work: replacing the `regex` crate and rewriting the `toml`
+crate so that it does not use `serde`.
+
+== Clone macro
+
+Finally, I created the `clone!` macro which can be really useful to
+pass reference counted data to an event handler.
+
+For instance, currently we have to write something like this:
+
+[source,rust]
+----
+let state = Rc::new(RefCell::new(State::new()));
+let state2 = Rc::new(RefCell::new(State::new()));
+
+{
+    // Create a new scope to avoid shadowing the references in the
+    // outer scope.
+    let state = Rc::downgrade(&state);
+    let state2 = Rc::clone(&state2);
+    application.connect_activate(move |app| {
+        let state =
+            match state.upgrade() {
+                Some(state) => state,
+                None => return,
+            };
+        // Use state and state2.
+    }));
+}
+----
+
+Here, you can see that we have to juggle between downgrading to get a
+weak reference and upgrading, which can fail. All of this is really
+cumbersome.
+
+And now, we can do this:
+
+[source,rust]
+----
+let state = Rc::new(RefCell::new(State::new()));
+let state2 = Rc::new(RefCell::new(State::new()));
+
+application.connect_activate(clone!(@weak state, state2 => move |app| {
+    // Use state and state2.
+}));
+----
+
+We use the `@weak` marker to specify that we want a weak reference and
+no marker for a strong reference.
+
+We can also specify the return value in case we cannot upgrade as in:
+
+[source,rust]
+----
+clone!(@weak state => @default-return 42, move |_| {
+    state.borrow_mut().started = true;
+    10
+})
+----
+
+In this case, if the `state` value was freed, it cannot be upgraded
+and this will return `42`.
+Otherwise, the code in the closure will be executed and will return
+`10`.
+
+Thanks to this macro, it is now much easier to avoid leaking memory by
+doing weak references.
+
+== Thanks
+
+A big thank to https://github.com/apiraino[Antonio Piraino] for organizing the
+Hackfest, a big thank to https://www.assetdata.it[Asset Data] for the venue and a
+**huge** thank to the GNOME foundation for sponsoring my flight and
+accommodation to allow me to participate to this Hackfest.
+
+image:img/gnome-foundation.png[GNOME Foundation]
