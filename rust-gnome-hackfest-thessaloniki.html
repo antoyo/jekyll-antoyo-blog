@@ -235,7 +235,7 @@ Now, you can use the <a href="https://github.com/antoyo/relm/pull/149"><code>$</
 </div>
 <div class="paragraph">
 <p>There was also a bug with <a href="https://github.com/antoyo/relm/issues/137"><code>EventStream</code> that could panic because of a BorrowMut error</a> if shared between multiple threads.
-<a href="http://relm.antoyo.xyz/relm-intro#state-mutation">Remember that it was <code>relm</code> was created to have no error of this kind</a>, so it was a bit of a shame to still have that kind of issues.
+<a href="https://relm.antoyo.xyz/relm-intro#state-mutation">Remember that it was <code>relm</code> was created to have no error of this kind</a>, so it was a bit of a shame to still have that kind of issues.
 But, it was a very easy fix because it was caused by the Rust compiler to wrongly auto-generate a <code>Send impl</code> for this type that should not be shared with other threads.
 Indeed, when you want to send a message from another thread in <code>relm</code>, you should not use an <code>EventStream</code> but a <a href="https://github.com/antoyo/relm/blob/master/examples/multithread.rs#L62">Channel</a>.
 So <a href="https://github.com/antoyo/relm/pull/148">the fix</a> was simply to make this type non-Send.</p>
