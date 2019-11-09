@@ -1,1 +1,1 @@
-Sitemap: http://antoyo.ml/sitemap.xml
+Sitemap: http://blog.antoyo.xyz/sitemap.xml

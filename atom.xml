@@ -2,12 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Antoyo's Blog</title>
- <link href="http://antoyo.ml/atom.xml" rel="self"/>
- <id>http://antoyo.ml</id>
- <updated>2019-10-24T08:44:06+00:00</updated>
+ <link href="http://blog.antoyo.xyz/atom.xml" rel="self"/>
+ <id>http://blog.antoyo.xyz</id>
+ <updated>2019-11-09T13:59:44+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
-   <uri>http://antoyo.ml</uri>
+   <uri>http://blog.antoyo.xyz</uri>
    <email>bouanto@zoho.com</email>
  </author>
 
@@ -15,8 +15,8 @@
 
  <entry>
    <title>Rust+GNOME Hackfest #6</title>
-   <link href="http://antoyo.ml/rust-gnome-hackfest-rome"/>
-   <id>http://antoyo.ml/rust-gnome-hackfest-rome</id>
+   <link href="http://blog.antoyo.xyz/rust-gnome-hackfest-rome"/>
+   <id>http://blog.antoyo.xyz/rust-gnome-hackfest-rome</id>
    <updated>2019-10-24T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Last week, I went to the sixth Rust+GNOME hackfest which was in Rome. During these hackfests, we work on improving the integration between Rust and the GNOME libraries.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improvement_for_builders&quot;&gt;Improvement for builders&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;In the previous...</content>
  </entry>
@@ -25,8 +25,8 @@
 
  <entry>
    <title>Improvement to the compile time of a crate</title>
-   <link href="http://antoyo.ml/compilation-time-dependencies"/>
-   <id>http://antoyo.ml/compilation-time-dependencies</id>
+   <link href="http://blog.antoyo.xyz/compilation-time-dependencies"/>
+   <id>http://blog.antoyo.xyz/compilation-time-dependencies</id>
    <updated>2019-09-07T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;For one of my projects, I need to use LLVM so I tried this cool &lt;code&gt;inkwell&lt;/code&gt; crate that provides a mostly safe wrapper over LLVM.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;To my dismay, though, compiling this crate takes… a lot of time:&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;listingblock&quot;&gt; &lt;div...</content>
  </entry>
@@ -35,8 +35,8 @@
 
  <entry>
    <title>mini-aio: the new async IO library for Rust</title>
-   <link href="http://antoyo.ml/mini-aio-new-async-io-library"/>
-   <id>http://antoyo.ml/mini-aio-new-async-io-library</id>
+   <link href="http://blog.antoyo.xyz/mini-aio-new-async-io-library"/>
+   <id>http://blog.antoyo.xyz/mini-aio-new-async-io-library</id>
    <updated>2019-05-20T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;During my work at Adgear, I&amp;#8217;ve been working for a while on an async IO library for Rust. This post will present this new library.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;mini_aio&quot;&gt;mini-aio&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;This library takes a very different approach than...</content>
  </entry>
@@ -45,8 +45,8 @@
 
  <entry>
    <title>Rust+GNOME Hackfest #5</title>
-   <link href="http://antoyo.ml/rust-gnome-hackfest-berlin"/>
-   <id>http://antoyo.ml/rust-gnome-hackfest-berlin</id>
+   <link href="http://blog.antoyo.xyz/rust-gnome-hackfest-berlin"/>
+   <id>http://blog.antoyo.xyz/rust-gnome-hackfest-berlin</id>
    <updated>2019-05-14T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Last week, I went to the fifth Rust+GNOME hackfest which was in Berlin again.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;generate_builder_for_widgets&quot;&gt;Generate builder for widgets&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;My goal for this hackfest was to fix this &lt;a href=&quot;https://github.com/gtk-rs/gir/issues/286&quot;&gt;issue&lt;/a&gt; I opened nearly three years...</content>
  </entry>
@@ -55,8 +55,8 @@
 
  <entry>
    <title>The future of Rust</title>
-   <link href="http://antoyo.ml/future-of-rust"/>
-   <id>http://antoyo.ml/future-of-rust</id>
+   <link href="http://blog.antoyo.xyz/future-of-rust"/>
+   <id>http://blog.antoyo.xyz/future-of-rust</id>
    <updated>2019-04-01T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;We had many meetings during the past months to talk about the future of Rust. It&amp;#8217;s time to think about Rust 2.0 and how it will keep the many advantages of the language, without its drawbacks.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;First of all, we wanted...</content>
  </entry>
@@ -65,8 +65,8 @@
 
  <entry>
    <title>The Evolution of a Rust Programmer</title>
-   <link href="http://antoyo.ml/evolution-rust-programmer"/>
-   <id>http://antoyo.ml/evolution-rust-programmer</id>
+   <link href="http://blog.antoyo.xyz/evolution-rust-programmer"/>
+   <id>http://blog.antoyo.xyz/evolution-rust-programmer</id>
    <updated>2019-01-15T00:00:00+00:00</updated>
    <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;freshman_rust_programmer&quot;&gt;Freshman Rust Programmer&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;listingblock&quot;&gt; &lt;div class=&quot;content&quot;&gt; &lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;rust&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;tok-nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-kd&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-k&quot;&gt;mut&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;tok-p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;tok-w&quot;&gt;&lt;/span&gt; &lt;span class=&quot;tok-w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;tok-o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;tok-n&quot;&gt;io&lt;/span&gt;&lt;span...</content>
  </entry>
@@ -75,8 +75,8 @@
 
  <entry>
    <title>Rust+GNOME Hackfest #4</title>
-   <link href="http://antoyo.ml/rust-gnome-hackfest-thessaloniki"/>
-   <id>http://antoyo.ml/rust-gnome-hackfest-thessaloniki</id>
+   <link href="http://blog.antoyo.xyz/rust-gnome-hackfest-thessaloniki"/>
+   <id>http://blog.antoyo.xyz/rust-gnome-hackfest-thessaloniki</id>
    <updated>2018-11-25T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Less than 2 weeks ago, I was working on improving the integration of Rust with GNOME libraries at the fourth Hackfest, which happened this time in Thessaloniki.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improving_ergonomics_of_gnome_class&quot;&gt;Improving ergonomics of gnome-class&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;As I said...</content>
  </entry>
@@ -85,8 +85,8 @@
 
  <entry>
    <title>Rust+GNOME Hackfest #3</title>
-   <link href="http://antoyo.ml/rust-gnome-hackfest-madrid"/>
-   <id>http://antoyo.ml/rust-gnome-hackfest-madrid</id>
+   <link href="http://blog.antoyo.xyz/rust-gnome-hackfest-madrid"/>
+   <id>http://blog.antoyo.xyz/rust-gnome-hackfest-madrid</id>
    <updated>2018-04-24T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improvement_of_the_position_of_error_messages&quot;&gt;Improvement of the position of error messages&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Thanks to my...</content>
  </entry>
@@ -95,8 +95,8 @@
 
  <entry>
    <title>TQL, an easy-to-use ORM for Rust</title>
-   <link href="http://antoyo.ml/tql-easy-orm"/>
-   <id>http://antoyo.ml/tql-easy-orm</id>
+   <link href="http://blog.antoyo.xyz/tql-easy-orm"/>
+   <id>http://blog.antoyo.xyz/tql-easy-orm</id>
    <updated>2017-12-11T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use &lt;code&gt;proc-macro&lt;/code&gt; and benefit from the same features as the original version, while also...</content>
  </entry>
@@ -105,8 +105,8 @@
 
  <entry>
    <title>Rust+GNOME Hackfest (November 2017)</title>
-   <link href="http://antoyo.ml/rust-gnome-hackfest-november"/>
-   <id>http://antoyo.ml/rust-gnome-hackfest-november</id>
+   <link href="http://blog.antoyo.xyz/rust-gnome-hackfest-november"/>
+   <id>http://blog.antoyo.xyz/rust-gnome-hackfest-november</id>
    <updated>2017-11-13T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin. The Hackfest was generously hosted by Kinvolk. I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source...</content>
  </entry>
