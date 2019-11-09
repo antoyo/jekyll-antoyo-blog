@@ -1,11 +1,11 @@
 # Site settings
 title: Antoyo's Blog
 description: "Antoyo's Personal Blog"
-url: "http://antoyo.ml"
+url: "http://blog.antoyo.xyz"
 author:
   name: "Antoni Boucher"
   email: "bouanto@zoho.com"
-  url: "http://antoyo.ml"
+  url: "http://blog.antoyo.xyz"
 exclude:
   - LICENSE.adoc
   - README.adoc

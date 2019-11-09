@@ -5,7 +5,7 @@ Last week, I was working on improving the integration of Rust with GNOME librari
 
 == Improvement of the position of error messages
 
-Thanks to my experience in http://relm.ml/relm-better-error-message[improving the error messages in relm], I was able to help Federico improving the error message of https://gitlab.gnome.org/federico/gnome-class[gnome-class] which is a project providing a procedural macro to create new GTK classes from Rust.
+Thanks to my experience in link:{{ site.baseurl }}/relm-better-error-message[improving the error messages in relm], I was able to help Federico improving the error message of https://gitlab.gnome.org/federico/gnome-class[gnome-class] which is a project providing a procedural macro to create new GTK classes from Rust.
 With this project, these new classes written in Rust could be used in other languages as well because it follows the conventions of GObject.
 What is interesting with gnome-class is that it generates all the boilerplate that is required so that the users of this crate only need to write the code that really matters and is specific to a new class.
 In the future, it will be possible to create new widgets with gnome-class in Rust and it will be possible to use these new widgets from other languages as well.
