@@ -1,5 +1,6 @@
 = Rust+GNOME Hackfest #3
 :page-navtitle: Rust+GNOME Hackfest #3
+:page-liquid:
 
 Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.
 

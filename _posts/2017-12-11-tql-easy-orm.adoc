@@ -1,5 +1,6 @@
 = TQL, an easy-to-use ORM for Rust
 :page-navtitle: TQL, an easy-to-use ORM for Rust
+:page-liquid:
 
 Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use `proc-macro` and benefit from the same features as the original version, while also working on the stable version of Rust!
 
