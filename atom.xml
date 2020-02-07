@@ -4,7 +4,7 @@
  <title>Antoyo's Blog</title>
  <link href="https://blog.antoyo.xyz/atom.xml" rel="self"/>
  <id>https://blog.antoyo.xyz</id>
- <updated>2020-02-07T23:20:54+00:00</updated>
+ <updated>2020-02-07T23:24:13+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>https://blog.antoyo.xyz</uri>
@@ -18,7 +18,7 @@
    <link href="https://blog.antoyo.xyz/vim-tips"/>
    <id>https://blog.antoyo.xyz/vim-tips</id>
    <updated>2020-02-07T00:00:00+00:00</updated>
-   <content type="html">&lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Here&amp;#8217;s a list of vim tips that I learned over the years. I tried to put the ones I find the most useful or less known first.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;ulist&quot;&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;To cycle throught the delete registers, first type &lt;code&gt;&quot;1p&lt;/code&gt; and then you can cycle through the...</content>
+   <content type="html">&lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Here&amp;#8217;s a list of vim tips that I&amp;#8217;ve learned over the years. I tried to put the ones I find the most useful or less known first.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;ulist&quot;&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;To cycle throught the delete registers, first type &lt;code&gt;&quot;1p&lt;/code&gt; and then you can cycle through the...</content>
  </entry>
 
  
