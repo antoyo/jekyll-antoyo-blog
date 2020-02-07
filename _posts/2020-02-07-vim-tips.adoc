@@ -6,7 +6,7 @@ I tried to put the ones I find the most useful or less known first.
 * To cycle throught the delete registers, first type `"1p` and then you can cycle through the delete registers with `u.`.
 * You can use numbers to fetch the delete registers. For instance `"1p` will paste the last delete, `"2p` will paste the last but one…
 * Put a count before a `<action>i(` to go at a parent level of parentheses. For instance, if you're here:
-```
+```c
 if (function(param1, param2, param2)) {
                              ^
 ```
