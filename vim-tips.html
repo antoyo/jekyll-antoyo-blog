@@ -164,7 +164,7 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p>Use <code>=%</code> to indent a block of code.</p>
 </li>
 <li>
-<p>Use <code>C-o</code> (or <code>C-i</code>) to back (or forward) in the jump history.</p>
+<p>Use <code>C-o</code> (or <code>C-i</code>) to go back (or forward) in the jump history.</p>
 </li>
 <li>
 <p>Do <code>''</code> (go to the mark <code>'</code>, which is an implicit mark) to go to the latest position in the jump history.</p>
@@ -197,10 +197,10 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p>Use <code>{</code> (or <code>}</code>) to go to the previous (next) blank line.</p>
 </li>
 <li>
-<p>Once you jump to a character one same line with <code>f&lt;char&gt;</code>, you can jump to the next occurrence with <code>;</code>.</p>
+<p>Once you jump to a character on the same line with <code>f&lt;char&gt;</code>, you can jump to the next occurrence with <code>;</code>.</p>
 </li>
 <li>
-<p>When you selected a block with <code>vi{</code> you can select the outer block by typing <code>i{</code> and you can do this as much as you want. (Sounds useful for lisp programmer.)</p>
+<p>When you selected a block with <code>vi{</code> you can select the outer block by typing <code>i{</code> and you can do this as much as you want. (Sounds useful for lisp programmers.)</p>
 </li>
 <li>
 <p>Use <code>:retab</code> to convert the buffer to your setup for indentation. For instance, if you configured vim to have 4 spaces for indentation, it will convert the tabs to 4 spaces.</p>
@@ -242,7 +242,7 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p>Use <code>zt</code>, <code>zz</code> or <code>zb</code> to respectively move the the view towards to the top, the center or the bottom.</p>
 </li>
 <li>
-<p>In addition to being able to do <code>/search/e</code> you can do <code>/search/e+2</code> to go 2 characters after the end. It also works with - as in <code>/search/e-2</code> and from the beginning with <code>b</code> like <code>/search/b+2</code>.</p>
+<p>In addition to being able to do <code>/search/e</code> you can do <code>/search/e+2</code> to go 2 characters after the end. It also works with <code>-</code> as in <code>/search/e-2</code> and from the beginning with <code>b</code> like <code>/search/b+2</code>.</p>
 </li>
 <li>
 <p><code>_</code> can be used instead of <code>^</code> to go to the first non-blank character.</p>
@@ -266,7 +266,7 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p><code>0</code> goes to the beginning of the line, but if you want to go to the first non-space character of the line, use <code>^</code>.</p>
 </li>
 <li>
-<p>In normal mode, use <code>C-e</code> and <code>C-y</code> to the view up and down.</p>
+<p>In normal mode, use <code>C-e</code> and <code>C-y</code> to move the view up and down.</p>
 </li>
 <li>
 <p>In visual mode, filter your selection with a shell command by typing <code>!cmd</code>. It&#8217;s useful to sort your file, for instance: <code>V&lt;move&gt;!sort</code>.</p>
@@ -278,13 +278,13 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p>Map the leader key to some accessible key like space (<code>let mapleader = "\&lt;Space&gt;"</code>) or comma and create bindings to be able to do common actions quicker like: <code>nnoremap &lt;Leader&gt;w :w&lt;CR&gt;</code>.</p>
 </li>
 <li>
-<p>You can configure what you want to save in a session. For instance, if you only want to save the opened buffers and the current directory, use <code>set sessionoptions=buffers,curdir</code>.</p>
-</li>
-<li>
 <p>You can create a session with <code>:mksession &lt;name&gt;</code> and reload that session later with <code>:source &lt;name&gt;</code>. There are many parameters to configure what goes into the session file.</p>
 </li>
 <li>
-<p>Quit vim by setting exit code with <code>:cq</code>. That is useful to exit the vim opened by <code>git rebase</code>, for instance.</p>
+<p>You can configure what you want to save in a session. For instance, if you only want to save the opened buffers and the current directory, use <code>set sessionoptions=buffers,curdir</code>.</p>
+</li>
+<li>
+<p>Quit vim by setting exit code with <code>:cq</code>. That is useful to exit the vim opened by <code>git rebase</code> to cancel the rebase, for instance.</p>
 </li>
 <li>
 <p><code>vit</code> to select XML tags. And you can type <code>it</code> again to select the parent tag.</p>
@@ -305,7 +305,7 @@ I tried to put the ones I find the most useful or less known first.</p>
 <p>In command or search mode, use the up arrow (or <code>ctrl-p</code>) to select the previous command.</p>
 </li>
 <li>
-<p>In insert mode, use <code>C-e</code> to type the same character as the below and <code>C-y</code> to type the same character as the one above.</p>
+<p>In insert mode, use <code>C-e</code> to type the same character as the line below and <code>C-y</code> to type the same character as the one above.</p>
 </li>
 <li>
 <p>You can open .gz files containing text in vim (seems to come from a built-in plugin). Also works for .tar files.</p>
