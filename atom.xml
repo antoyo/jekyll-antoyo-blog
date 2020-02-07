@@ -4,12 +4,22 @@
  <title>Antoyo's Blog</title>
  <link href="https://blog.antoyo.xyz/atom.xml" rel="self"/>
  <id>https://blog.antoyo.xyz</id>
- <updated>2019-11-09T18:40:13+00:00</updated>
+ <updated>2020-02-07T23:20:54+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>https://blog.antoyo.xyz</uri>
    <email>bouanto@zoho.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Vim tips</title>
+   <link href="https://blog.antoyo.xyz/vim-tips"/>
+   <id>https://blog.antoyo.xyz/vim-tips</id>
+   <updated>2020-02-07T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Here&amp;#8217;s a list of vim tips that I learned over the years. I tried to put the ones I find the most useful or less known first.&lt;/p&gt; &lt;/div&gt; &lt;div class=&quot;ulist&quot;&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;To cycle throught the delete registers, first type &lt;code&gt;&quot;1p&lt;/code&gt; and then you can cycle through the...</content>
+ </entry>
 
  
 
@@ -99,16 +109,6 @@
    <id>https://blog.antoyo.xyz/tql-easy-orm</id>
    <updated>2017-12-11T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use &lt;code&gt;proc-macro&lt;/code&gt; and benefit from the same features as the original version, while also...</content>
- </entry>
-
- 
-
- <entry>
-   <title>Rust+GNOME Hackfest (November 2017)</title>
-   <link href="https://blog.antoyo.xyz/rust-gnome-hackfest-november"/>
-   <id>https://blog.antoyo.xyz/rust-gnome-hackfest-november</id>
-   <updated>2017-11-13T00:00:00+00:00</updated>
-   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin. The Hackfest was generously hosted by Kinvolk. I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source...</content>
  </entry>
 
  
