@@ -1,0 +1,68 @@
+= Vim tips
+
+Here's a list of vim tips that I learned over the years.
+I tried to put the ones I find the most useful or less known first.
+
+* To cycle throught the delete registers, first type `"1p` and then you can cycle through the delete registers with `u.`.
+* You can use numbers to fetch the delete registers. For instance `"1p` will paste the last delete, `"2p` will paste the last but one…
+* Put a count before a `<action>i(` to go at a parent level of parentheses. For instance, if you're here:
+```
+if (function(param1, param2, param2)) {
+                             ^
+```
+Do `2di(` to delete the content of the condition.
+* Use the register `+` and `*` to access the system clipboard and selection. You need vim to be compiled with `+clipboard` for that to work or neovim + xclip.
+* Use capital `W` (like `diW` instead of `diw`) in your actions to do it on every character connected to the current one instead of the "word".
+* Use `=%` to indent a block of code.
+* Use `C-o` (or `C-i`) to back (or forward) in the jump history.
+* Do `''` (go to the mark `'`, which is an implicit mark) to go to the latest position in the jump history.
+* You can search with word boundary by doing `/\<word\>`.
+* Use `f<char>` to move to a character in the current line. It's useful when combining with actions like `df)`.
+* In addition to the visual mode, there's a line visual mode that you enable with `Shift+v` and a block visual mode that you enable with `Ctrl+v`. You can switch from one mode to the other without going back to normal mode by pressing the corresponding bindings.
+* `@@` executes the last executed macro.
+* Use `C-^` to go to the alternate (previous) file. (It's very useful when you often need to toggle between two files you're working on.)
+* Use `gv` to recreate the last selection.
+* Use `C-]` to navigate through a link in the help pages.
+* Use `gf` to open the file with the name coming from the word under the cursor.
+* Use `{` (or `}`) to go to the previous (next) blank line.
+* Once you jump to a character one same line with `f<char>`, you can jump to the next occurrence with `;`.
+* When you selected a block with `vi{` you can select the outer block by typing `i{` and you can do this as much as you want. (Sounds useful for lisp programmer.)
+* Use `:retab` to convert the buffer to your setup for indentation. For instance, if you configured vim to have 4 spaces for indentation, it will convert the tabs to 4 spaces.
+* Enable the `relativenumber` option to have relative line numbers. It makes it easier to do actions with a count prefix.
+* In neovim, use the option `set inccommand=split` to get an incremental visual feedback when doing the substitude command.
+* Move by visual line (instead of actual line) with `gj` and `gk`. If you prefer that way of moving, you can remap `j` and `k` to these.
+* Use K on a word to open its manpage. Very useful when reading C code.
+* You can hide all windows except the focused one with `:only`.
+* You can hide a window with the `:hide` command.
+* Increase (decrease) the size of a window with `C-w +` (`C-w -`). You can use the count before to specify how many lines (or columns) to increase/decrease at once.
+* You can remove trailing spaces with the command `:%s/\s\+$/`.
+* Pressing `o` in visual mode switches the cursor at the other end of the selection
+* Pressing `%` in normal mode goes to the matching parens.
+* To go to the end of the previous word, type `ge`.
+* Use `zt`, `zz` or `zb` to respectively move the the view towards to the top, the center or the bottom.
+* In addition to being able to do `/search/e` you can do `/search/e+2` to go 2 characters after the end. It also works with - as in `/search/e-2` and from the beginning with `b` like `/search/b+2`.
+* `_` can be used instead of `^` to go to the first non-blank character.
+* Use `=` to indent your code. Most useful if combined with visual mode or with a count parameter before.
+* In command or search mode, type `Ctrl-r 0` to paste from the yank register.
+* You can enable the option `gdefault` to have global substitute by default (all matches in a line will be substituted).
+* Use the option `scrolloff` to keep a context of a certain number of lines when you scroll or move the cursor. For instance, with `set scrolloff=3`, vim will keep 3 lines visible below the cursor when you scroll down.
+* Use `C-a` (`C-x`) to increment (decrement) the next number. It's very useful in macros.
+* `0` goes to the beginning of the line, but if you want to go to the first non-space character of the line, use `^`.
+* In normal mode, use `C-e` and `C-y` to the view up and down.
+* In visual mode, filter your selection with a shell command by typing `!cmd`. It's useful to sort your file, for instance: `V<move>!sort`.
+* You can have global marks (i.e. marks for other files than the current one) but using capital-letter marks (like `mA`).
+* Map the leader key to some accessible key like space (`let mapleader = "\<Space>"`) or comma and create bindings to be able to do common actions quicker like: `nnoremap <Leader>w :w<CR>`.
+* You can configure what you want to save in a session. For instance, if you only want to save the opened buffers and the current directory, use `set sessionoptions=buffers,curdir`.
+* You can create a session with `:mksession <name>` and reload that session later with `:source <name>`. There are many parameters to configure what goes into the session file.
+* Quit vim by setting exit code with `:cq`. That is useful to exit the vim opened by `git rebase`, for instance.
+* `vit` to select XML tags. And you can type `it` again to select the parent tag.
+* `_` is the black hole register. You can use it to delete stuff without overwriting a buffer as in `"_dd`.
+* Enter the command `:set spell` to enable spell checking the the buffer. You can specify the language with `:set spelllang=fr` for french.
+* You can repeat the last command entered with `:` by typing `@:` and the subsequent repeats can be done with `@@`.
+* Add this option `set matchpairs+=<:>` to be able to use `%` to jump from `<` to `>`.
+* In command or search mode, use the up arrow (or `ctrl-p`) to select the previous command.
+* In insert mode, use `C-e` to type the same character as the below and `C-y` to type the same character as the one above.
+* You can open .gz files containing text in vim (seems to come from a built-in plugin). Also works for .tar files.
+* If you want to scroll all your split windows at the same time, bind them together with: `:windo set scrollbind`.
+* `<C-g>` show some info (less than `g<C-g>`) about the current file.
+* If you want to save a read-only file (forget to open vim with sudo), use the following command: `:w !sudo tee %`
