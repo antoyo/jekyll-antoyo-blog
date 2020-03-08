@@ -15,7 +15,7 @@ Do `2di(` to delete the content of the condition.
 * Use the register `+` and `*` to access the system clipboard and selection. You need vim to be compiled with `+clipboard` for that to work or neovim + xclip.
 * Use capital `W` (like `diW` instead of `diw`) in your actions to do it on every character connected to the current one instead of the "word".
 * Use `=%` to indent a block of code.
-* Type `Ctrl-o <normal mode command>` to execute a normal mode command in insert mode. (_*edit*: added March 8th 2020_)
+* Type `Ctrl-o <normal mode command>` to execute a normal mode command in insert mode. (_**edit**: added March 8th 2020_)
 * Use `C-o` (or `C-i`) to go back (or forward) in the jump history.
 * Do `''` (go to the mark `'`, which is an implicit mark) to go to the latest position in the jump history.
 * You can search with word boundary by doing `/\<word\>`.
