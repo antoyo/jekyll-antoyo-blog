@@ -45,7 +45,7 @@ Do `2di(` to delete the content of the condition.
 * In addition to being able to do `/search/e` you can do `/search/e+2` to go 2 characters after the end. It also works with `-` as in `/search/e-2` and from the beginning with `b` like `/search/b+2`.
 * `_` can be used instead of `^` to go to the first non-blank character.
 * Use `=` to indent your code. Most useful if combined with visual mode or with a count parameter before.
-* In command or search mode, type `Ctrl-r 0` to paste from the yank register.
+* In command or search mode, type `Ctrl-r 0` to paste from the yank register. This also works in insert mode. (_**edit**: completed on March 23th 2020_)
 * You can enable the option `gdefault` to have global substitute by default (all matches in a line will be substituted).
 * Use the option `scrolloff` to keep a context of a certain number of lines when you scroll or move the cursor. For instance, with `set scrolloff=3`, vim will keep 3 lines visible below the cursor when you scroll down.
 * Use `C-a` (`C-x`) to increment (decrement) the next number. It's very useful in macros.
