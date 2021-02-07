@@ -17,6 +17,7 @@ Do `2di(` to delete the content of the condition.
 * Use `=%` to indent a block of code.
 * Type `Ctrl-o <normal mode command>` to execute a normal mode command in insert mode. (_**edit**: added March 8th 2020_)
 * Use `C-o` (or `C-i`) to go back (or forward) in the jump history.
+* Use `g;` to go to a previous edit location, `g,` to go to the next one. The command `:changes` shows the list of changes, with a number for each that you can put in front of `g;` or `g,` to go to that specific change. (_**edit**: added February 5th 2021_)
 * Do `''` (go to the mark `'`, which is an implicit mark) to go to the latest position in the jump history.
 * You can search with word boundary by doing `/\<word\>`.
 * Use `f<char>` to move to a character in the current line. It's useful when combining with actions like `df)`.
