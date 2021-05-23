@@ -1,0 +1,61 @@
+= rustc_codegen_gcc can now run libcore's tests and pass most of them!
+
+== What is rustc_codegen_gcc?
+
+https://github.com/antoyo/rustc_codegen_gcc[rustc_codegen_gcc] is a
+shared library that can be loaded by the Rust compiler to replace the
+code generation done by LLVM by another code generator: in this case,
+it generates code using GCC or, more precisely, it's library
+libgccjit. Despite its name, libgccjit can generate code ahead-of-time
+(aot) too.
+
+This is very exiting that we can do this because it will allow us to
+generate code for architectures that are not supported by LLVM.
+Also, it will be nice to see the difference in performance, both in
+terms of compile time, but also in terms of run-time of the generated
+binaries.
+
+== libcore's tests
+
+Recently, rustc_codegen_gcc was improved enough that it can now run
+the tests of libcore.
+This is a very important milestone as it means that rustc_codegen_gcc
+can compile and run correctly programs of medium complexity.
+Morever, it will allow me to see more easily what bugs need to be
+fixed.
+
+Here are the results of running the tests of libcore:
+
+[source,bash]
+----
+test result: FAILED. 1127 passed; 114 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+----
+
+_The tests of libcore running in 0s… Just kidding, that must be
+another bug in the code generation._
+
+(The one test that was filtered out was because it was stalling:
+another bug to fix.)
+
+== State of rustc_codegen_gcc
+
+In order to reach this milestone, multiple features needed to be added
+to libgccjit.
+I had to wrote as much as 7 https://github.com/antoyo/rustc_codegen_gcc/tree/master/gcc-patches[gcc patches] that
+needs to be applied to upstream gcc in order to run this GCC codegen
+for Rust.
+Among other things, support was added for thread-local-storage
+variables, specifying the link section of a variable, sized integer
+types (including 128-bit integers).
+Also a reflection API was added and a few bugs were fixed.
+
+In terms of features supported by rustc_codegen_gcc, the following
+were added recently and works with varying degrees of stability:
+
+ * Atomics
+ * Inline assembly
+ * Thread-local storage variables
+
+This project is currently at the point where many programs can be
+compiled, but run incorrectly, so my focus will be on fixing this and
+adding the other missing features.
