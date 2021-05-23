@@ -41,7 +41,7 @@ another bug to fix.)
 
 In order to reach this milestone, multiple features needed to be added
 to libgccjit.
-I had to wrote as much as 7 https://github.com/antoyo/rustc_codegen_gcc/tree/master/gcc-patches[gcc patches] that
+I had to write as much as 7 https://github.com/antoyo/rustc_codegen_gcc/tree/master/gcc-patches[gcc patches] that
 needs to be applied to upstream gcc in order to run this GCC codegen
 for Rust.
 Among other things, support was added for thread-local-storage
