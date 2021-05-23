@@ -4,7 +4,7 @@
  <title>Antoyo's Blog</title>
  <link href="https://blog.antoyo.xyz/atom.xml" rel="self"/>
  <id>https://blog.antoyo.xyz</id>
- <updated>2021-05-23T17:21:24+00:00</updated>
+ <updated>2021-05-23T17:37:09+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>https://blog.antoyo.xyz</uri>
@@ -18,7 +18,7 @@
    <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-run-core-tests"/>
    <id>https://blog.antoyo.xyz/rustc_codegen_gcc-run-core-tests</id>
    <updated>2021-05-23T00:00:00+00:00</updated>
-   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/antoyo/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a shared library that can be loaded by the Rust compiler to replace the code generation done by LLVM by another code generator: in this case, it generates code using GCC or, more precisely, it&amp;#8217;s library libgccjit....</content>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/antoyo/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a shared library that can be loaded by the Rust compiler to replace the code generation done by LLVM by another code generator: in this case, it generates code using GCC or, more precisely, its library libgccjit....</content>
  </entry>
 
  
