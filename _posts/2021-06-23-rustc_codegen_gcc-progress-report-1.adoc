@@ -1,0 +1,101 @@
+= rustc_codegen_gcc: Progress Report #1
+
+== What is rustc_codegen_gcc?
+
+https://github.com/antoyo/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== libcore's tests
+
+In a previous article, I mentioned that rustc_codegen_gcc 
+link:{{ site.baseurl }}/rustc_codegen_gcc-run-core-tests[passes most
+of the tests of libcore].
+Today, I'm happy to tell you that it passes all of the them:
+
+[source]
+----
+test result: ok. 1258 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.98s
+----
+
+_The libcore's tests now all pass, except the ones requiring SIMD or
+unwinding which were disabled until those features are implemented._
+
+== State of rustc_codegen_gcc
+
+Most of the features that were fixed this last month were to make
+those tests pass:
+
+ * 128-bit integers
+ * floating-point numbers
+ * some atomic operations
+ * some intrinsics: count leading zeroes, count trailing zeroes,
+   bswap, saturating subtract, bit reverse, bitcast, bit rotate
+ * alignment issues
+ * some casts
+ * some math operations: exactsdiv, fneg
+
+https://github.com/antoyo/rustc_codegen_gcc/runs/2861611473#step:13:3838[Moreover, those tests now run in the CI.]
+
+The next step now was to run the UI tests, which are also ran in the CI:
+
+[source]
+----
+test result: FAILED 7004 passed; 4070 failed; 87 ignored; 0 measured; 0 filtered out; finished in 1550.63s
+----
+
+I also started working on handling the different `#[inline]`
+attributes, SIMD, LTO and unwinding, but those are not ready yet and
+most of these features will require a lot more work to make them work.
+
+I'll now switch back to focus on fixing the codegen to make the UI
+tests pass.
+
+As an additional side note, rustc_codegen_gcc will soon be in
+https://github.com/compiler-explorer/compiler-explorer/issues/2683[godbolt,
+the compiler explorer]!
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * TraverseResearch
+ * Shnatsel
+
+Also, a big thank you to the rest of my sponsors:
+
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * regiontog
+ * berkus
+ * gilescope
+ * wezm
+ * belzael
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+
+and a few others that preferred to say anonymous.
