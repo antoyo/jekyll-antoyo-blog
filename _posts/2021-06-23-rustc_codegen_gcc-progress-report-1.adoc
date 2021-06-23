@@ -10,7 +10,7 @@ supported and having access to GCC's optimizations.
 == libcore's tests
 
 In a previous article, I mentioned that rustc_codegen_gcc 
-link:{{ site.baseurl }}/rustc_codegen_gcc-run-core-tests[passes most of the tests of libcore].
+{% post_url 2021-05-23-rustc_codegen_gcc-run-core-tests %}[passes most of the tests of libcore].
 Today, I'm happy to tell you that it passes all of the them:
 
 [source]
