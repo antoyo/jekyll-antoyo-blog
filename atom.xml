@@ -4,12 +4,22 @@
  <title>Antoyo's Blog</title>
  <link href="https://blog.antoyo.xyz/atom.xml" rel="self"/>
  <id>https://blog.antoyo.xyz</id>
- <updated>2021-05-23T17:39:28+00:00</updated>
+ <updated>2021-06-23T12:15:57+00:00</updated>
  <author>
    <name>Antoni Boucher</name>
    <uri>https://blog.antoyo.xyz</uri>
    <email>bouanto@zoho.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #1</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-1"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-1</id>
+   <updated>2021-06-23T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/antoyo/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2...</content>
+ </entry>
 
  
 
@@ -99,16 +109,6 @@
    <id>https://blog.antoyo.xyz/rust-gnome-hackfest-thessaloniki</id>
    <updated>2018-11-25T00:00:00+00:00</updated>
    <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Less than 2 weeks ago, I was working on improving the integration of Rust with GNOME libraries at the fourth Hackfest, which happened this time in Thessaloniki.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improving_ergonomics_of_gnome_class&quot;&gt;Improving ergonomics of gnome-class&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;As I said...</content>
- </entry>
-
- 
-
- <entry>
-   <title>Rust+GNOME Hackfest #3</title>
-   <link href="https://blog.antoyo.xyz/rust-gnome-hackfest-madrid"/>
-   <id>https://blog.antoyo.xyz/rust-gnome-hackfest-madrid</id>
-   <updated>2018-04-24T00:00:00+00:00</updated>
-   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;improvement_of_the_position_of_error_messages&quot;&gt;Improvement of the position of error messages&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;Thanks to my...</content>
  </entry>
 
  
