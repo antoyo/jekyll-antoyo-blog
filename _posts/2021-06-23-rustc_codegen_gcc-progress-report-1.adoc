@@ -48,7 +48,8 @@ test result: FAILED 7004 passed; 4070 failed; 87 ignored; 0 measured; 0 filtered
 
 I also started working on handling the different `#[inline]`
 attributes, SIMD, LTO and unwinding, but those are not ready yet and
-most of these features will require a lot more work to make them work.
+most of these features will require a lot more work to reach
+completion.
 
 I'll now switch back to focus on fixing the codegen to make the UI
 tests pass.
