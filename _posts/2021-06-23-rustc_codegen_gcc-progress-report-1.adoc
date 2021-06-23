@@ -1,4 +1,6 @@
 = rustc_codegen_gcc: Progress Report #1
+:page-navtitle: rustc_codegen_gcc: Progress Report #1
+:page-liquid:
 
 == What is rustc_codegen_gcc?
 
