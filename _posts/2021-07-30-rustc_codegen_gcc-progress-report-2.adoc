@@ -37,9 +37,9 @@ in Godbolt: The Compiler Explorer.
 https://godbolt.org/z/oz88d61zK[Here's an example of using this
 Rust codegen.]
 
-(Please ignore the generate `__gccGlobalInit*` functions as it's
+(Please ignore the generated `__gccGlobalInit*` functions as it's
 currently a workaround used because libgccjit does not properly
-support global variable initializations for now. That will be fixed in
+support global variable initialization for now. That will be fixed in
 the future.)
 
 == State of rustc_codegen_gcc
