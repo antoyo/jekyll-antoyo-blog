@@ -1,0 +1,115 @@
+= rustc_codegen_gcc: Progress Report #2
+:page-navtitle: rustc_codegen_gcc: Progress Report #2
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/antoyo/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+In a previous article, I mentioned that rustc_codegen_gcc 
+link:{% post_url 2021-05-23-rustc_codegen_gcc-run-core-tests
+%}[required a few patches in GCC].
+Today, I'm happy to tell you that the
+https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=5cca4131e4aabf70a18e362620ad65a3cebf227a[first one was merged]
+in GCC.
+Now that I have write access to the GCC repo, it's only a matter of
+time before my other patches are merged.
+The next one is waiting for approval and should get merged soon.
+
+== Status of merging into rustc
+
+I opened a https://github.com/rust-lang/rust/pull/87260[PR] to merge
+rustc_codegen_gcc into rustc.
+Currently, it's waiting for reviews and guidance to go forward.
+When it gets merged, we'll be able to make some useful changes to make 
+it easier to implement the gcc codegen and some required changes to
+implement some missing features in rustc_codegen_gcc.
+
+== Godbolt
+
+Thanks to the amazing work of dkm, we can now test rustc_codegen_gcc
+in Godbolt: The Compiler Explorer.
+https://godbolt.org/z/oz88d61zK[Here's an example of using this
+Rust codegen.]
+
+(Please ignore the generate `__gccGlobalInit*` functions as it's
+currently a workaround used because libgccjit does not properly
+support global variable initializations for now. That will be fixed in
+the future.)
+
+== State of rustc_codegen_gcc
+
+Not much progress on this side: I implemented the popcount intrinsic
+manually (because gcc would generate a call to some function, which
+would not work in `no-std`).
+Apart from that, I fixed things to make it easier to add this gcc
+codegen in godbolt and for my PR to merge it into rustc.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * TraverseResearch
+ * Shnatsel
+
+Also, a big thank you to the rest of my sponsors:
+
+ * repi
+ * nevi-me
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * steven-joruk
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * gilescope
+ * wezm
+ * belzael
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Cass
+ * Jonas
+ * Jeff Muizelaar
+ * Robin Moussu
+ * Chris Butler
+ * Dakota Brink
+ * sierrafiveseven
+ * Joseph Garvin
+ * Paul Ellenbogen
+ * icewind
+ * Sebastian Zivota
+
+and a few others that preferred to stay anonymous.
