@@ -45,7 +45,7 @@ https://github.com/antoyo/rustc_codegen_gcc/runs/3450998046#step:15:10391[CI]:
 test result: FAILED. 4332 passed; 104 failed; 48 ignored; 0 measured; 0 filtered out; finished in 1249.33s
 ----
 
-(The number of tests is lower than in a link:{% post_url 2021-05-23-rustc_codegen_gcc-run-core-tests
+(The number of tests is lower than in a link:{% post_url 2021-06-23-rustc_codegen_gcc-progress-report-1
 %}[previous article], because
 https://github.com/antoyo/rustc_codegen_gcc/pull/57[the tests checking
 compilation failure were disabled].)
