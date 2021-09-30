@@ -1,0 +1,190 @@
+= rustc_codegen_gcc: Progress Report #4
+:page-navtitle: rustc_codegen_gcc: Progress Report #4
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/antoyo/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+No progress for the review of my gcc patches this month.
+
+I did fixed a https://github.com/antoyo/gcc/commit/919b622dec9fb8a68ca42ea69bd91521d86da52b[previous one]
+though: it's to set the initial value of a global variables. I also
+added the ability to create struct and array rvalues to be able to use
+those types as initial values.
+
+== Status of merging into rustc
+
+The https://github.com/rust-lang/rust/pull/87260[PR] adding this
+project into rustc was merged!
+Now, I'll start changing the rustc API to make it more convenient to
+use in this project and also to allow me to implement some features I
+would not be able otherwise (like unwinding).
+Here's what I plan to do in the long term:
+
+ * Divide the `Value` type into three types: `RValue`, `LValue` and
+   `Function`.
+ * Refactor the landing pad stuff into a more friendly interface for
+   libgccjit which uses try/catch.
+ * Separate aggregate operations into a different operations for
+   structures, arrays and vectors.
+ * Refactor the handling of basic blocks to make it less error-prone
+   for the gcc codegen (if possible).
+ * Refactor the API to make it less error-prone to an IR that is more
+   AST-based than instruction-based (if possible).
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/72[Improve the
+   support of inline assembly.] (Thanks to Commeownist!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/91[Fix the
+   initialization of global variables.] (That was a big one and my
+ goal for this month. No more workaround initializing the global
+ variables at runtime.)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/93[Remove
+   the linker script hack that was needed mostly because of the global
+ variable workaround used previously.]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/94[Fix some
+   mismatched types.]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/95[Fix count
+   trailing zeroes, pop count and bit reverse to also work on signed
+ integers.]
+
+(As you can see, the project has been moved into the `rust-lang`
+organization!)
+
+With those fixes, more UI tests pass as can be seen in the
+https://github.com/rust-lang/rustc_codegen_gcc/runs/3733116811#step:15:9136[CI]:
+
+[script,bash]
+----
+test result: FAILED. 4353 passed; 85 failed; 50 ignored; 0 measured; 0 filtered out; finished in 551.86s
+----
+
+For the next month, I'll add the support for some integer sizes
+on platforms not supporting them (like 128-bit integers on 32-bit
+platforms) since people want to start adding the support for new
+architectures now that this project is merged upstream.
+I might also start working on implementing unwinding: that will
+require changing the rustc API in addition to add the support for
+try/catch in libgccjit.
+
+== How to contribute
+
+I had a slide in my https://youtu.be/ORwYx5_zmZo?t=5259[LPC talk]
+that I forgot to mention and it was about how to contribute to this
+project. (You can find all the slides https://www.linuxplumbersconf.org/event/11/contributions/903/[on this page].)
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * igrr
+ * saethlin
+ * embark-studios
+ * TraverseResearch
+ * Shnatsel
+
+A big thank you to bjorn3 for his help and reviews.
+And a big thank you to lqd and GuillaumeGomez for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * repi
+ * nevi-me
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * 0xdeafbeef
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Cass
+ * Jonas
+ * Jeff Muizelaar
+ * Robin Moussu
+ * Chris Butler
+ * Dakota Brink
+ * sierrafiveseven
+ * Joseph Garvin
+ * Paul Ellenbogen
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+
+and a few others who preferred to stay anonymous.

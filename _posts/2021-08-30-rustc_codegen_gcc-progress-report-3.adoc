@@ -102,6 +102,8 @@ A special thanks to the following sponsors:
  * TraverseResearch
  * Shnatsel
 
+A big thank you to bjorn3 for his help and reviews.
+
 Also, a big thank you to the rest of my sponsors:
 
  * repi
