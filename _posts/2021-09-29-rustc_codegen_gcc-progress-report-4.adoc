@@ -4,7 +4,7 @@
 
 == What is rustc_codegen_gcc?
 
-https://github.com/antoyo/rustc_codegen_gcc[rustc_codegen_gcc] is a
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
 GCC codegen for rustc, meaning that it can be loaded by the existing
 rustc frontend, but benefits from GCC by having more architectures
 supported and having access to GCC's optimizations.
@@ -31,7 +31,7 @@ Here's what I plan to do in the long term:
    `Function`.
  * Refactor the landing pad stuff into a more friendly interface for
    libgccjit which uses try/catch.
- * Separate aggregate operations into a different operations for
+ * Separate aggregate operations into different operations for
    structures, arrays and vectors.
  * Refactor the handling of basic blocks to make it less error-prone
    for the gcc codegen (if possible).
