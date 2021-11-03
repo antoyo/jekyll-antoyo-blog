@@ -1,0 +1,165 @@
+= rustc_codegen_gcc: Progress Report #5
+:page-navtitle: rustc_codegen_gcc: Progress Report #5
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+No progress for the review of my gcc patches this month.
+
+I did work on a https://github.com/antoyo/gcc/pull/5[new patch] though:
+it's to help to support integers not supported on some platforms (like
+128-bit integers on 32-bit platforms).
+I also pushed https://github.com/antoyo/gcc/commit/766477071f69e6f6857ef71dcbbabf55990d6187[a branch] with early support
+for try/catch since someone mentioned interest in implementing
+unwinding.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/108[Fix negation operation]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/104[Disable strict aliasing]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/101[Fix FIXME in Builder::and and Builder::or impls] (Thanks to fisherdarling!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/100[Add missing cast and change some bitcasts to casts to avoid a gimple verification failure] (this fixes https://github.com/rust-lang/rustc_codegen_gcc/issues/38[an issue] when compiling libgccjit with the flags to enable more checks)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/107[Sync from rust and update nightly version]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/102[Remove unused dependency on object] (Thanks to bjorn3!)
+
+With those fixes, more UI tests pass as can be seen in the
+https://github.com/rust-lang/rustc_codegen_gcc/runs/4061354962?check_suite_focus=true#step:15:8831[CI]:
+
+[script,bash]
+----
+test result: FAILED. 4411 passed; 73 failed; 51 ignored; 0 measured; 0 filtered out; finished in 577.44s
+----
+
+As promised in the previous progress report, I started working on adding
+support for integer types not supported on some platform.
+It turned out to be much bigger than I anticipated, so it's still not
+https://github.com/rust-lang/rustc_codegen_gcc/pull/103[merged] yet.
+
+For the next month, I'll attempt to finish this feature.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * igrr
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help and reviews.
+And a big thank you to lqd and GuillaumeGomez for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * repi
+ * nevi-me
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * jam1garner
+ * Shoeboxam
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * 0xdeafbeef
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Cass
+ * Jonas
+ * Jeff Muizelaar
+ * Robin Moussu
+ * Chris Butler
+ * Dakota Brink
+ * sierrafiveseven
+ * Joseph Garvin
+ * Paul Ellenbogen
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+
+and a few others who preferred to stay anonymous.
