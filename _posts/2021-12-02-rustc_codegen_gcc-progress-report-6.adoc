@@ -17,10 +17,10 @@ https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=cfe8dbd9c08a5bce497646467c9d30942e
 Also, some of my other patches got reviewed, were updated and some of
 them were approved:
 
- * https://gcc.gnu.org/pipermail/jit/2021q4/001389.html[[PATCH] libgccjit: Add support for TLS variable [PR95415]] (approved)
- * https://gcc.gnu.org/pipermail/jit/2021q4/001390.html[[PATCH] libgccjit: Add support for types used by atomic builtins [PR96066] [PR96067]]
- * https://gcc.gnu.org/pipermail/jit/2021q4/001386.html[[PATCH] libgccjit: Add support for setting the link section of global variables [PR100688]] (approved)
- * https://gcc.gnu.org/pipermail/jit/2021q4/001391.html[[PATCH] libgccjit: Add function to set the initial value of a global variable [PR96089]]
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001389.html[[PATCH\] libgccjit: Add support for TLS variable [PR95415]] (approved)
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001390.html[[PATCH\] libgccjit: Add support for types used by atomic builtins [PR96066] [PR96067]]
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001386.html[[PATCH\] libgccjit: Add support for setting the link section of global variables [PR100688]] (approved)
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001391.html[[PATCH\] libgccjit: Add function to set the initial value of a global variable [PR96089]]
 
 These approved patches were not merged yet because there's an earlier
 patch that needs to be merged before the others and was not approved
