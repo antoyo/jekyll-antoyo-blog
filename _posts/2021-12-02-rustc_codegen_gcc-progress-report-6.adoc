@@ -1,0 +1,157 @@
+= rustc_codegen_gcc: Progress Report #6
+:page-navtitle: rustc_codegen_gcc: Progress Report #6
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+This month, a lot of progress happened here!
+https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=cfe8dbd9c08a5bce497646467c9d30942ec3efe0[My second patch was merged.]
+
+Also, some of my other patches got reviewed, were updated and some of
+them were approved:
+
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001389.html[[PATCH] libgccjit: Add support for TLS variable [PR95415]] (approved)
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001390.html[[PATCH] libgccjit: Add support for types used by atomic builtins [PR96066] [PR96067]]
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001386.html[[PATCH] libgccjit: Add support for setting the link section of global variables [PR100688]] (approved)
+ * https://gcc.gnu.org/pipermail/jit/2021q4/001391.html[[PATCH] libgccjit: Add function to set the initial value of a global variable [PR96089]]
+
+These approved patches were not merged yet because there's an earlier
+patch that needs to be merged before the others and was not approved
+yet.
+
+The last on these patches is likely to be dropped in favor of https://gcc.gnu.org/pipermail/jit/2021q4/001399.html[one made
+by someone else].
+
+== State of rustc_codegen_gcc
+
+Not much progress on this side, this month.
+I continued working on supporting integer types not supported on some
+platforms, but debugging assembly and GIMPLE takes a lot of time.
+
+For the next month, I'll continue working on this and perhaps get some
+other gcc patches merged.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * igrr
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help and reviews.
+And a big thank you to lqd and GuillaumeGomez for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * repi
+ * nevi-me
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * jam1garner
+ * Shoeboxam
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * 0xdeafbeef
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Cass
+ * Jonas
+ * Jeff Muizelaar
+ * Robin Moussu
+ * Chris Butler
+ * Dakota Brink
+ * sierrafiveseven
+ * Joseph Garvin
+ * Paul Ellenbogen
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+
+and a few others who preferred to stay anonymous.
