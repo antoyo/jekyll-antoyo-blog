@@ -31,7 +31,7 @@ I also need to make the tests of libcore pass when 128-bit integers are not
 supported.
 
 To make sure this continue working in the future, I added
-https://github.com/rust-lang/rustc_codegen_gcc/runs/4680998978?check_suite_focus=true[CI]
+https://github.com/rust-lang/rustc_codegen_gcc/runs/4735088066?check_suite_focus=true[CI]
 with a version of libgccjit with 128-bit integers disabled.
 As you can see https://github.com/rust-lang/rustc_codegen_gcc/runs/4735088066?check_suite_focus=true#step:17:2803[here], most of them pass:
 
