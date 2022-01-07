@@ -1,0 +1,184 @@
+= rustc_codegen_gcc: Progress Report #7
+:page-navtitle: rustc_codegen_gcc: Progress Report #7
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+Again this month, a lot of progress happened here!
+https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=611fdb0fc5b95ee15215e2e3679834f311919096[My third],
+https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=c6b7f68bfd61fcd02842e672476f9924d5ba1d3c[my fourth]
+and https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=0b52083ea2c2dd9897031fdc3802a68fd4aa45ef[my fifth]
+patches were merged.
+
+My patch for global initializer was dropped in favor of
+https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=3736837806fdb26daa51300bee1554bef89db9fe[this patch].
+
+== State of rustc_codegen_gcc
+
+This month, I continued working on supporting integer types not
+supported on some platforms.
+https://github.com/rust-lang/rustc_codegen_gcc/pull/103[The PR] is
+still not merged yet because some new UI tests now fail.
+This indeed surfaced an issue with bitcasts in my libgccjit patch that I'll have to fix.
+I also need to make the tests of libcore pass when 128-bit integers are not
+supported.
+
+To make sure this continue working in the future, I added
+https://github.com/rust-lang/rustc_codegen_gcc/runs/4680998978?check_suite_focus=true[CI]
+with a version of libgccjit with 128-bit integers disabled.
+As you can see https://github.com/rust-lang/rustc_codegen_gcc/runs/4735088066?check_suite_focus=true#step:17:2803[here], most of them pass:
+
+[script,bash]
+----
+test result: FAILED. 1359 passed; 22 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.35s
+----
+
+(To be noted: the tests of libcore still pass for the normal case of
+using native integers. They only fail (for now) when using non-native
+integers.)
+
+Also, a few other things were done last month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/110[Fix discarded in-out constraint in inline asm]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/111[Switch to
+   the new functions for global variable initialization]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/112[Update to newer nightly] and https://github.com/rust-lang/rustc_codegen_gcc/pull/114[sync from rustc] (thanks to bjorn3)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/113[Remove unnecessary report_symbol_names call] (thanks to bjorn3)
+
+Here are the results of running the UI tests in the https://github.com/rust-lang/rustc_codegen_gcc/runs/4680185287?check_suite_focus=true#step:15:8766[CI]:
+
+[script,bash]
+----
+test result: FAILED. 4446 passed; 77 failed; 55 ignored; 0 measured; 0 filtered out; finished in 603.56s
+----
+
+For the next month, I'll continue working on non-native integers and
+hopefully merge this PR.
+I also want to do some cleanup of the code in this PR and also of the
+code it generates.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * igrr
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * repi
+ * nevi-me
+ * Alovchin91
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * jam1garner
+ * Shoeboxam
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * 0xdeafbeef
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Cass
+ * Jonas
+ * Jeff Muizelaar
+ * Robin Moussu
+ * Chris Butler
+ * Dakota Brink
+ * sierrafiveseven
+ * Joseph Garvin
+ * Paul Ellenbogen
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+ * robinmoussu
+
+and a few others who preferred to stay anonymous.
