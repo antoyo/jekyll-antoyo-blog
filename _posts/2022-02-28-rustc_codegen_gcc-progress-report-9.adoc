@@ -1,0 +1,156 @@
+= rustc_codegen_gcc: Progress Report #9
+:page-navtitle: rustc_codegen_gcc: Progress Report #9
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+No progress on the review of my GCC patches this month.
+
+I did some work that will result in patches when they're ready:
+
+ * https://github.com/antoyo/gcc/pull/9[Fix bug where unary_op will return an integer type instead of the correct type]
+ * https://github.com/antoyo/gcc/pull/8[Add support for target-specific builtins]
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/127[README: Add compiler-rt cloning step] (thanks to JBBgameich!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/130[Update to nightly 2022-02-24] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/131[Fix miscompilation when cg_ssa is using multiple builders at the same time] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/132[Add dummy unwinding implementation] (Note that this doesn't actually implement unwinding — thanks bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/133[Don't export global allocs which are not statics] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/135[Add support for on_stack parameters]
+
+I also worked on https://github.com/rust-lang/rustc_codegen_gcc/pull/129[SIMD support] but this is not done yet.
+The gcc patch adding support for target-specific builtins mentioned
+above will also need more work.
+
+Here are the results of running the UI tests in the https://github.com/rust-lang/rustc_codegen_gcc/runs/5354667573?check_suite_focus=true#step:17:7938[CI]:
+
+[script,bash]
+----
+test result: FAILED. 4542 passed; 49 failed; 61 ignored; 0 measured; 0 filtered out; finished in 669.83s
+----
+
+For the next month, I'll continue working on SIMD support.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Thomas Colliers
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * jam1garner
+ * Shoeboxam
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+ * robinmoussu
+
+and a few others who preferred to stay anonymous.
