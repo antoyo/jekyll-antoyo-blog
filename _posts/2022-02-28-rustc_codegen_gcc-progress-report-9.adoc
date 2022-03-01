@@ -33,12 +33,16 @@ I also worked on https://github.com/rust-lang/rustc_codegen_gcc/pull/129[SIMD su
 The gcc patch adding support for target-specific builtins mentioned
 above will also need more work.
 
+=== UI tests progress
+
 Here are the results of running the UI tests in the https://github.com/rust-lang/rustc_codegen_gcc/runs/5354667573?check_suite_focus=true#step:17:7938[CI]:
 
-[script,bash]
-----
-test result: FAILED. 4542 passed; 49 failed; 61 ignored; 0 measured; 0 filtered out; finished in 669.83s
-----
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4448 | 4542 | +94
+| Failed | 75 | 49 | -26
+|===
 
 For the next month, I'll continue working on SIMD support.
 
@@ -93,6 +97,7 @@ Another big thank you to Commeownist for his contributions.
 Also, a big thank you to the rest of my sponsors:
 
  * kpp
+ * 0x7CFE
  * repi
  * nevi-me
  * oleid
@@ -102,6 +107,7 @@ Also, a big thank you to the rest of my sponsors:
  * TimNN
  * sdroege
  * pcn
+ * alanfalloon
  * steven-joruk
  * davidlattimore
  * Nehliin
@@ -152,5 +158,6 @@ Also, a big thank you to the rest of my sponsors:
  * luizirber
  * kiyoshigawa
  * robinmoussu
+ * Daniel Sheehan
 
 and a few others who preferred to stay anonymous.
