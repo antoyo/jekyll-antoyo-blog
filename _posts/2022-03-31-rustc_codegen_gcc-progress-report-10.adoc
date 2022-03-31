@@ -42,6 +42,8 @@ Here's what has been done this month:
 As you may have guessed from the title of this blog post, the GCC codegen has made enough progress to be able to compile rustc itself!
 That's a huge milestone!
 
+I was able to compile rustc using the GCC codegen and use the resulting rustc to compile a Hello World!
+
 Thanks to bjorn3 who helped me a lot by testing the process of compiling rustc with the GCC codegen, reporting the errors encountered to me, helping me to fix some of those and answering my questions!
 
 The SIMD work is not over, but a good part of it was done. I implemented enough of it to allow bootstrapping the compiler.
