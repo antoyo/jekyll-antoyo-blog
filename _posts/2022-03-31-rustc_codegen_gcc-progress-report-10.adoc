@@ -1,0 +1,180 @@
+= Progress Report #10: rustc_codegen_gcc can now bootstrap rustc!
+:page-navtitle: Progress Report #10: rustc_codegen_gcc can now bootstrap rustc!
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+
+== GCC patches status
+
+No progress on the review of my GCC patches this month.
+
+I did some work that will result in patches when they're ready:
+
+ * https://github.com/antoyo/gcc/pull/8[Add support for target-specific builtins] (is now merged)
+ * https://github.com/antoyo/gcc/commit/9022beea8c14ae951f5289fd4d0b46ecb5f223a2[Add support for packed structs]
+ * https://github.com/antoyo/gcc/commit/3f5934ef480d6871cc3af0324abb47c59a5852f6[Fix a bug to allow some recursive types to be created]
+ * https://github.com/antoyo/gcc/commit/2afbf55bb3a39b977792ba2f4c96800c1668ccf0[Fix a bug that caused an infinite recursion]
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/136[Stop removing the llvm-asm tests in test.sh since they don't exist anymore] (thanks to light4!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/137[Fix ice in box alloc]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/139[Fix version of compiler_builtins to fix compilation failure]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/141[Fix shift of unsigned integer by signed integer]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/143[Add --release-sysroot flag to build.sh] (thanks to yvt!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/146[Sync with rust nightly] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/147[Don't pass --target in cargo.sh] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/148[Feature/packed struct]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/149[Add support for target builtins]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/150[Add missing vendor intrinsics] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/151[Add intrinsic translation for x86 arch] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/152[Generate all listed architectures from llvmint] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/153[Sort arch builtins and make the generate predictable] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/154[Fix error related to var tracking assignments]
+
+As you may have guessed from the title of this blog post, the GCC codegen has made enough progress to be able to compile rustc itself!
+That's a huge milestone!
+
+Thanks to bjorn3 who helped me a lot by testing the process of compiling rustc with the GCC codegen, reporting the errors encountered to me, helping me to fix some of those and answering my questions!
+
+The SIMD work is not over, but a good part of it was done. I implemented enough of it to allow bootstrapping the compiler.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the https://github.com/rust-lang/rustc_codegen_gcc/runs/5772606543?check_suite_focus=true#step:17:9349[CI]:
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4542 | 4598 | +56
+| Failed | 49 | 64 | +15
+|===
+
+More tests are failing now because I enabled the tests for SIMD which were disabled before.
+Some other tests are disabled and I will enable them when I start working on the features they test.
+
+For the next month, I'll continue working on SIMD support and perhaps start working on unwinding support.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Thomas Colliers
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * wezm
+ * belzael
+ * vincentdephily
+ * mexus
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * stuhood
+ * yerke
+ * bes
+ * raymanfx
+ * seanpianka
+ * srijs
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * Hofer-Julian
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * icewind
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+
+and a few others who preferred to stay anonymous.
