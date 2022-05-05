@@ -14,11 +14,11 @@ supported and having access to GCC's optimizations.
 There was a lot of progress this month!
 The following patches were reviewed and merged upstream:
 
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=af80ea97b61847d91da0d303e85faed437059092[libgccjit: Add support for sized integer types, including 128-bit integers \[PR95325\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=30f7c83e9cfe7c015448d72f63c4c39d14bc6de6[libgccjit: Add support for bitcasts \[PR104071\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=5780ff348ad4430383fd67c6f0c572d8c3e721ad[libgccjit: Add support for register variables \[PR104072\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=79e1a6fb9babb34dfcb99964c37d3c4f8bb619ca[libgccjit: Add function to hide stderr logs \[PR104073\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=6e5ad1cc24a315d07f24c95d76c269cafe2a8182[libgccjit: Add support for setting the alignment \[PR104293\]]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=af80ea97b61847d91da0d303e85faed437059092[libgccjit: Add support for sized integer types, including 128-bit integers [PR95325\]]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=30f7c83e9cfe7c015448d72f63c4c39d14bc6de6[libgccjit: Add support for bitcasts [PR104071\]]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=5780ff348ad4430383fd67c6f0c572d8c3e721ad[libgccjit: Add support for register variables [PR104072\]]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=79e1a6fb9babb34dfcb99964c37d3c4f8bb619ca[libgccjit: Add function to hide stderr logs [PR104073\]]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=6e5ad1cc24a315d07f24c95d76c269cafe2a8182[libgccjit: Add support for setting the alignment [PR104293\]]
 
 This means that they will be included in the GCC 12 release which should happen in the following days!
 This also means that all of my patches that were sent for review were merged.
