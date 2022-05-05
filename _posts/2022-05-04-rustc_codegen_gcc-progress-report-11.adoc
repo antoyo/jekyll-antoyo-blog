@@ -46,6 +46,7 @@ Some of the complexity comes from the fact that there's not a one-to-one mapping
 
 Here's a rough summary of what has been implemented:
 
+[cols="<,<"]
 |===
 | Feature | Completion
 
@@ -71,7 +72,7 @@ Here's a rough summary of what has been implemented:
 | implemented for x86
 
 | LLVM SIMD intrinsics
-| \~70% implemented for x86
+| ~70% implemented for x86
 
 | `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
 | 50% implemented
