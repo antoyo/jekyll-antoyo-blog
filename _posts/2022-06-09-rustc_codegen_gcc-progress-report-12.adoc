@@ -37,7 +37,7 @@ compile.
 
 Here's a rough summary of what has been implemented:
 
-[cols="<,<"]
+[cols="<,<,1,1"]
 |===
 | Feature | Last month completion | Completion | Delta
 
