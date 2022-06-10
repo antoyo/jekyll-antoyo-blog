@@ -240,6 +240,8 @@ Also, a big thank you to the rest of my sponsors:
  * Sam Harrington
  * Jonas
  * Jeff Muizelaar
+ * Eugene Bulkin
+ * Absolucy
  * Chris Butler
  * sierrafiveseven
  * Joseph Garvin
@@ -263,6 +265,7 @@ Also, a big thank you to the rest of my sponsors:
  * Daniel Sheehan
  * Marvin Löbel
  * nacaclanga
+ * Matthew Conolly
 
 and a few others who preferred to stay anonymous.
 
