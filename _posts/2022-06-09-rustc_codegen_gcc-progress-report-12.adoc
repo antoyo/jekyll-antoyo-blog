@@ -92,8 +92,8 @@ Here's a rough summary of what has been implemented:
 | +100%
 
 | LLVM SIMD intrinsics
-| \~70% implemented for x86
-| \~90% implemented for x86
+| ~70% implemented for x86
+| ~90% implemented for x86
 | +20%
 
 | `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
