@@ -281,7 +281,6 @@ Former sponsors/patreons:
  * 0xdeafbeef
  * ghost
  * gilescope
- * thesamesam
  * Hofer-Julian
  * olanod
  * Denis Zaletaev

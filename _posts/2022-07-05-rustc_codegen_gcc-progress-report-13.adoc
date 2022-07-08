@@ -1,119 +1,160 @@
-= rustc_codegen_gcc: Progress Report #11
-:page-navtitle: rustc_codegen_gcc: Progress Report #11
+= rustc_codegen_gcc: Progress Report #13
+:page-navtitle: rustc_codegen_gcc: Progress Report #13
 :page-liquid:
 
 == What is rustc_codegen_gcc?
 
 https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
-GCC codegen for rustc, meaning that it can be loaded by the existing
-rustc frontend, but benefits from GCC by having more architectures
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
 supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
 
 == GCC patches status
 
-There was a lot of progress this month!
-The following patches were reviewed and merged upstream:
+This month, two more patches were merged:
 
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=af80ea97b61847d91da0d303e85faed437059092[libgccjit: Add support for sized integer types, including 128-bit integers [PR95325\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=30f7c83e9cfe7c015448d72f63c4c39d14bc6de6[libgccjit: Add support for bitcasts [PR104071\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=5780ff348ad4430383fd67c6f0c572d8c3e721ad[libgccjit: Add support for register variables [PR104072\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=79e1a6fb9babb34dfcb99964c37d3c4f8bb619ca[libgccjit: Add function to hide stderr logs [PR104073\]]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=6e5ad1cc24a315d07f24c95d76c269cafe2a8182[libgccjit: Add support for setting the alignment [PR104293\]]
+ * https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=e3a5c77388ae3791afed4f4286ec7e41e5b9f7c3[libgccjit: Fix bug where unary_op will return an integer type instead of the correct type]
+ * https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=e484755aecd543b4c9e2adb4f348118c1e43cfd0[target: Fix asm generation for AVX builtins when using -masm=intel [PR106095\]]
 
-This means that they will be included in the GCC 12 release which should happen in the following days!
-This also means that all of my patches that were sent for review were merged.
 I still have a few that I need to prepare and send for review and I'll send them on the GCC mailing list this month.
 
 == State of rustc_codegen_gcc
 
-Since GCC 12 will be released soon, I started looking at rustup in order to allow distributing the GCC codegen along with libgccjit via rustup.
-Unfortunately, there's a step before creating the distribution artifacts that panics, so we're not there yet, but I will continue looking into this when this issue is fixed.
-
 Here's what has been done this month:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/156[Implement saturating_{add, sub} for non-native integer types] (thanks to yvt!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/158[Add feature for future libgccjit 12 release]
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/160[Don't assume /bin/bash is available on every system] (thanks to MikaelUrankar!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/162[Fix test.sh --build]
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/163[Add inline assembly sym operands as GCC input operands] (thanks to yvt!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/164[Don't emit .intel_syntax for non-x86 targets] (thanks to yvt!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/170[Use the provided pointee type in <Builder as BuilderMethods>::load] (thanks to yvt!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/171[Update intrinsics conversion generation] (thanks to GuillaumeGomez!)
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/172[Implement more SIMD intrinsics]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/181[Support more target-specific intrinsics] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/182[Remove duplicated intrinsics and add check]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/185[Add dummy fast math implementation]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/186[Update intrinsics tool] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/187[Prevent invalid intrinsics conversion generation] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/188[Simplify CI] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/189[Disable UI tests that fail on the rustc side]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/190[Support more SIMD]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/193[Parallelize CI] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/195[Split rustc tests in two] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/196[Split tests to have faster CI] (thanks to GuillaumeGomez!)
 
-The work on SIMD is still not completed as I cannot compile stdarch yet, but there's been good progress.
-Some of the complexity comes from the fact that there's not a one-to-one mapping for some SIMD intrinsics.
+Thanks to GuillaumeGomez, the CI now runs a whole lot faster!
+
+This month, I've made enough progress on SIMD to be able to compile the stdarch tests.
+Here are the results of running those tests:
+
+[script,bash]
+----
+test result: FAILED. 4548 passed; 28 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+----
 
 Here's a rough summary of what has been implemented:
 
-[cols="<,<"]
+[cols="<,<,1,1"]
 |===
-| Feature | Completion
+| Feature | Last month completion | Completion | Delta
 
 | target-specific builtins support in libgccjit
 | Done
+|
+|
 
 | support for vector shuffle (equivalent of `__builtin_shufflevector`) in libgccjit
 | Done
+|
+|
 
 | `simd_extract`
 | Done
+|
+|
 
 | `simd_select`, `simd_select_bitmask`
 | Done
+|
+|
 
 | `simd_reduce_min`, `simd_reduce_max`
 | Done
+|
+|
 
 | `simd_reduce_and`, `simd_reduce_or`
 | Done
+|
+|
 
 | `simd_saturating_add` and `simd_saturating_sub`
 | implemented for x86
-
-| LLVM SIMD intrinsics
-| ~70% implemented for x86
-
-| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
-| 50% implemented
+|
+|
 
 | `simd_insert`
-| 20% implemented
+| Done
+|
+|
 
 | `simd_cast`
-| 20% implemented
+| Done
+|
+|
+
+| `simd_bitmask`
+| Done
+|
+|
+
+| LLVM SIMD intrinsics
+| ~90% implemented for x86
+| ~99% implemented for x86
+| +9% (needs to fix some bugs)
+
+| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
+| 50%
+| 50%
+| 0
 
 | `simd_reduce_add_ordered`, `simd_reduce_mul_ordered`
 | 0%
+| 0%
+| 0
 
 | `simd_reduce_min_nanless`, `simd_reduce_max_nanless`
 | 0%
+| 0%
+| 0
 
 | `simd_reduce_xor`, `simd_reduce_all`, `simd_reduce_any`
 | 0%
+| 0%
+| 0
 
 | SIMD float intrinsics
 | 0%
-
-| `simd_bitmask`
 | 0%
+| 0
 
 | `simd_gather` and `simd_scatter`
 | 0%
+| 0%
+| 0
 
 | `simd_as`
 | 0%
+| 0%
+| 0
 |===
 
 === UI tests progress
 
-Here are the results of running the UI tests in the https://github.com/rust-lang/rustc_codegen_gcc/runs/6300172527?check_suite_focus=true#step:18:10510[CI]:
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7241729382?check_suite_focus=true#step:18:2658
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7241729293?check_suite_focus=true#step:18:2670
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7241729463?check_suite_focus=true#step:18:5676 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
 
-| Passed | 4598 | 4598 | 0
-| Failed | 64 | 64 | 0
+| Passed | 4697 | 4698 | +1
+| Failed | 61 | 57 | -4
 |===
 
 For the next month, I'll continue working on SIMD support.
@@ -213,10 +254,13 @@ Also, a big thank you to the rest of my sponsors:
  * Sam Harrington
  * Jonas
  * Jeff Muizelaar
+ * Eugene Bulkin
+ * Absolucy
  * Chris Butler
  * sierrafiveseven
  * Joseph Garvin
  * MarcoFalke
+ * athre0z
  * icewind
  * Tommy Thorn
  * Sebastian Zivota
@@ -236,6 +280,9 @@ Also, a big thank you to the rest of my sponsors:
  * Daniel Sheehan
  * Marvin Löbel
  * nacaclanga
+ * Matthew Conolly
+ * dandxy89
+ * 0x0177b11f
 
 and a few others who preferred to stay anonymous.
 
