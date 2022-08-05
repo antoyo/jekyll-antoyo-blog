@@ -1,0 +1,334 @@
+= rustc_codegen_gcc: Progress Report #14
+:page-navtitle: rustc_codegen_gcc: Progress Report #14
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, I did the following:
+
+ * https://github.com/antoyo/gcc/commit/e17fec1f60d7d5b0f6a0cbd3ad4e0b06b2d89e6c[Add initial support for variable attributes]
+ * https://github.com/antoyo/gcc/commit/fb37284fe3d5d802056bbbaf892906be47dabafa[Disable check for unknown sizes in gcc_jit_rvalue_dereference_field to allow recursive types]
+
+Those commits are not yet posted as patches for review since there are not ready.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/200[Sort ui_tests to ensure they remain coherent across different jobs] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/201[Add cache for rust repository] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/202[Cleanup regarding handling of recursive types]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/203[Support symbol visibility]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/204[Fix the mxcsr builtins]
+
+I also looked at CPU features detection, but I haven't anything working for now.
+
+Here is the progress of the stdarch tests:
+
+[script,bash]
+----
+test result: FAILED. 4553 passed; 23 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.89s
+----
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4548 | 4553 | +5
+| Failed | 28 | 23 | -5
+|===
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| target-specific builtins support in libgccjit
+| Done
+|
+|
+
+| support for vector shuffle (equivalent of `__builtin_shufflevector`) in libgccjit
+| Done
+|
+|
+
+| `simd_extract`
+| Done
+|
+|
+
+| `simd_select`, `simd_select_bitmask`
+| Done
+|
+|
+
+| `simd_reduce_min`, `simd_reduce_max`
+| Done
+|
+|
+
+| `simd_reduce_and`, `simd_reduce_or`
+| Done
+|
+|
+
+| `simd_saturating_add` and `simd_saturating_sub`
+| implemented for x86
+|
+|
+
+| `simd_insert`
+| Done
+|
+|
+
+| `simd_cast`
+| Done
+|
+|
+
+| `simd_bitmask`
+| Done
+|
+|
+
+| LLVM SIMD intrinsics
+| ~99% implemented for x86
+| ~99% implemented for x86
+| 0 (needs to fix some bugs)
+
+| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
+| 50%
+| 50%
+| 0
+
+| `simd_reduce_add_ordered`, `simd_reduce_mul_ordered`
+| 0%
+| 0%
+| 0
+
+| `simd_reduce_min_nanless`, `simd_reduce_max_nanless`
+| 0%
+| 0%
+| 0
+
+| `simd_reduce_xor`, `simd_reduce_all`, `simd_reduce_any`
+| 0%
+| 0%
+| 0
+
+| SIMD float intrinsics
+| 0%
+| 0%
+| 0
+
+| `simd_gather` and `simd_scatter`
+| 0%
+| 0%
+| 0
+
+| `simd_as`
+| 0%
+| 0%
+| 0
+|===
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7683580881?check_suite_focus=true#step:19:11661
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7683580949?check_suite_focus=true#step:19:11661
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/7683581038?check_suite_focus=true#step:19:14691 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4698 | 4698 | 0
+| Failed | 57 | 57 | 0
+|===
+
+For the next month, I'll continue working on SIMD support: debugging those tests and fixing the issues found.
+
+=== Summary of the failing UI tests.
+
+There was no progress on those tests this month, but I wanted to show a summary describing those failing tests:
+
+|===
+| Category | Number of failing tests
+
+| Target features | 1
+| Panic | 1
+| Undefined reference | 2
+| Simd | 19
+| Allocator | 9
+| Asm | 3
+| Unwinding | 3
+| Async | 3
+| Emit IR | 1
+| LTO | 10
+| Debug info | 2
+| NaN (float) | 2
+| Segfault | 1 (this one is on https://github.com/rust-lang/rust/issues/98458[rust's side])
+|===
+
+Those do not include some of the tests that were intentionally disabled for now since the feature is not supported yet
+(LTO and unwinding, mainly).
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * belzael
+ * vincentdephily
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * zebp
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Absolucy
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * fanquake
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * dandxy89
+ * 0x0177b11f
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * stuhood
+ * mexus
+ * raymanfx
+ * 0xdeafbeef
+ * ghost
+ * gilescope
+ * Hofer-Julian
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
