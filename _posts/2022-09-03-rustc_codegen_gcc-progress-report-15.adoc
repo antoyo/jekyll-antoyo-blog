@@ -1,0 +1,319 @@
+= rustc_codegen_gcc: Progress Report #15
+:page-navtitle: rustc_codegen_gcc: Progress Report #15
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== LPC 2022
+
+I'll be presenting at the
+https://lpc.events/event/16/sessions/150/[Linux Plumbers Conference]
+in Dublin later this month.
+Make sure to attend if you want to discuss using this codegen for any
+specific purposes.
+
+== GCC patches status
+
+This month, I did the following:
+
+ * https://github.com/antoyo/gcc/commit/f2281090b96f71f3adaf081a6c83a56441bc20ec[Add support for the `used` function attributes]
+
+This commit is not yet posted as a patch for review since it is not ready: there are many more attributes that are not yet supported.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/207[Regenerate intrinsics] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/209[2022/08/26 sync from rust]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/210[Remove extra newline in asm]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/211[Add used function attribute from inline asm]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/213[Fix bitcast to a type of a different size]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/214[simd: implement simd_fmin/fmax] (thanks to sadlerap!)
+
+Here is the progress of the stdarch tests:
+
+[script,bash]
+----
+test result: FAILED. 4564 passed; 12 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.03s
+----
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4553 | 4564 | +11
+| Failed | 23 | 12 | -11
+|===
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| target-specific builtins support in libgccjit
+| Done
+|
+|
+
+| support for vector shuffle (equivalent of `__builtin_shufflevector`) in libgccjit
+| Done
+|
+|
+
+| `simd_extract`
+| Done
+|
+|
+
+| `simd_select`, `simd_select_bitmask`
+| Done
+|
+|
+
+| `simd_reduce_min`, `simd_reduce_max`
+| Done
+|
+|
+
+| `simd_reduce_and`, `simd_reduce_or`
+| Done
+|
+|
+
+| `simd_saturating_add` and `simd_saturating_sub`
+| implemented for x86
+|
+|
+
+| `simd_insert`
+| Done
+|
+|
+
+| `simd_cast`
+| Done
+|
+|
+
+| `simd_bitmask`
+| Done
+|
+|
+
+| LLVM SIMD intrinsics
+| ~99% implemented for x86
+| ~99% implemented for x86
+| 0 (needs to fix some bugs)
+
+| SIMD float intrinsics
+| 0%
+| 5%
+| +5%
+
+| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
+| 50%
+| 50%
+| 0
+
+| `simd_reduce_add_ordered`, `simd_reduce_mul_ordered`
+| 0%
+| 0%
+| 0
+
+| `simd_reduce_min_nanless`, `simd_reduce_max_nanless`
+| 0%
+| 0%
+| 0
+
+| `simd_reduce_xor`, `simd_reduce_all`, `simd_reduce_any`
+| 0%
+| 0%
+| 0
+
+| `simd_gather` and `simd_scatter`
+| 0%
+| 0%
+| 0
+
+| `simd_as`
+| 0%
+| 0%
+| 0
+|===
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/8104656652?check_suite_focus=true#step:19:12019
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/8104656702?check_suite_focus=true#step:19:12019
+ * https://github.com/rust-lang/rustc_codegen_gcc/runs/8104656748?check_suite_focus=true#step:19:15350 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4698 | 4787 | +89
+| Failed | 57 | 52 | -5
+|===
+
+For the next month, I'll continue working on SIMD support: debugging those tests and fixing the issues found.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * regiontog
+ * berkus
+ * belzael
+ * vincentdephily
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * messense
+ * riking
+ * rafaelcaricio
+ * Lemmih
+ * memoryruins
+ * pthariensflame
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * zebp
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Absolucy
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * fanquake
+ * sstadick
+ * luizirber
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * dandxy89
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * tedbyron
+ * stuhood
+ * 0xdeafbeef
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * Hofer-Julian
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
