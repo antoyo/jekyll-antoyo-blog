@@ -40,7 +40,7 @@ In this image, we can see Linux modules, built in Rust, and compiled with `rustc
 It doesn't work on the master branch since it requires 2 features to be implemented:
 
  * CPU features detection.
- * Some compile flags (`-Crelocation-model=static`).
+ * Some compiler flags support (`-Crelocation-model=static`).
 
 If you want to try compiling Rust for Linux using the GCC codegen, I made a branch for both `rustc_codegen_gcc` and `Rust for Linux`:
 
