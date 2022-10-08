@@ -150,24 +150,24 @@ Here's a rough summary of what has been implemented for SIMD:
 | 100%
 | +100%
 
-| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
-| 50%
-| 50%
-| 0
-
 | `simd_reduce_add_ordered`, `simd_reduce_mul_ordered`
 | 0%
-| 0%
-| 0
+| 100%
+| +100%
 
 | `simd_reduce_min_nanless`, `simd_reduce_max_nanless`
 | 0%
-| 0%
-| 0
+| 100%
+| +100%
 
 | `simd_reduce_xor`, `simd_reduce_all`, `simd_reduce_any`
 | 0%
-| 0%
+| 100%
+| +100%
+
+| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
+| 50%
+| 50%
 | 0
 
 | `simd_gather` and `simd_scatter`
