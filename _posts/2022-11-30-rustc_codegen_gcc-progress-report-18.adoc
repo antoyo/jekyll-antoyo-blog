@@ -1,0 +1,321 @@
+= rustc_codegen_gcc: Progress Report #18
+:page-navtitle: rustc_codegen_gcc: Progress Report #18
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, with the help of https://github.com/GuillaumeGomez[GuillaumeGomez], I prepared and sent for review another patch for libgccjit:
+
+ * https://gcc.gnu.org/pipermail/jit/2022q4/001574.html
+
+I have a couple other patches I need to prepare and send for review.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/225[Run stdarch tests in the CI]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/174[Download libgccjit-12-dev package in the CI]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/239[Escape { and } in inline asm]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/240[Fix simd_bitmask]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/241[Fix the argument order for some AVX-512 intrinsics]
+
+With those issues fixed, now all the SIMD tests pass in the https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/3550494965/jobs/5963931693#step:17:4624[CI]:
+
+[script,bash]
+----
+test result: ok. 4576 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.37s
+----
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4364 | 4576 | +212
+| Failed | 212 | 0 | -212
+|===
+
+There are around 350 tests that are not ran on the CI because the CPU on the support doesn't support the required features to run them.
+I ran a few of them locally in the Intel Software Development Emulator and they passed.
+So, I'll assume that all the SIMD LLVM intrinsics are implemented for x86-64!
+I'll attempt to run all of those tests locally using this emulator: I'm currently having some issues to do so because the emulator throws an error when running the test executable within it.
+Eventually, I'll run those tests in the CI using the emulator.
+
+Here's a rough summary of what has been implemented for SIMD:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| target-specific builtins support in libgccjit
+| Done
+|
+|
+
+| support for vector shuffle (equivalent of `__builtin_shufflevector`) in libgccjit
+| Done
+|
+|
+
+| `simd_extract`
+| Done
+|
+|
+
+| `simd_select`, `simd_select_bitmask`
+| Done
+|
+|
+
+| `simd_reduce_min`, `simd_reduce_max`
+| Done
+|
+|
+
+| `simd_reduce_and`, `simd_reduce_or`
+| Done
+|
+|
+
+| `simd_saturating_add` and `simd_saturating_sub`
+| implemented for x86
+|
+|
+
+| `simd_insert`
+| Done
+|
+|
+
+| `simd_cast`
+| Done
+|
+|
+
+| `simd_bitmask`
+| Done
+|
+|
+
+| SIMD float intrinsics
+| Done
+|
+|
+
+| `simd_as`
+| Done
+|
+|
+
+| `simd_reduce_add_ordered`, `simd_reduce_mul_ordered`
+| Done
+|
+|
+
+| `simd_reduce_min_nanless`, `simd_reduce_max_nanless`
+| Done
+|
+|
+
+| `simd_reduce_xor`, `simd_reduce_all`, `simd_reduce_any`
+| Done
+|
+|
+
+| LLVM SIMD intrinsics
+| ~99% implemented for x86
+| 100% implemented for x86
+| +1%
+
+| `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`
+| 50%
+| 50%
+| 0
+
+| `simd_gather` and `simd_scatter`
+| 0%
+| 0%
+| 0
+|===
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/3550494968/jobs/5963932196#step:20:12007
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/3550494968/jobs/5963932239#step:20:12007
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/3550494968/jobs/5963932279#step:20:14675 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4795 | 4796 | +1
+| Failed | 44 | 43 | -1
+|===
+
+For the next month, I'll continue working on unwinding support.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * messense
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * zebp
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * fanquake
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * 0xdeafbeef
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * Hofer-Julian
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
