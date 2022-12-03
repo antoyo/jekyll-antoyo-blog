@@ -20,6 +20,6 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name: install dependencies & build site
-        uses: Cutwell/jekyll-action@2.4.0
+        uses: Cutwell/jekyll-build-action@patch-1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
