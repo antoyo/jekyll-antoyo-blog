@@ -19,11 +19,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: setup ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6
-
       - name: install dependencies & build site
         uses: helaili/jekyll-action@2.4.0
         with:
