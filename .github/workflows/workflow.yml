@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Test Python3
-        run: python3 -c "print('test')"
+        run: /usr/bin/env python3 -c "print('test')"
 
       - uses: actions/cache@v2
         with:
