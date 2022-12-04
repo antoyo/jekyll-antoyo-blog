@@ -15,6 +15,9 @@ jobs:
       - name: Test Python3
         run: /usr/bin/env python3 -c "print('test')"
 
+      - name: Install packages
+        run: sudo apt-get install python3-pygments
+
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
