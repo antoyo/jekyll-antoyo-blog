@@ -42,7 +42,7 @@ test result: ok. 4576 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; f
 | Failed | 212 | 0 | -212
 |===
 
-There are around 350 tests that are not ran on the CI because the CPU on the support doesn't support the required features to run them.
+There are around 350 tests that are not ran on the CI because the CPU on the server doesn't support the required features to run them.
 I ran a few of them locally in the Intel Software Development Emulator and they passed.
 So, I'll assume that all the SIMD LLVM intrinsics are implemented for x86-64!
 I'll attempt to run all of those tests locally using this emulator: I'm currently having some issues to do so because the emulator throws an error when running the test executable within it.
