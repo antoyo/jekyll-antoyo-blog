@@ -12,8 +12,8 @@ jobs:
       - name: setup
         uses: actions/checkout@v2
 
-      - name: Install packages
-        run: sudo apt-get install python3
+      - name: Test Python3
+        run: python3 -c "print('test')"
 
       - uses: actions/cache@v2
         with:
