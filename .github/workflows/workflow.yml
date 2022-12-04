@@ -12,6 +12,9 @@ jobs:
       - name: setup
         uses: actions/checkout@v2
 
+      - name: Install packages
+        run: sudo apt-get install python3
+
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
