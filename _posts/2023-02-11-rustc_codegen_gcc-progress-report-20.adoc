@@ -1,0 +1,325 @@
+= rustc_codegen_gcc: Progress Report #20
+:page-navtitle: rustc_codegen_gcc: Progress Report #20
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, I prepared and sent for review the following patch:
+
+ * https://gcc.gnu.org/pipermail/jit/2023q1/001606.html[Add support for machine-dependent builtins]
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/246[Cleanup]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/249[Fix/signed integer overflow]
+
+My goal for this month was to make all of the tests that pass in debug mode also pass in release mode.
+Indeed, there were a few tests that would fail only in release mode.
+One of the culprits was the undefined behavior on signed integer overflow.
+This is now fixed.
+
+The other culprit is… unwinding. So, I'm not done debugging the unwinder to figure out what is wrong.
+It turns out that my current implementation of unwinding will see its cleanup landing pads removed when compiled with `-O3`, seemingly because they are considered unreachable.
+I'm still not sure what's causing this issue, but I'll continue to investigate this in the coming months.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| SIMD (x86-64).
+| 95%
+| 95%
+| Missing `simd_reduce_add_unordered`, `simd_reduce_mul_unordered`, `simd_gather` and `simd_scatter`
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| LTO.
+| 0%
+|
+|
+
+| Debug info.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| More function and variable attributes.
+| 0%
+|
+|
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 0%
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+// TODO: add progress of compiling some projects.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4020052831/jobs/6907565975#step:20:11969
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4020052831/jobs/6907566062#step:20:11969
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4020052831/jobs/6907566142#step:20:15177 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 4821 | 4821 | 0
+| Failed | 65 | 65 | 0
+|===
+
+For the next month, I'll continue investigating the issues with unwinding in release mode and I'll work on supporting the missing SIMD intrinsics.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * fanquake
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+ * Emily A. Bellows
+ * David Vasak
+ * Eric Driggers
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * 0xdeafbeef
