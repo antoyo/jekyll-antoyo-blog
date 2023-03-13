@@ -148,7 +148,7 @@ Here's a rough summary of what has been implemented:
 Here are the results of running the UI tests in the CI:
 
  * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4333731125/jobs/7567103865#step:19:2037
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4333731125/jobs/7567103865#step:19:2037
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4333731125/jobs/7567103913#step:19:2017
  * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4333731125/jobs/7567103942 (failures)
 
 |===
