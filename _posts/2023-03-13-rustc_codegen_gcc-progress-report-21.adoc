@@ -290,6 +290,9 @@ Also, a big thank you to the rest of my sponsors:
  * David Vasak
  * Eric Driggers
  * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
 
 and a few others who preferred to stay anonymous.
 
