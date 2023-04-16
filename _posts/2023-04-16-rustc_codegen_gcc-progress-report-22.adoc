@@ -44,7 +44,7 @@ test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 4572 filtered out; f
 I was unable to run the tests regarding rtm or tbm, so there might still be failures there.
 
 I was also finally able to implement the `#[inline]` attribute by figuring out some stuff regarding the personality function.
-I also still tried to fix the unwinding in release mode: I'm starting to believe that the IR sent to `rustc_codegen_gcc` by `rustc` doesn't play well with GCC's optimizations: I attempt to convert landing pads to try/catch, and the MIR blocks for these landing pads contain `goto`s, so this generates try/catch with `goto`s that quit the try/catch, which seems to play badly with GCC's optimizations.
+I also still tried to fix the unwinding in release mode: I'm starting to believe that the IR sent to `rustc_codegen_gcc` by `rustc` doesn't play well with GCC's optimizations: I attempt to convert landing pads to try/catch, and the MIR blocks for these landing pads contain `goto`, so this generates try/catch with `goto` that quit the try/catch, which seems to play badly with GCC's optimizations.
 
 Here's a rough summary of what has been implemented:
 
