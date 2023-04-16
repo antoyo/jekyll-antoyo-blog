@@ -1,0 +1,347 @@
+= rustc_codegen_gcc: Progress Report #22
+:page-navtitle: rustc_codegen_gcc: Progress Report #22
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, I did the following commits, which are yet to be sent on the gcc mailing list:
+
+ * https://github.com/antoyo/gcc/commit/3e63da67f22648ef9edf883c5d80259b49a2e715[Add support for the variable inline attributes]
+ * https://github.com/antoyo/gcc/commit/19869202b426021595b50781b0b0476a0c8d7036[Add a way to set the personality function globally and uncomment some code that was commented when implementing unwinding]
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/257[Optimize bitreverse codegen] (thanks to arpankapoor!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/259[Regenerate intrinsics] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/260[Add llvm folder to .gitignore file] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/261[Update gccjit dependency version] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/262[Fix vpshrd llvm instrinsics]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/266[Run emulated stdarch tests in the CI]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/267[Add support for inline attribute]
+
+I found out there was another SIMD intrinsic that wasn't implemented properly by running the stdarch tests in the Intel Software Development Emulator.
+Here are the results of those tests:
+
+[source]
+----
+# Using the Intel Software Development Emulator:
+test result: ok. 4572 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 169.77s
+
+# The other tests running natively on my AMD CPU:
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 4572 filtered out; finished in 0.02s
+----
+
+I was unable to run the tests regarding rtm or tbm, so there might still be failures there.
+
+I was also finally able to implement the `#[inline]` attribute by figuring out some stuff regarding the personality function.
+I also still tried to fix the unwinding in release mode: I'm starting to believe that the IR sent to `rustc_codegen_gcc` by `rustc` doesn't play well with GCC's optimizations: I attempt to convert landing pads to try/catch, and the MIR blocks for these landing pads contain `goto`s, so this generates try/catch with `goto`s that quit the try/catch, which seems to play badly with GCC's optimizations.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| More function and variable attributes.
+| 0%
+| 5%
+| +5%
+
+| LTO.
+| 0%
+|
+|
+
+| Debug info.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 0%
+|
+|
+
+| SIMD (x86-64).
+| Done
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+// TODO: add progress of compiling some projects.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4715557516/jobs/8362624626#step:19:2027
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4715557516/jobs/8362624651#step:19:2019
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/4715557516/jobs/8362624674#step:19:4666 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 5126 | 5125 | -1
+| Failed | 66 | 67 | +1
+|===
+
+The new failure is related to panics, so I'm assuming this was caused by new optimizations done by the addition of the support for the `#[inline]` attribute.
+
+For the next month, I'll continue investigating the issues with unwinding in release mode.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+ * Rust Foundation
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * fanquake
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+ * Emily A. Bellows
+ * David Vasak
+ * Eric Driggers
+ * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
+ * Eddddddd
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * 0xdeafbeef
