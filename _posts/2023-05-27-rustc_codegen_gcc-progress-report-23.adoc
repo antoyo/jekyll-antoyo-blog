@@ -1,8 +1,8 @@
-// TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
-
 = rustc_codegen_gcc: Progress Report #23
 :page-navtitle: rustc_codegen_gcc: Progress Report #23
 :page-liquid:
+
+// TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
 
 == What is rustc_codegen_gcc?
 
