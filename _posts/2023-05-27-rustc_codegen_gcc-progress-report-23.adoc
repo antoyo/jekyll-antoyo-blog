@@ -1,0 +1,325 @@
+= rustc_codegen_gcc: Progress Report #23
+:page-navtitle: rustc_codegen_gcc: Progress Report #23
+:page-liquid:
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, I did not make any progress on this front.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/277[Set visibility of global]
+
+Apart from that, I started working on implementing https://github.com/rust-lang/rustc_codegen_gcc/pull/278[Link-Time Optimization].
+
+I managed to compile a Hello World using the standard library with LTO. I'm not sure yet whether this works as intended, but it does increase the size of the binary (which I'm also not sure if it's intended since the LLVM codegen will produce a smaller binary in this case).
+
+I tried on a bigger project to see how LTO affects the run-time performance, but libgccjit crashes, so I started debugging GCC's garbage collector to fix this issue.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| LTO.
+| 0%
+| 20%
+| +20%
+
+| More function and variable attributes.
+| 5%
+| 5%
+|
+
+| Debug info.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 0%
+|
+|
+
+| SIMD (x86-64).
+| Done
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+// TODO: add progress of compiling some projects.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5085564134/jobs/9139149467#step:19:2024
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5085564134/jobs/9139149529#step:19:2031
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5085564134/jobs/9139149578#step:19:4677 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 5125 | 5125 | 0
+| Failed | 67 | 67 | 0
+|===
+
+For the next month, I'll continue working on link-time optimization.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+ * Rust Foundation
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * jam1garner
+ * yvt
+ * Shoeboxam
+ * evanrichter
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * sbstp
+ * Chris
+ * Bálint Horváth
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+ * Emily A. Bellows
+ * David Vasak
+ * Eric Driggers
+ * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
+ * Eddddddd
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * 0xdeafbeef
+ * fanquake
