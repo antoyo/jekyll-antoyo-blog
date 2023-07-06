@@ -1,0 +1,340 @@
+= rustc_codegen_gcc: Progress Report #24
+:page-navtitle: rustc_codegen_gcc: Progress Report #24
+:page-liquid:
+
+// TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, some progress was made:
+
+ * https://github.com/antoyo/gcc/pull/17[Fix compilation error when bfloat is unsupported] (thanks to Heath123!)
+ * https://github.com/antoyo/gcc/pull/18[Add support for the `cold` function attribute] (thanks to GuillaumeGomez!)
+ * https://github.com/antoyo/gcc/pull/19[Add ability to get CPU features]
+
+None of these were sent as patches to GCC yet.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done this month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/279[Regen intrinsics with latest LLVM version] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/282[Sync from rust 2023/06/11]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/286[Add support for cold attribute] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/299[Add support for detecting CPU features]
+
+Apart for that, I continued working on https://github.com/rust-lang/rustc_codegen_gcc/pull/278[Link-Time Optimization (LTO)] support: I managed to fix the GCC's garbage collector issue and tried LTO on a personal project of mine.
+Without LTO, the program compiled with GCC is around 5% slower than the one compiled with LLVM.
+With LTO, both GCC and LLVM brings a performance benefit of around 40%.
+It's interesting to see that LTO give around the same performance improvement for both GCC and LLVM.
+
+Finally, since one of the goals of this project is to be able to run Rust code on new platforms, I created a https://github.com/rust-lang/rustc_codegen_gcc/wiki[wiki page] that shows on which new platforms some people succeeded in compiling Rust code on.
+There isn't much there yet, but the idea is to complete it when people try to compile Rust on new platforms.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| LTO.
+| 20%
+| 40%
+| +20%
+
+| More function and variable attributes.
+| 5%
+| 10%
+| +5%
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 0%
+| 60%
+| +60%
+
+| Debug info.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| SIMD (x86-64).
+| Done
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+// TODO: add progress of compiling some projects.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5469252330/jobs/9957949859#step:19:1571
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5469252330/jobs/9957949982#step:19:1565
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/5469252330/jobs/9957950108#step:19:4032 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 5125 | 5352 | +227
+| Failed | 67 | 62 | -5
+|===
+
+For the next month, I'll continue working on link-time optimization.
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * Futurewei
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+ * Rust Foundation
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * Nehliin
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * yvt
+ * Shoeboxam
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * Chris
+ * Bálint Horváth
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+ * Emily A. Bellows
+ * David Vasak
+ * Eric Driggers
+ * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
+ * Eddddddd
+ * rrbutani
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * 0xdeafbeef
+ * fanquake
+ * jam1garner
+ * sbstp
+ * evanrichter
