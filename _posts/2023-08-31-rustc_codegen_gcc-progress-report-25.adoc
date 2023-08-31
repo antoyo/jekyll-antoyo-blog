@@ -1,0 +1,363 @@
+= rustc_codegen_gcc: Progress Report #25
+:page-navtitle: rustc_codegen_gcc: Progress Report #25
+:page-liquid:
+
+// TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+During the past 2 months, a lot of progress was made:
+
+ * https://github.com/antoyo/gcc/pull/20[Add support for returns_twice attribute in libgccjit] (thanks to GuillaumeGomez!)
+ * https://github.com/antoyo/gcc/pull/21[Add pure attribute support in libgccjit] (thanks to GuillaumeGomez!)
+ * https://github.com/antoyo/gcc/pull/22[Add support for const attribute in libgccjit] (thanks to GuillaumeGomez!)
+ * https://github.com/antoyo/gcc/pull/23[Fix a bug in the GCC garbage collector]
+ * https://github.com/antoyo/gcc/pull/24[Implement weak and alias function attributes]
+ * https://github.com/antoyo/gcc/pull/25[Change the type of targetjitm to gcc_targetjitm] (thanks to row454!)
+ * https://github.com/antoyo/gcc/pull/26[Add support for restrict attribute on function parameters] (and https://github.com/antoyo/gcc/pull/27[follow-up PR]) (thanks to GuillaumeGomez!)
+
+Only the last one was reviewed and https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=29763b002459cba64fa76a6965046792944de41d[merged in GCC upstream].
+
+== State of rustc_codegen_gcc
+
+Here's what has been done during the past 2 months:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/301[Add support for "returns_twice" function attribute] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/303[Add license explanations]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/305[Add support for "pure" function attribute] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/306[Extract a create_wrapper_function for use in allocator shim writing] (thanks to bjorn3!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/307[Add support for "ffi_const" function attribute] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/308[Add instructions on how to generate GIMPLE format] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/311[Regenerate intrinsics] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/312[Add support for noalias function parameters] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/313[Sync from rust 2023/08/12]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/317[Fix command to run custom rustc] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/318[Add doc for sending patches to GCC] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/319[Rustify prepare.sh command] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/278[Add support for Link-Time Optimization]
+
+We accomplished quite a lot in the past two months and we finally got the support for Link-Time Optimization (LTO).
+LTO is not completely done yet, since there is an issue about some missing symbols when using proc-macros, but I merged the PR anyway since it works in most cases.
+I haven't work on ThinLTO yet: I don't know if GCC has something that will be equivalent to LLVM's ThinLTO.
+
+The support for `restrict`/`noalias` brought a performance improvement of 3% in my test program.
+Using `hyperfine` to compare it against the same program compiled with the LLVM codegen, we are 3% slower (compared to 5% in last progress report), so we're getter there.
+As far as I know, adding the support for `restrict` didn't trigger any bugs in GCC, but that would probably require a crater run to make sure.
+
+Next month, I plan to work on correctly handling the endianness for non-native 128-bit integers.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| LTO.
+| 40%
+| 80%
+| +40%
+
+| More function and variable attributes.
+| 10%
+| 20%
+| +10%
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 60%
+| 60%
+|
+
+| Thin LTO.
+| 0%
+|
+|
+
+| Debug info.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| SIMD (x86-64).
+| Done
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+// TODO: add progress of compiling some projects.
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366176936#step:20:1553
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366177045#step:20:1565
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366177161#step:20:6118 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 5352 | 5445 | +93
+| Failed | 62 | 69 | +7
+|===
+
+// TODO: remove the (15) LTO tests from the table.
+
+(I removed the LTO tests from the failed row because those tests pass in the CI job were LTO is enabled.)
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * Futurewei
+ * saethlin
+ * embark-studios
+ * Traverse-Research
+ * Shnatsel
+ * Rust Foundation
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * repi
+ * nevi-me
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * TimNN
+ * sdroege
+ * pcn
+ * alanfalloon
+ * steven-joruk
+ * davidlattimore
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * yvt
+ * Shoeboxam
+ * yerke
+ * bes
+ * seanpianka
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * spike grobstein
+ * Oliver Marshall
+ * Sam Harrington
+ * Jonas
+ * Jeff Muizelaar
+ * Eugene Bulkin
+ * Chris Butler
+ * sierrafiveseven
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * icewind
+ * Tommy Thorn
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Thomas Colliers
+ * Justin Ossevoort
+ * Chris
+ * Bálint Horváth
+ * kiyoshigawa
+ * robinmoussu
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * Matthew Conolly
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Myrik Lord
+ * Mauve
+ * icewind1991
+ * T
+ * nicholasbishop
+ * Emily A. Bellows
+ * David Vasak
+ * Eric Driggers
+ * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
+ * Eddddddd
+ * rrbutani
+ * Mateusz K
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * 0xdeafbeef
+ * fanquake
+ * jam1garner
+ * sbstp
+ * evanrichter
+ * Nehliin
