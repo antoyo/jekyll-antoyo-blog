@@ -46,7 +46,7 @@ Here's what has been done during the past 2 months:
 
 We accomplished quite a lot in the past two months and we finally got the support for Link-Time Optimization (LTO).
 LTO is not completely done yet, since there is an issue about some missing symbols when using proc-macros, but I merged the PR anyway since it works in most cases.
-I haven't work on ThinLTO yet: I don't know if GCC has something that will be equivalent to LLVM's ThinLTO.
+I haven't worked on ThinLTO yet: I don't know if GCC has something that will be equivalent to LLVM's ThinLTO.
 
 The support for `restrict`/`noalias` brought a performance improvement of 3% in my test program.
 Using `hyperfine` to compare it against the same program compiled with the LLVM codegen, we are 3% slower (compared to 5% in last progress report), so we're getter there.
