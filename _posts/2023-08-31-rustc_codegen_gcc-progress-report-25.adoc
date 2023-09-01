@@ -190,7 +190,7 @@ Here are the results of running the UI tests in the CI:
 
 // TODO: remove the (15) LTO tests from the table.
 
-(I removed the LTO tests from the failed row because those tests pass in the CI job were LTO is enabled.)
+(I removed the LTO tests from the failed row because those tests pass in the CI job where LTO is enabled.)
 
 == How to contribute
 
