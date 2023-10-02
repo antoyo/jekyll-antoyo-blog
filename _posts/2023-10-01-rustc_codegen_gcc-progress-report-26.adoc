@@ -259,7 +259,7 @@ Here are the results of running the UI tests in the CI:
 | Category | Last Month | This Month | Delta
 
 | Passed | 5445 | 5446 | +1
-| Failed | 69 | 68 | -7
+| Failed | 69 | 68 | -1
 |===
 
 // TODO: remove the (15) LTO tests from the table.
