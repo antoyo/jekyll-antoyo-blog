@@ -34,16 +34,17 @@ Here's what has been done during the past month:
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/343[Add guide to add new attributes support in libgccjit] (thanks to GuillaumeGomez!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/344[Improve y.sh script] (thanks to GuillaumeGomez!)
 
-It was announced {% post_url 2022-10-07-rustc_codegen_gcc-progress-report-16 %}[last year] that `rustc_codegen_gcc` can compile https://rust-for-linux.com/[Rust for Linux] with very few hacks.
+It was announced link:{% post_url 2022-10-07-rustc_codegen_gcc-progress-report-16 %}[last year] that `rustc_codegen_gcc` can compile https://rust-for-linux.com/[Rust for Linux] with very few hacks.
 Today, I'm happy to announce that it can compile Rust for Linux without any patches! (Well, we still need patches to GCC itself like the rest of `rustc_codegen_gcc`, but those will be merged upstream eventually.)
 
 // TODO: move to after the features table.
 
 === State of compiling popular crates
 
-If was asked from time to time to test compiling the most popular crates with `rustc_codegen_gcc` and I finally done so.
+If was asked from time to time to test compiling the most popular crates with `rustc_codegen_gcc` and I finally did so.
 Here are the results of running the tests of the most popular crates.
 
+[cols="2, 1, 1, 1, 4"]
 |===
 | Project | Compiles | Tests passing | Tests failing | Note
 
@@ -250,15 +251,15 @@ Here's a rough summary of what has been implemented:
 
 Here are the results of running the UI tests in the CI:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366176936#step:20:1553
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366177045#step:20:1565
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6031856595/job/16366177161#step:20:6118 (failures)
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6305004562/job/17117544424
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6305004562/job/17117543960
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/6305004562/job/17117545193 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
 
-| Passed | 5352 | 5445 | +93
-| Failed | 62 | 69 | +7
+| Passed | 5445 | 5446 | +1
+| Failed | 69 | 68 | -7
 |===
 
 // TODO: remove the (15) LTO tests from the table.
