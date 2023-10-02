@@ -41,7 +41,7 @@ Today, I'm happy to announce that it can compile Rust for Linux without any patc
 
 === State of compiling popular crates
 
-If was asked from time to time to test compiling the most popular crates with `rustc_codegen_gcc` and I finally did so.
+It was asked from time to time to test compiling the most popular crates with `rustc_codegen_gcc` and I finally did so.
 Here are the results of running the tests of the most popular crates.
 
 [cols="2, 1, 1, 1, 4"]
