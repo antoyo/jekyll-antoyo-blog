@@ -46,7 +46,7 @@ Here's what has been done during the past month:
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/368[Fix vector compilation error]
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/369[Regenerate intrinsics mapping] (thanks to GuillaumeGomez!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/371[Sync from rust 2023/10/25]
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/375[Make build scripts work with rust bootstrap]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/375[Make build scripts work with rust bootstrap] (thanks to GuillaumeGomez!)
 
 Big news this month: we now run part of our tests in the CI of the https://github.com/rust-lang/rust[Rust repo].
 This is the first step before we can ship the GCC codegen with `rustup`, which is something we're going to work on in the coming months.
