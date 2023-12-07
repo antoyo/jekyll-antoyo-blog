@@ -25,8 +25,9 @@ This month, we prepared and sent the following patches to the mailing list:
  * https://gcc.gnu.org/pipermail/jit/2023q4/001711.html[[PATCH\] libgccjit: Add vector permutation and vector access operations]
  * https://gcc.gnu.org/pipermail/jit/2023q4/001712.html[[PATCH\] libgccjit: Add ways to set the personality function]
  * https://gcc.gnu.org/pipermail/jit/2023q4/001725.html[[PATCH\] libgccjit: Add support for machine-dependent builtins]
+ * https://gcc.gnu.org/pipermail/jit/2023q4/001692.html[[PATCH\] Add missing declaration of get_restrict in C++ interface] (thanks to GuillaumeGomez!)
 
-None of those were merged yet, but we got some reviews and addressed some of them already.
+None of those were merged yet except the last one, but we got some reviews and addressed some of them already.
 
 == State of rustc_codegen_gcc
 
@@ -252,7 +253,6 @@ Also, a big thank you to the rest of my sponsors:
  * Shoeboxam
  * yerke
  * bes
- * seanpianka
  * srijs
  * kkysen
  * riking
@@ -352,3 +352,4 @@ Former sponsors/patreons:
  * nevi-me
  * TimNN
  * steven-joruk
+ * seanpianka
