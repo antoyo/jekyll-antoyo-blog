@@ -30,7 +30,7 @@ This month, we prepared and sent the following patches to the mailing list:
  * https://gcc.gnu.org/pipermail/jit/2024q1/001795.html[[PATCH\] libgccjit: Fix float playback for cross-compilation]
 
 As you can see, a few of those were already merged.
-We also got some reviews, addressed some of them already and some of them were already approved to be merged.
+We also got some reviews and addressed some of them already.
 
 In addition, the following patch was merged:
 
@@ -59,6 +59,7 @@ Here's what has been done during the past month:
 // TODO: move to after the features table when it's not updated.
 
 Next month, I'll continue to send patches to GCC and address the review of the patches that were already sent and hopefully merge most of them.
+We'll also continue towards our goal of distributing this project through `rustup`, which should hopefully happens in a couple of months.
 
 Here's a rough summary of what has been implemented:
 
@@ -238,7 +239,6 @@ A special thanks to the following sponsors:
  * embark-studios
  * Shnatsel
  * Rust Foundation
- * Traverse-Research
 
 A big thank you to bjorn3 for his help, contributions and reviews.
 And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
@@ -332,6 +332,7 @@ and a few others who preferred to stay anonymous.
 Former sponsors/patreons:
 
  * igrr
+ * Traverse-Research
  * finfet
  * Alovchin91
  * wezm
