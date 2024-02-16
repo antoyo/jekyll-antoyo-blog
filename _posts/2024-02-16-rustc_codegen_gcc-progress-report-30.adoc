@@ -26,7 +26,7 @@ This month, we prepared and sent the following patches to the mailing list:
 
 In addition, the following patch was merged:
 
- * https://gcc.gnu.org/pipermail/jit/2023q4/001762.html[[PATCH\] libgccjit: Implement sizeof operator]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=5d534a214bf96605d1eeff44d41ced3a7d4397f6[[PATCH\] libgccjit: Implement sizeof operator]
 
 We also rebased our GCC fork to have the latest upstream changes, got some reviews on our patches and addressed some of them already.
 
