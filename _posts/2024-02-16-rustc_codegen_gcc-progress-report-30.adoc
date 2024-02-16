@@ -1,5 +1,5 @@
-= rustc_codegen_gcc: Progress Report #29
-:page-navtitle: rustc_codegen_gcc: Progress Report #29
+= rustc_codegen_gcc: Progress Report #30
+:page-navtitle: rustc_codegen_gcc: Progress Report #30
 :page-liquid:
 
 // TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
