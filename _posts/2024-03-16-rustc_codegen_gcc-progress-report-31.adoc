@@ -46,7 +46,7 @@ Here's what has been done during the past month:
 // TODO: move to after the features table when it's not updated.
 
 This month, we continued our work towards having `rustup` distribution: we now use the default rust mangling scheme and we now build libgccjit in the Rust CI so that we run the tests will all the latest features of rustc_codegen_gcc in the Rust CI.
-We also transferred the ownership of my [GCC fork](https://github.com/rust-lang/gcc) and the [gccjit.rs crate](https://github.com/rust-lang/gccjit.rs) to rust-lang in order to have all the dependencies of the GCC codegen owned by this organization.
+We also transferred the ownership of my https://github.com/rust-lang/gcc[GCC fork] and the https://github.com/rust-lang/gccjit.rs[gccjit.rs crate] to rust-lang in order to have all the dependencies of the GCC codegen owned by this organization.
 We also saw the start of the implementation of debug info, thanks to tempdragon.
 
 Next month, we'll address the review of the GCC patches that were already sent and hopefully merge most of them in time for the release of gcc 14.
@@ -173,15 +173,15 @@ Here's a rough summary of what has been implemented:
 
 Here are the results of running the UI tests in the CI:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/7917070895/job/21612356641#step:12:4381
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/7917070895/job/21612358033#step:12:4380
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/7915215519#summary-21606579314 (failures)
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8308465770/job/22738724634#step:13:4438
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8308465770/job/22738724759#step:13:4463
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8267543813#summary-22618213855 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
 
-| Passed | 5576 | 5577 | +1
-| Failed | 69 | 68 | -1
+| Passed | 5577 | 5647 | +70
+| Failed | 68 | 70 | +2
 |===
 
 // TODO: remove the (15) LTO tests from the table.
@@ -365,3 +365,5 @@ Former sponsors/patreons:
  * T
  * Emily A. Bellows
  * Chris
+
+// TODO: remove embark-studios
