@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>rustc_codegen_gcc: Progress Report #1</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+<a href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+<a href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>rustc_codegen_gcc: Progress Report #1</h2>
+    <time datetime="2021-06-23T00:00:00+00:00" class="by-line">23 Jun 2021</time>
+    <div class="content">
+
+        <div class="sect1">
+<h2 id="what_is_rustc_codegen_gcc">What is rustc_codegen_gcc?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/antoyo/rustc_codegen_gcc">rustc_codegen_gcc</a> is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC&#8217;s optimizations.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="libcores_tests">libcore&#8217;s tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a previous article, I mentioned that rustc_codegen_gcc
+<a href="/rustc_codegen_gcc-run-core-tests">passes most of the tests of libcore</a>.
+Today, I&#8217;m happy to tell you that it passes all of the them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>test result: ok. 1258 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.98s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>The libcore&#8217;s tests now all pass, except the ones requiring SIMD or
+unwinding which were disabled until those features are implemented.</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="state_of_rustc_codegen_gcc">State of rustc_codegen_gcc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most of the features that were fixed this last month were to make
+those tests pass:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>128-bit integers</p>
+</li>
+<li>
+<p>floating-point numbers</p>
+</li>
+<li>
+<p>some atomic operations</p>
+</li>
+<li>
+<p>some intrinsics: count leading zeroes, count trailing zeroes,
+bswap, saturating subtract, bit reverse, bitcast, bit rotate</p>
+</li>
+<li>
+<p>alignment issues</p>
+</li>
+<li>
+<p>some casts</p>
+</li>
+<li>
+<p>some math operations: exactsdiv, fneg</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/antoyo/rustc_codegen_gcc/runs/2861611473#step:13:3838">Moreover, those tests now run in the CI.</a></p>
+</div>
+<div class="paragraph">
+<p>The next step now was to run the UI tests, which are also ran in the CI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>test result: FAILED 7004 passed; 4070 failed; 87 ignored; 0 measured; 0 filtered out; finished in 1550.63s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I also started working on handling the different <code>#[inline]</code>
+attributes, SIMD, LTO and unwinding, but those are not ready yet and
+most of these features will require a lot more work to reach
+completion.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll now switch back to focus on fixing the codegen to make the UI
+tests pass.</p>
+</div>
+<div class="paragraph">
+<p>As an additional side note, rustc_codegen_gcc will soon be in
+<a href="https://github.com/compiler-explorer/compiler-explorer/issues/2683">godbolt,
+the compiler explorer</a>!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks_for_your_support">Thanks for your support!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.</p>
+</div>
+<div class="paragraph">
+<p>A special thanks to the following sponsors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>saethlin</p>
+</li>
+<li>
+<p>TraverseResearch</p>
+</li>
+<li>
+<p>Shnatsel</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Also, a big thank you to the rest of my sponsors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Alovchin91</p>
+</li>
+<li>
+<p>oleid</p>
+</li>
+<li>
+<p>acshi</p>
+</li>
+<li>
+<p>joshtriplett</p>
+</li>
+<li>
+<p>djc</p>
+</li>
+<li>
+<p>TimNN</p>
+</li>
+<li>
+<p>regiontog</p>
+</li>
+<li>
+<p>berkus</p>
+</li>
+<li>
+<p>gilescope</p>
+</li>
+<li>
+<p>wezm</p>
+</li>
+<li>
+<p>belzael</p>
+</li>
+<li>
+<p>evanrichter</p>
+</li>
+<li>
+<p>stuhood</p>
+</li>
+<li>
+<p>yerke</p>
+</li>
+<li>
+<p>bes</p>
+</li>
+<li>
+<p>raymanfx</p>
+</li>
+<li>
+<p>messense</p>
+</li>
+<li>
+<p>riking</p>
+</li>
+<li>
+<p>rafaelcaricio</p>
+</li>
+<li>
+<p>Lemmih</p>
+</li>
+<li>
+<p>memoryruins</p>
+</li>
+<li>
+<p>pthariensflame</p>
+</li>
+<li>
+<p>senden9</p>
+</li>
+<li>
+<p>Hofer-Julian</p>
+</li>
+<li>
+<p>Jonas Platte</p>
+</li>
+<li>
+<p>spike grobstein</p>
+</li>
+<li>
+<p>Oliver Marshall</p>
+</li>
+<li>
+<p>Sam Harrington</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and a few others that preferred to stay anonymous.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+    <span>© 2017-2024 - Antoni Boucher</span>
+    <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
