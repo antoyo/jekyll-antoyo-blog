@@ -1,0 +1,385 @@
+= rustc_codegen_gcc: Progress Report #32
+:page-navtitle: rustc_codegen_gcc: Progress Report #32
+:page-liquid:
+
+// TODO: switch the GitHub action jeffreytse/jekyll-deploy-action back to a stable version.
+
+== What is rustc_codegen_gcc?
+
+https://github.com/rust-lang/rustc_codegen_gcc[rustc_codegen_gcc] is a
+GCC https://en.wikipedia.org/wiki/Ahead-of-time_compilation[ahead-of-time] codegen for rustc, meaning that it
+can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC's optimizations.
+It is not to be confused with gccrs, which is a GCC frontend for Rust.
+
+== GCC patches status
+
+This month, only one patch was sent to the mailing list:
+
+ * https://gcc.gnu.org/pipermail/jit/2024q2/001870.html[Add rvalue::get_name method] (thanks to GuillaumeGomez!)
+
+We also implemented added a few features that are yet to be sent to the mailing list:
+
+ * https://github.com/rust-lang/gcc/pull/44[[PATCH\] Allow gcc_jit_type_get_size to work with pointers] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/gcc/pull/47[Add Float16 and Float128 support for jit] (thanks to zedar!)
+ * https://github.com/rust-lang/gcc/pull/50[Target Info extended with supported types (limited to Float16|32|64|128)] (thanks to zedar!)
+ * https://github.com/rust-lang/gcc/pull/51[add git_jit_type_is_float()] (thanks to zedar!)
+ * https://github.com/rust-lang/gcc/pull/52[Some fixes and workaround for aarch64]
+ * https://github.com/rust-lang/gcc/pull/53[Add a way to remove a global]
+ * https://github.com/rust-lang/gcc/pull/54[Fix wrong reinitialization of target_builtins] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/gcc/pull/55[Make is_same_type_as() supporting floating point types. Improve type coparison] (thanks to zedar!)
+ * https://github.com/rust-lang/gcc/pull/56[libgccjit: Add support for Aarch64 CPU features]
+ * https://github.com/rust-lang/gcc/pull/57[Fix for double initialization of Aarch64 builtins]
+ * https://github.com/rust-lang/gcc/pull/58[Fix for global variable removal]
+
+We're still waiting for the reviews of the other patches that were sent before.
+
+== State of rustc_codegen_gcc
+
+Here's what has been done during the past month:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/471[Regen intrinsics conversions] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/489[Updating readme instructions] (thanks to Gerson2102!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/490[updated build system script commands] (thanks to g4titanx!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/493[Fix passing custom CG_RUSTFLAGS when building sysroot] (thanks to darcagn!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/494[Modify build_system's prepare stage to allow for custom sysroot source path] (thanks to darcagn!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/497[Fix check for main function already declared]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/498[Fix PassMode::Indirect with params]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/499[Fix panic when calling get_fn for a variable]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/500[Implement more type kinds]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/504[Some fixes for aarch64]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/507[Download artifacts from rust-lang/gcc instead of old antoyo/gcc] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/508[Some more fixes and workarounds for Aarch64]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/509[Stop swallowing signals in build_system when running sub-commands] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/510[Add fmt command] (thanks to GuillaumeGomez!)
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/512[Fix segfault in tests due to a bug in libc 0.2.154]
+
+//=== State of compiling popular crates
+
+// TODO: measure time to run tests and RSS (RAM usage).
+// TODO: move to after the features table when it's not updated.
+
+This month, we fixed a few ICEs (Internal Compiler Error) that we had, we improved the support for Aarch64 and made progress on the support for the new types `f16` and `f128` (thanks to zedar!) among other things.
+We're still progressing in doing the sync with the Rust repo which is harder than usual, but after it's done, we'll be back on working on `rustup` support.
+
+Next month, we'll continue towards our goal of distributing this project through `rustup`, which should hopefully happens in a couple of months.
+
+Here's a rough summary of what has been implemented:
+
+[cols="<,<,1,1"]
+|===
+| Feature | Last month completion | Completion | Delta
+
+| Unwinding.
+| 80%
+| 80%
+|
+
+| LTO.
+| 80%
+| 80%
+|
+
+| More function and variable attributes.
+| 20%
+| 20%
+|
+
+| Target features (to detect what is supported in an architecture, like SIMD).
+| 80%
+| 82%
+| +2%
+
+| Debug info.
+| 20%
+|
+|
+
+| Thin LTO.
+| 0%
+|
+|
+
+| Rustup distribution.
+| 0%
+|
+|
+
+| SIMD for other architectures than x86-64.
+| 0%
+|
+|
+
+| Support for new architectures in libraries (libc, object, …) and rustc.
+| 0%
+|
+|
+
+| Endianness support for non-native 128-bit integers.
+| Done
+|
+|
+
+| SIMD (x86-64).
+| Done
+|
+|
+
+| Basic and aggregate types.
+| Done
+|
+|
+
+| Operations, local and global variables, constants, functions, basic blocks.
+| Done
+|
+|
+
+| Atomics.
+| Done
+|
+|
+
+| Thread-local storage.
+| Done
+|
+|
+
+| Inline assembly.
+| Done
+|
+|
+
+| Many intrinsics.
+| Done
+|
+|
+
+| Metadata.
+| Done
+|
+|
+
+| Setting optimization level.
+| Done
+|
+|
+
+| Packed structures.
+| Done
+|
+|
+
+| Alignment, symbol visibility, attributes.
+| Done
+|
+|
+
+| 128-bit integers.
+| Done
+|
+|
+|===
+
+=== UI tests progress
+
+Here are the results of running the UI tests in the CI:
+
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8938693692/job/24553335006#step:15:4472
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8938693692/job/24553334727#step:15:4449
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/8930722686#summary-24531397699 (failures)
+
+|===
+| Category | Last Month | This Month | Delta
+
+| Passed | 5647 | 5664 | +17
+| Failed |  70 | 71 | +1
+|===
+
+// TODO: remove the (15) LTO tests from the table.
+
+(I removed the LTO tests from the failed row because those tests pass in the CI job where LTO is enabled.)
+
+== How to contribute
+
+=== `rustc_codegen_gcc`
+
+If you want to help on the project itself, please do the following:
+
+ 1. Run the tests locally.
+ 2. Choose a test that fails.
+ 3. Investigate why it fails.
+ 4. Fix the problem.
+
+Even if you can't fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!
+
+=== Crates and rustc
+
+If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like `libc` and `object` and also
+in the rust compiler itself.
+
+=== Test this project
+
+Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.
+
+To do so, follow https://github.com/rust-lang/rustc_codegen_gcc?tab=readme-ov-file#building[these instructions to build the project] and run a program via the https://github.com/rust-lang/rustc_codegen_gcc?tab=readme-ov-file#cargo[`cargo` command of our script].
+
+If you find a bug, https://github.com/rust-lang/rustc_codegen_gcc/issues[please open an issue].
+
+=== Good first issue
+
+Finally, another good way to help is to look at https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22[good first issues]. Those are issues that should be easier to start with.
+
+== Thanks for your support!
+
+I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.
+
+A special thanks to the following sponsors:
+
+ * Futurewei
+ * saethlin
+ * embark-studios
+ * Shnatsel
+ * Rust Foundation
+ * opensrcsec
+
+A big thank you to bjorn3 for his help, contributions and reviews.
+And a big thank you to lqd and https://github.com/GuillaumeGomez[GuillaumeGomez] for answering my
+questions about rustc's internals.
+Another big thank you to Commeownist for his contributions.
+
+Also, a big thank you to the rest of my sponsors:
+
+ * kpp
+ * 0x7CFE
+ * oleid
+ * acshi
+ * joshtriplett
+ * djc
+ * sdroege
+ * pcn
+ * alanfalloon
+ * davidlattimore
+ * colelawrence
+ * zmanian
+ * alexkirsz
+ * berkus
+ * belzael
+ * yvt
+ * Shoeboxam
+ * yerke
+ * bes
+ * srijs
+ * kkysen
+ * riking
+ * Lemmih
+ * memoryruins
+ * senden9
+ * robjtede
+ * Jonas Platte
+ * Sam Harrington
+ * Jonas
+ * Eugene Bulkin
+ * Joseph Garvin
+ * MarcoFalke
+ * athre0z
+ * Sebastian Zivota
+ * Oskar Nehlin
+ * Nicolas Barbier
+ * Daniel
+ * Justin Ossevoort
+ * kiyoshigawa
+ * Daniel Sheehan
+ * Marvin Löbel
+ * nacaclanga
+ * 0x0177b11f
+ * L.apz
+ * JockeTF
+ * davidcornu
+ * stuhood
+ * Mauve
+ * icewind1991
+ * nicholasbishop
+ * David Vasak
+ * Eric Driggers
+ * Olaf Leidinger
+ * UtherII
+ * simonlindholm
+ * lemmih
+ * Eddddddd
+ * rrbutani
+ * Mateusz K
+ * thk1
+ * 0xdeafbeef
+ * teh
+ * KirilMihaylov
+ * Vladislav Sukhmel
+ * CohenArthur
+ * ximou
+ * Kate Kiesel
+
+and a few others who preferred to stay anonymous.
+
+Former sponsors/patreons:
+
+ * igrr
+ * Traverse-Research
+ * finfet
+ * Alovchin91
+ * wezm
+ * mexus
+ * raymanfx
+ * ghost
+ * gilescope
+ * olanod
+ * Denis Zaletaev
+ * Chai T. Rex
+ * Paul Ellenbogen
+ * Dakota Brink
+ * Botlabs
+ * Cass
+ * Oliver Marshall
+ * pthariensflame
+ * tedbyron
+ * sstadick
+ * Absolucy
+ * rafaelcaricio
+ * dandxy89
+ * luizirber
+ * regiontog
+ * vincentdephily
+ * zebp
+ * Hofer-Julian
+ * messense
+ * fanquake
+ * jam1garner
+ * sbstp
+ * evanrichter
+ * Nehliin
+ * nevi-me
+ * TimNN
+ * steven-joruk
+ * seanpianka
+ * spike grobstein
+ * Jeff Muizelaar
+ * robinmoussu
+ * Chris Butler
+ * sierrafiveseven
+ * icewind
+ * Thomas Colliers
+ * Tommy Thorn
+ * Bálint Horváth
+ * Matthew Conolly
+ * Lapz
+ * Myrik Lord
+ * T
+ * Emily A. Bellows
+ * Chris
+ * repi
+
+// TODO: remove embark-studios and saethlin
