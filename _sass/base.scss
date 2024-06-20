@@ -16,14 +16,10 @@ html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, img {
   border: 0;
 }
 
-body {
-
-}
-
 /*- Base color -*/
 
 $background-color: #FFFFFF;
-$text-color: #333333;
+$text-color: #000;
 $text-light-color: rgba(0,0,0,0.6);
 $text-dark-color: #000000;
 
@@ -40,9 +36,8 @@ html {
 }
 
 body {
- max-width: 1000px;
- margin: 0 auto;
- padding: 0 10px;
+ margin: 0;
+ padding: 0;
 }
 
 /*- Link -*/
