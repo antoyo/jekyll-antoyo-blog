@@ -43,6 +43,7 @@ Here's what has been done during the past month:
 This month, the main highlight is the support for the new types `f16` and `f128` (thanks to zedar!).
 
 We also were able to finish the sync with the Rust compiler, which was much harder than usual, so we'll be able to get back on working on `rustup` support.
+During this sync, we implemented a dummy ThinLTO implementation, so while it doesn't do ThinLTO, it won't panic anymore when attempting to compile a project with ThinLTO enabled.
 We did many attempts to sync with the Rust compiler since March because we had a very hard time keeping up with all the changes in the Rust compiler that break things every now and then:
 
  * https://github.com/antoyo/rustc_codegen_gcc/pull/11[Take #1]
@@ -102,8 +103,8 @@ Here's a rough summary of what has been implemented:
 
 | Thin LTO.
 | 0%
-|
-|
+| 5%
+| +5%
 
 | Rustup distribution.
 | 0%
