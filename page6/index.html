@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Antoyo's Blog</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+<a href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+<a href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <!-- Posts -->
+<ul id="posts">
+
+	
+
+	  <li class="post">
+	  	<h2><a href="/evolution-rust-programmer">The Evolution of a Rust Programmer</a></h2>
+      <time datetime="2019-01-15T00:00:00+00:00" class="by-line"> <i>15 Jan 2019</i> </time>
+	  	<p>Freshman Rust Programmer fn main() { let mut line = String::new(); std::io::stdin().read_line(&amp;mut line).unwrap(); let mut sum = 0; for word in line.split_whitespace() { let num = word.parse::&lt;i64&gt;().unwrap(); sum += num; } println!(&quot;Sum: {}&quot;, sum); } Sophomore Rust Programmer (studied C as a freshman) extern crate libc; use libc::{c_char, printf, scanf,...</p>
+	  </li>
+
+    
+
+	  <li class="post">
+	  	<h2><a href="/rust-gnome-hackfest-thessaloniki">Rust+GNOME Hackfest #4</a></h2>
+      <time datetime="2018-11-25T00:00:00+00:00" class="by-line"> <i>25 Nov 2018</i> </time>
+	  	<p>Less than 2 weeks ago, I was working on improving the integration of Rust with GNOME libraries at the fourth Hackfest, which happened this time in Thessaloniki. Improving ergonomics of gnome-class As I said in my previous blog post, there is a issue when inheriting from a gtk::Widget: As a...</p>
+	  </li>
+
+    
+
+	  <li class="post">
+	  	<h2><a href="/rust-gnome-hackfest-madrid">Rust+GNOME Hackfest #3</a></h2>
+      <time datetime="2018-04-24T00:00:00+00:00" class="by-line"> <i>24 Apr 2018</i> </time>
+	  	<p>Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid. Improvement of the position of error messages Thanks to my experience in improving the error messages in relm, I was able to help Federico improving the...</p>
+	  </li>
+
+    
+
+	  <li class="post">
+	  	<h2><a href="/tql-easy-orm">TQL, an easy-to-use ORM for Rust</a></h2>
+      <time datetime="2017-12-11T00:00:00+00:00" class="by-line"> <i>11 Dec 2017</i> </time>
+	  	<p>Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use proc-macro and benefit from the same features as the original version, while also working on the stable version of...</p>
+	  </li>
+
+    
+
+	  <li class="post">
+	  	<h2><a href="/rust-gnome-hackfest-november">Rust+GNOME Hackfest (November 2017)</a></h2>
+      <time datetime="2017-11-13T00:00:00+00:00" class="by-line"> <i>13 Nov 2017</i> </time>
+	  	<p>This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin. The Hackfest was generously hosted by Kinvolk. I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source projects related to gtk-rs. The Rust+GNOME...</p>
+	  </li>
+
+    
+
+</ul>
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+        <div class="pagination">
+          
+            <a href="/page5/" class="page-item">&laquo;</a>
+          
+
+          
+            
+              <a href="/" class="page-item">1</a>
+            
+          
+            
+              <a href="/page2/" class="page-item">2</a>
+            
+          
+            
+              <a href="/page3/" class="page-item">3</a>
+            
+          
+            
+              <a href="/page4/" class="page-item">4</a>
+            
+          
+            
+              <a href="/page5/" class="page-item">5</a>
+            
+          
+            
+              <span class="page-item">6</span>
+            
+          
+
+          
+            <span class="page-item">&raquo;</span>
+          
+        </div>
+        
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+    <span>© 2017-2024 - Antoni Boucher</span>
+    <a href="https://www.patreon.com/antoyo"><img class="sponsor" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <iframe src="https://github.com/sponsors/antoyo/button" title="Sponsor antoyo" height="35" width="116" style="border: 0;"></iframe>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
