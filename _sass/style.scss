@@ -2,9 +2,14 @@ li > p {
     margin-bottom: 0;
 }
 
-.sponsor {
-    display: inline;
+.patreon {
     margin: 0;
+}
+
+.sponsor {
+  display: flex;
+  align-content: center;
+  align-items: center;
 }
 
 th.halign-left,td.halign-left {
