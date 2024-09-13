@@ -7,9 +7,13 @@ li > p {
 }
 
 .sponsor {
-  display: flex;
+  display: flex !important;
   align-content: center;
   align-items: center;
+}
+
+.btn:hover {
+  border-color: #000;
 }
 
 th.halign-left,td.halign-left {
