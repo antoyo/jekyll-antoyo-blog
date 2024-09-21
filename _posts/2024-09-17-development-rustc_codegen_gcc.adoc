@@ -47,8 +47,10 @@ In this case, we had the following errors when compiling a program using the sta
 
 [source,bash]
 ----
-/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib(std.std.c6df57227ece985b-cgu.11.rcgu.o):(.data.rel._rust_extern_with_linkage_pidfd_spawnp+0x0): undefined reference to `pidfd_spawnp'
-/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib(std.std.c6df57227ece985b-cgu.11.rcgu.o):(.data.rel._rust_extern_with_linkage_pidfd_getpid+0x0): undefined reference to `pidfd_getpid'
+/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib(std.std.c6df57227ece985b-cgu.11.rcgu.o):(.data.rel._rust_extern_with_linkage_pidfd_spawnp+0x0):
+undefined reference to `pidfd_spawnp'
+/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib(std.std.c6df57227ece985b-cgu.11.rcgu.o):(.data.rel._rust_extern_with_linkage_pidfd_getpid+0x0):
+undefined reference to `pidfd_getpid'
 ----
 
 This required a bit of investigation to figure out why this was happening.
@@ -69,7 +71,7 @@ The process to create this mapping is cumbersome:
  3. We add the mapping for this intrinsic.
  4. We go back to step 1.
 
-Since in the current sync (which updates from Rust nightly-2024-07-02 to nightly-2024-08-11) there were https://github.com/rust-lang/rustc_codegen_gcc/pull/556/files#diff-4fb378dd283a8400f8f8defde08413dc31a55b1a776c3fa2473e3f059061740cR902-R1228[more than 100 new intrinsics], this process can take time.
+Since in the current sync (which updates from Rust `nightly-2024-07-02` to `nightly-2024-08-11`) there were https://github.com/rust-lang/rustc_codegen_gcc/compare/d3c9cc57d291efa09963add37b11cc52edcae19e..cb36d78d7ba5ddd1b148db955121f43aad9f5db4#diff-4fb378dd283a8400f8f8defde08413dc31a55b1a776c3fa2473e3f059061740c[more than 100 new intrinsics], this process can take time.
 
 To help go a bit faster, I modified a bit the code so that it doesn't panic on the first missing intrinsic, but it will rarely show more than 5 missing intrinsics at a time since it will eventually fail with a type mismatch error in GCC at some point when I do that.
 
@@ -95,7 +97,8 @@ We also have another error that we need to fix:
 
 [source,bash]
 ----
-libgccjit.so: crates/core_arch/src/x86/avx512ifma.rs:136:5: error: : ‘__builtin_ia32_vpmadd52huq256_mask’ needs isa option -mavx512ifma -mavx512vl
+libgccjit.so: crates/core_arch/src/x86/avx512ifma.rs:136:5: error: :
+‘__builtin_ia32_vpmadd52huq256_mask’ needs isa option -mavx512ifma -mavx512vl
 ----
 
 This seems to suggest that we do something wrong with enabling target features at the function level: I haven't started investigating this issue yet, though, so I might be wrong.
