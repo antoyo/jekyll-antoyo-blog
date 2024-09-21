@@ -108,14 +108,17 @@ This seems to suggest that we do something wrong with enabling target features a
 All of that made me think perhaps it would help quite a bit to shift our priorities.
 For instance, focusing on the latest AVX-512 intrinsics could perhaps be delayed so that the sync can be made faster and more easily.
 Doing so would allow us to work on other, more important, features.
-I'd still like to keep running the stdarch tests in our CI, though, so that what we have continues to work:
+I'd still like to keep running the `stdarch` tests in our CI, though, so that what we have continues to work:
 I'll try to find a way to make sure the tests compile even without the missing intrinsics and to ignore the tests in this case.
+Doing so could also create relatively simple tasks for new potential contributors: they could add a few missing intrinsics every now and then, a few at a time.
 
-As I continue to do this exercise of explaining the work we do on rustc_codegen_gcc, I might think about other prioritization issues we might have.
+As I continue to do this exercise of explaining the work we do on `rustc_codegen_gcc`, I might think about other prioritization issues we might have.
 
 == Conclusion
 
 As you can see, we're struggling to keep up with the changes in rustc. For the current sync, the issue mostly was trying to stay up-to-date to support the newest AVX-512 intrinsics. Doing so, we found a bug in the GCC backend which we'll need to fix to complete this sync.
+
+I also proposed a solution to help us go faster with these sync by prioritizing more important work.
 
 When we'll have more tests running in the CI of the Rust repo, it will help us with these sync because we'll be able to fix one issue at a time without having to investigate much about what's the cause of the issue.
 Some of these issues might even be fixed by the contributor making the PR if it's easy.
