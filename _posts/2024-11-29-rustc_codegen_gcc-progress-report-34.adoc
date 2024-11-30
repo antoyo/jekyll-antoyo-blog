@@ -194,15 +194,15 @@ Here's a rough summary of what has been implemented:
 
 Here are the results of running the UI tests in the CI:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/9813140371/job/27098581101#step:15:4635
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/9813140371/job/27098581731#step:15:4667
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/9812866864#summary-27097769703 (failures)
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/12035966315/job/33556138107#step:15:4223
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/12035966315/job/33556138637#step:15:4249
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/12035966946#summary-33556131754 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
 
-| Passed | 5664 | 5931 | +267
-| Failed | 71 | 88 | +17
+| Passed | 5931 | 6125 | +194
+| Failed | 88 | 129 | +41
 |===
 
 // TODO: remove the (15) LTO tests from the table.
