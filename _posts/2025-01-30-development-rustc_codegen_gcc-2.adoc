@@ -4,7 +4,7 @@
 
 A couple months ago, https://blog.antoyo.xyz/development-rustc_codegen_gcc[I wrote an article] that described the challenges we had to do the previous sync from the Rust repo to `rustc_codegen_gcc`.
 (if you don't know what a sync is, please read that https://blog.antoyo.xyz/development-rustc_codegen_gcc[blog article]).
-We also had many issues with the https://github.com/rust-lang/rustc_codegen_gcc/pull/578[latest sync] and this post will described what they were and how they were fixed.
+We also had many issues with the https://github.com/rust-lang/rustc_codegen_gcc/pull/578[latest sync] and this post will describe what they were and how they were fixed.
 
 == Undefined function errors
 
@@ -30,6 +30,7 @@ When doing this sync, we had a few issues that surfaced with this change and the
 
 The first issue was a linking error:
 
+[source,bash]
 ----
   = note: rust-lld: error: relocation R_X86_64_64 cannot be used against local symbol; recompile with -fPIC
           >>> defined in /home/user/projects/rustc_codegen_gcc/build/build_sysroot/target/x86_64-unknown-linux-gnu/debug/deps/libadler-23df15ba7ec65be8.rlib(adler-23df15ba7ec65be8.adler.f06cf9c6e30e0791-cgu.0.rcgu.o)
