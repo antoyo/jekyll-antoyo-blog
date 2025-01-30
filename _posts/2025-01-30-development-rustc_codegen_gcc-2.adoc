@@ -1,0 +1,74 @@
+= Development of rustc_codegen_gcc #2
+:page-navtitle: Development of rustc_codegen_gcc #2
+:page-liquid:
+
+A couple months ago, https://blog.antoyo.xyz/development-rustc_codegen_gcc[I wrote an article] that described the challenges we had to do the previous sync from the Rust repo to `rustc_codegen_gcc`.
+(if you don't know what a sync is, please read that https://blog.antoyo.xyz/development-rustc_codegen_gcc[blog article]).
+We also had many issues with the https://github.com/rust-lang/rustc_codegen_gcc/pull/578[latest sync] and this post will described what they were and how they were fixed.
+
+== Undefined function errors
+
+The first error we had was about some functions that could not be found by the linker, including some alloc functions like `__rust_alloc`.
+It turned out that this was caused by some changes made in the LLVM codegen regarding the visibility set on functions that were not copied in the GCC codegen.
+We plan some day to reduce the duplication between both codegens in order to avoid this kind of issues in the future.
+
+== AVX-512 tests failing
+
+Like I explained in the previous article about the development of this project, we had some issues with AVX-512.
+While I mentioned in that article that I might pause the work on AVX-512 to be able to progress faster on the project, I'm glad I didn't skip fixing this issue since I learned something important.
+Indeed, while some AVX-512 tests were failing, it wasn't caused by these intrinsics.
+It was actually caused by this fact that I didn't know: GCC seems to allocate some expressions on the stack even when I do not specifically ask it to do so.
+The tests would crash with a stack overflow and upon inspection, I saw that they tried to allocate way too much space on the stack.
+By looking at the GIMPLE dumps, I noticed that it would create thousands of vector variables, many of them being constants and having the same value.
+I don't know why GCC wasn't able to optimize that: perhaps it just gives up when there are too many variables?
+In the end, I fixed this issue by explicitly asking GCC to create a variable instead of reusing the same expression in multiple places in order to control how many variables would actually be created on the stack. I suspect I have this issue in other places and I'll fix it when I see this problem again.
+
+== Failures caused by the switch to `lld`
+
+A couple months ago, Rust made the switch to use a https://blog.rust-lang.org/2024/05/17/enabling-rust-lld-on-linux.html[new linker by default on Linux: lld].
+When doing this sync, we had a few issues that surfaced with this change and they were quite hard to diagnosed.
+
+The first issue was a linking error:
+
+----
+  = note: rust-lld: error: relocation R_X86_64_64 cannot be used against local symbol; recompile with -fPIC
+          >>> defined in /home/user/projects/rustc_codegen_gcc/build/build_sysroot/target/x86_64-unknown-linux-gnu/debug/deps/libadler-23df15ba7ec65be8.rlib(adler-23df15ba7ec65be8.adler.f06cf9c6e30e0791-cgu.0.rcgu.o)
+          >>> referenced by fake.c
+          >>>               adler-23df15ba7ec65be8.adler.f06cf9c6e30e0791-cgu.0.rcgu.o:(global.1) in archive /home/user/projects/rustc_codegen_gcc/build/build_sysroot/target/x86_64-unknown-linux-gnu/debug/deps/libadler-23df15ba7ec65be8.rlib
+----
+
+An error about a relocation. I had to dive into how GCC generates relocations to understand what was going on.
+
+=== What are relocations?
+
+Let's say you have a program that takes a reference to a global variable.
+When we compile an object file, we don't know what will be the address of this variable before linking, so the compiler inserts what we call a relocation, an information that can be used at link-time to compute the actual address of the variable. That's called a static relocation.
+
+Relocation can also happen at run-time: in this case, it's called a dynamic relocation.
+
+In my first issue, I first noticed that the variable was put in the section `.rodata`, while Rust with LLVM would put it in the section `.data.rel.ro`.
+At some point, I realized GCC didn't generate the relocation that was needed.
+After debugging the code in GCC that generates the relocation, I noticed that using the GCC equivalent of `transmute` in the initial value of a global variable would cause this issue.
+So, I was using `transmute` there for pointer to integer conversion, because, at the time, `libgccjit` didn't allow casting between pointers and integers.
+By switching to a normal cast, this fixed this issue.
+
+The second issue caused some global variables to be uninitialized.
+Again, this was an issue with relocations: this time, it was producing a static relocation, but it needed a dynamic relocation.
+This time, the issue was that I was creating duplicate global variables of the same name, in different codegen units (so in different object files), instead of creating it once and importing it in other modules.
+It took me a while to figure that out.
+
+== LTO issues
+
+After that, I had some LTO issues, where some tests would fail with LTO enabled.
+The issue turned out that I was not handling the relocation model when doing LTO.
+Now, we correctly send `-fPIC`, `-fPIE` or `-fno-pie` depending on the requested relocation model.
+
+== Conclusion
+
+Once again, we're struggling to keep up with the changes in rustc. https://github.com/rust-lang/rustc_codegen_gcc/pull/578[This sync] was to be up-to-date with nightly-2024-12-11.
+But we started to see some of these issues when trying to do the sync for nightly-2024-10-08: again, it took us a few months to be able to investigate and fix these issues.
+We were able to do a few more syncs afterwards and we're now at nightly-2025-01-12.
+
+Hopefully, this taught us a few things that might be useful in the future about relocations and LTO: perhaps debugging this LTO issue would help us to resolve the last issues that we have with LTO.
+
+Some people helped me to investigate these issues and I'd like to thank them: David Lattimore, Jessica Clarke, lqd, bjorn3, Kobzol, Saethlin, tgross35, GuillaumeGomez and possibly a few others.
