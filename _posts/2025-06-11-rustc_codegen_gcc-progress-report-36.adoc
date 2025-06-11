@@ -25,7 +25,7 @@ Here's what has been done during the past months:
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/652[Sync from rust 2025/04/25]
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/653[Enable [no-mentions\] and [issue-links\] in rustbot] (thanks to Urgau!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/654[Sync from rust 2025/04/26]
- * https://github.com/rust-lang/rustc_codegen_gcc/pull/656[Clean up docs]
+ * https://github.com/rust-lang/rustc_codegen_gcc/pull/656[Clean up docs] (thanks to GuillaumeGomez!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/657[Support more calling convention attributes]
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/659[Added a .gitattributes file for showing cargo.lock diffs] (thanks to albus-droid!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/660[Stop ignoring the feature -sse]
@@ -54,12 +54,12 @@ Also, we've had a https://github.com/Rust-for-Linux/ci-rustc_codegen_gcc[CI to t
 // TODO: move to after the features table when it's not updated.
 
 Once again, I still struggle with https://github.com/rust-lang/rustc_codegen_gcc/pull/694[the current sync].
-In order to make it easier in the future and avoid having frequent breakage of `rustc_codegen_gcc` with the changes made in the Rust repo, I want compile the sysroot with `rustc_codegen_gcc` in the CI of the Rust repository: that way, this should catch much more errors than with the tests that we currently have.
+In order to make it easier in the future and avoid having frequent breakage of `rustc_codegen_gcc` with the changes made in the Rust repo, I want to compile the sysroot with `rustc_codegen_gcc` in the CI of the Rust repository: that way, this should catch much more errors than with the tests we currently have.
 This will allow me to focus more on making progress on actual work, rather than fixing issues that should not happen if we had better testing.
 
-As you can see, we got many contributions from FractalFir, which is doing the https://blog.rust-lang.org/2025/05/08/gsoc-2025-selected-projects/[Google Summer of Code with us this year]: we're super happy to have a such talented person helping us moving things forward!
+As you can see, we got many contributions from FractalFir, which is doing the https://blog.rust-lang.org/2025/05/08/gsoc-2025-selected-projects/[Google Summer of Code with us this year]: we're super happy to have such a talented person helping us moving things forward!
 
-Next month, I'll finish this sync, attempt to reenable some tests https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-33[that were disabled in a previous sync] and continue my work on fixing Link-Time Optimization which doesn't work properly in some cases.
+Next month, I'll finish this sync, attempt to reenable some tests https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-33#state_of_rustc_codegen_gcc[that were disabled in a previous sync] and continue my work on fixing Link-Time Optimization which doesn't work properly in some cases.
 
 Here's a rough summary of what has been implemented:
 
