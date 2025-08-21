@@ -209,9 +209,9 @@ Here's a rough summary of what has been implemented:
 
 Here are the results of running the UI tests in the CI:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/15571933992/job/43849452162#step:14:4307
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/15571933992/job/43849452151#step:14:4325
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/15570906521#summary-43846293076 (failures)
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/16971110900/job/48108045682#step:18:4035
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/16971110900/job/48108045684#step:18:4028
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/16970015645#summary-48104146696 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
