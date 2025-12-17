@@ -37,7 +37,7 @@ I sent all the patches that were ready to be sent in the hope that we can be as 
 Also, a few patches were merged upstream:
 
  * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=143396aebf749f8182c77a077cca3b216a7cbebc[libgccjit: Add the function attributes for setting the ABI]
- * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=536163c3f51c679c7ac64333480501a0a89a3d76[libgccjit: Add _Float16, _Float32, _Float64 and \__float128 support for jit]
+ * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=536163c3f51c679c7ac64333480501a0a89a3d76[libgccjit: Add _Float16, _Float32, _Float64 and `__float128` support for jit]
  * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=f84ff38613595a2b3d47ca2ceb635619e81c2908[libgccjit: Fix error on Power architectures caused by wrong jit_target_objs]
  * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=c11d9eaa8ac9ee905f1211c345857373427ea5ac[libgccjit: Add gcc_jit_context_new_array_type_u64]
  * https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=df879e7adfcef471703950ef0652e8a6e4fde0f4[libgccjit: Do not treat warnings as errors]
