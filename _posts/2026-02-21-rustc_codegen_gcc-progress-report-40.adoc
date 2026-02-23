@@ -39,11 +39,11 @@ Here's what has been done during the past months:
 As you may have https://www.reddit.com/r/rust/comments/1qk9t1t/the_rust_gcc_backend_can_now_be_installed_with/[seen on Reddit], `rustc_codegen_gcc` is now distributed on rustup!
 Thanks a lot to Kobzol, bjorn3, GuillaumeGomez and all others who helped with this.
 It is to be noted that there are some issues with it (especially proc-macros) since it uses a standard library compiled with a LLVM-based rustc (most likely an ABI issue).
-I will do a proper announcement blog post after adding some tests of the rustup artifacts: this will allow make to quickly fix any issues that arise there.
+I will do a proper announcement blog post after adding some tests of the rustup artifacts: this will allow me to quickly fix any issues that arise there.
 For now, it is only distributed for Linux x86-64.
 
 I have an idea of what could be the issue here and if it is what I think, it might take a couple months to have a proper fix for this since GCC gives less control over the ABI than LLVM.
-In the next months, I attempt to fix this or at least provide a temporary workaround to make sure that the version distributed by rustup works as well as the version in the project repository.
+In the next months, I'll attempt to fix this or at least provide a temporary workaround to make sure that the version distributed by rustup works as well as the version in the project repository.
 Also, I'll get back to my work of building a working `rustc` for m68k.
 
 //=== State of compiling popular crates
