@@ -40,8 +40,9 @@ As you may have https://www.reddit.com/r/rust/comments/1qk9t1t/the_rust_gcc_back
 Thanks a lot to Kobzol, bjorn3, GuillaumeGomez and all others who helped with this.
 It is to be noted that there are some issues with it (especially proc-macros) since it uses a standard library compiled with a LLVM-based rustc (most likely an ABI issue).
 I will do a proper announcement blog post after adding some tests of the rustup artifacts: this will allow make to quickly fix any issues that arise there.
+For now, it is only distributed for Linux x86-64.
 
-I have an idea what could be the issue here and if it is what I think, it might take a couple months to have a proper fix for this since GCC gives less control over the ABI than LLVM.
+I have an idea of what could be the issue here and if it is what I think, it might take a couple months to have a proper fix for this since GCC gives less control over the ABI than LLVM.
 In the next months, I attempt to fix this or at least provide a temporary workaround to make sure that the version distributed by rustup works as well as the version in the project repository.
 Also, I'll get back to my work of building a working `rustc` for m68k.
 
@@ -63,8 +64,8 @@ Here's a rough summary of what has been implemented:
 
 | Rustup distribution.
 | 40%
-| 40%
-|
+| 100%
+| +60%
 
 | Unwinding.
 | 80%
@@ -102,9 +103,9 @@ Here's a rough summary of what has been implemented:
 |
 
 | Support for new architectures in libraries (libc, object, …) and rustc.
-| 0%
 | 2%
-| +2%
+| 2%
+|
 
 | SIMD for other architectures than x86-64.
 | 0%
