@@ -192,15 +192,15 @@ Here's a rough summary of what has been implemented:
 
 Here are the results of running the UI tests in the CI:
 
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/20039113246/job/57468316723#step:18:4162
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/20039113246/job/57468316741#step:18:4176
- * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/20038468084#summary-57466180045 (failures)
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/22260624208/job/64398279632#step:19:4223
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/22260624208/job/64398279654#step:19:4267
+ * https://github.com/rust-lang/rustc_codegen_gcc/actions/runs/22260624205#summary-64398279622 (failures)
 
 |===
 | Category | Last Month | This Month | Delta
 
-| Passed | 6676 | 6774 | +98
-| Failed | 47 | 57 | +10
+| Passed | 6774 | 6916 | +142
+| Failed | 57 | 68 | +11
 |===
 
 == How to contribute
