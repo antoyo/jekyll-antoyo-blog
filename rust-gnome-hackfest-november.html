@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Rust+GNOME Hackfest (November 2017)</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Rust+GNOME Hackfest (November 2017)</h2>
+    <time datetime="2017-11-13T00:00:00+00:00" class="by-line">13 Nov 2017</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This last weekend was the second Rust+GNOME Hackfest and this time, it was in Berlin.
+The Hackfest was generously hosted by Kinvolk.
+I was graciously sponsored by GNOME to be able to attend this Hackfest to have the opportunity to work on open source projects related to gtk-rs.</p>
+</div>
+<div class="paragraph">
+<p>The Rust+GNOME Hackfest is an event to work on integrating Rust into the GNOME ecosystem.
+The idea of this event is to progressively allow using more Rust for developing Rust softwares.
+On the first Hackfest in Mexico, I worked on integrating glib with futures, resulting in the <a href="https://github.com/antoyo/futures-glib-rs">futures-glib crate</a>.</p>
+</div>
+<div class="paragraph">
+<p>During this event, I met new people, some that I have talked to online, like <a href="https://github.com/sdroege">Sebastian Dröge aka sdroege</a> and some that I didn&#8217;t know like <a href="https://github.com/philn">Philippe Normand aka philn</a>.
+It was awesome to meet new people that weren&#8217;t in the first Hackfest in Mexico, and also to meet the ones that were there.
+This event allowed me to do a task in a few days, while it would have taken me months to do in my spare time, so this kind of events is very nice to quickly improve the Rust and GNOME integration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gir_the_code_generator">Gir, the code generator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>During this Hackfest, I worked on <a href="https://github.com/gtk-rs/gir"><code>gir</code></a>, the tool we use to generate most of the code for the Rust bindings of the GNOME libraries.
+This tool can generate both the <code>*-sys</code> crates (like <code>gtk-sys</code>) which is a direct Rust mapping to the C functions and types and the idiomatic and safe Rust wrapper (i.e. <code>gtk</code>).
+It uses both a <code>.gir</code> file (like <code>Gtk-3.0.gir</code>) which contains the classes, methods and functions for a GNOME library and a custom <code>toml</code> file to palliate the issues of the <code>.gir</code> file and customize the code generation.</p>
+</div>
+<div class="paragraph">
+<p>While <code>gir</code> can currently generate most of the code, one area that was still missing was the asynchronous methods.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="asynchronous_functions">Asynchronous functions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In GTK+, you can start operations asynchronously and get notified in a callback when it is done.
+This can be done this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">load_callback</span><span class="tok-p">(</span><span class="tok-n">GObject</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">source_object</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">GAsyncResult</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">res</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">gpointer</span><span class="tok-w"> </span><span class="tok-n">user_data</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-kt">char</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">contents</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">gsize</span><span class="tok-w"> </span><span class="tok-n">length</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-kt">char</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">etag_out</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">GError</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">error</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-o">!</span><span class="tok-n">g_file_load_contents_finish</span><span class="tok-p">((</span><span class="tok-n">GFile</span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">source_object</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">res</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">contents</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">length</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">etag_out</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">error</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// Handle error.</span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// Use contents.</span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">g_file_load_contents_async</span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">load_callback</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This involves some boilerplate and surely we can do better in Rust, by using at least closures and the <code>Result</code> type.</p>
+</div>
+<div class="paragraph">
+<p>So my task consisted of generating a safe and convenient Rust wrapper by updating the <code>gir</code> tool to support asynchronous functions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rust_wrapper_for_asynchronous_methods">Rust wrapper for asynchronous methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we dive into what I worked on, let&#8217;s look at the expected API we want to use in Rust.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example of using the generated code for the <code>gio</code> crate:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">app_launch_context</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">AppLaunchContext</span>::<span class="tok-n">new</span><span class="tok-p">();</span><span class="tok-w"></span>
+
+<span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">cancellable</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">AppInfo</span>::<span class="tok-n">launch_default_for_uri_async</span><span class="tok-p">(</span><span class="tok-s">&quot;file:///tmp/test.png&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">app_launch_context</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-n">result</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-nb">Err</span><span class="tok-p">(</span><span class="tok-n">error</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">result</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-fm">println!</span><span class="tok-p">(</span><span class="tok-s">&quot;Error: {}&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">error</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-fm">println!</span><span class="tok-p">(</span><span class="tok-s">&quot;Finish&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-p">});</span><span class="tok-w"></span>
+
+<span class="tok-n">cancellable</span><span class="tok-p">.</span><span class="tok-n">cancel</span><span class="tok-p">();</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The signature of this method is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">fn</span> <span class="tok-nf">launch_default_for_uri_async</span><span class="tok-o">&lt;</span><span class="tok-n">P</span>: <span class="tok-nb">Fn</span><span class="tok-p">(</span><span class="tok-nb">Result</span><span class="tok-o">&lt;</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">Error</span><span class="tok-o">&gt;</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-nb">Send</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-nb">Sync</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">uri</span>: <span class="tok-kp">&amp;</span><span class="tok-kt">str</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">launch_context</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">AppLaunchContext</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">callback</span>: <span class="tok-nc">P</span><span class="tok-p">)</span><span class="tok-w"> </span>-&gt; <span class="tok-nc">Cancellable</span><span class="tok-p">;</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This takes a closure that receives a <code>Result</code> type because asynchronous operations can always fail.
+It also have other parameters that are required for this specific method.
+Moreover, it returns a <code>Cancellable</code> structure that you can use to control the asynchronous task, for example by cancelling it.</p>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s see how we use this method line by line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">app_launch_context</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">AppLaunchContext</span>::<span class="tok-n">new</span><span class="tok-p">();</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First, we create an object that is required as a parameter for the method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">cancellable</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">AppInfo</span>::<span class="tok-n">launch_default_for_uri_async</span><span class="tok-p">(</span><span class="tok-s">&quot;file:///tmp/test.png&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">app_launch_context</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-n">result</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// …</span>
+<span class="tok-p">});</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we call the method and send it the required parameters and a callback that will receive the result as a parameter.
+Let&#8217;s see the content of this callback:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">cancellable</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">AppInfo</span>::<span class="tok-n">launch_default_for_uri_async</span><span class="tok-p">(</span><span class="tok-s">&quot;file:///tmp/test.png&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">app_launch_context</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-n">result</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-nb">Err</span><span class="tok-p">(</span><span class="tok-n">error</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">result</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-fm">println!</span><span class="tok-p">(</span><span class="tok-s">&quot;Error: {}&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">error</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-fm">println!</span><span class="tok-p">(</span><span class="tok-s">&quot;Finish&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-p">});</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we first check the error of the asynchronous operation.
+If there&#8217;s an error, we print it to the terminal.
+In any case, we print <code>Finish</code> to the terminal.
+Since there&#8217;s no result (it is <code>()</code>) for this method, we do nothing with it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">cancellable</span><span class="tok-p">.</span><span class="tok-n">cancel</span><span class="tok-p">();</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, we cancel the task so that it will print the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>Error: Operation was cancelled
+Finish</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementation_in_gir">Implementation in gir</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The task to generate asynchronous methods and functions is quite involved:
+we need to modify many parts of <code>gir</code> and we need to access two different methods when generating a single one.
+This is to get the types of the output parameters from the <code>*_finish</code> function when we generate the <code>*_async</code> one.</p>
+</div>
+<div class="paragraph">
+<p><code>Gir</code> contains multiple phases, like a compiler.
+First, it parses the XML <code>.gir</code> file.
+Then, it has an analysis phase:
+this phase gathers the information from the <code>.gir</code> file:
+like the classes and methods of a GNOME library.
+Finally, <code>gir</code> continues with the code generation phase:
+in this last phase, the Rust code is generated.</p>
+</div>
+<div class="paragraph">
+<p>Most of the work I did was in the analysis and code generation phases.
+The analysis phase now recognizes an asynchronous function and gather its output types.
+The code generation phase now generates the asynchronous functions and its associated trampoline.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="future_plan">Future plan</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There&#8217;s still some work to add in <code>gir</code> regarding asynchronous methods.
+The first one is to fix some issues and edge cases:
+some gnome libraries do not follow the convention of <code>*_async</code>, like GDBus where functions are asynchronous by default (with a <code>*_sync</code> variant for the asynchronous version).
+After these are fixed, I&#8217;ll merge the work into the master branch.</p>
+</div>
+<div class="paragraph">
+<p>Another interesting feature to implement would be to generate the asynchronous methods to return a <a href="https://github.com/alexcrichton/futures-rs"><code>futures</code></a> so that we can run futures on the <a href="https://github.com/antoyo/futures-glib-rs">glib event loop with futures-glib</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks_to_the_gnome_foundation">Thanks to the GNOME foundation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I&#8217;d like to thank the GNOME foundation for funding my trip to Berlin and which allowed me to work on open source projects with nice people for a few days.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/gnome-foundation.png" alt="GNOME Foundation"></span></p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

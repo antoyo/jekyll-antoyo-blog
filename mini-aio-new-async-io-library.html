@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>mini-aio: the new async IO library for Rust</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>mini-aio: the new async IO library for Rust</h2>
+    <time datetime="2019-05-20T00:00:00+00:00" class="by-line">20 May 2019</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>During my work at Adgear, I&#8217;ve been working for a while on an async IO
+library for Rust.
+This post will present this new library.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mini_aio">mini-aio</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This library takes a very different approach than most other async IO
+libraries in Rust:
+it is actually inspired by the <a href="https://www.ponylang.io/">Pony
+programming language</a>.
+So, it does not use futures, it does not use async/await: it just
+provides simple traits.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage">Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For instance, if you want to write an HTTP server, you&#8217;ll just
+implement the trait <code>TcpListenNotify</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">struct</span> <span class="tok-nc">Listener</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">impl</span><span class="tok-w"> </span><span class="tok-n">TcpListenNotify</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">Listener</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">listening</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">listener</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">net</span>::<span class="tok-n">TcpListener</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-k">match</span><span class="tok-w"> </span><span class="tok-n">listener</span><span class="tok-p">.</span><span class="tok-n">local_addr</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-nb">Ok</span><span class="tok-p">(</span><span class="tok-n">address</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-fm">println!</span><span class="tok-p">(</span><span class="tok-s">&quot;Listening on {}:{}.&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">address</span><span class="tok-p">.</span><span class="tok-n">ip</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">address</span><span class="tok-p">.</span><span class="tok-n">port</span><span class="tok-p">()),</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-nb">Err</span><span class="tok-p">(</span><span class="tok-n">error</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-fm">eprintln!</span><span class="tok-p">(</span><span class="tok-s">&quot;Could not get local address: {}.&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">error</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">not_listening</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-fm">eprintln!</span><span class="tok-p">(</span><span class="tok-s">&quot;Could not listen.&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">connected</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">_listener</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">net</span>::<span class="tok-n">TcpListener</span><span class="tok-p">)</span><span class="tok-w"> </span>-&gt; <span class="tok-nb">Box</span><span class="tok-o">&lt;</span><span class="tok-n">TcpConnectionNotify</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-nb">Box</span>::<span class="tok-n">new</span><span class="tok-p">(</span><span class="tok-n">Server</span><span class="tok-w"> </span><span class="tok-p">{})</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The idea is that the trait methods are called according to some events
+like when the socket started listening and when a connection was
+accepted.
+In the <code>connected</code> method, we create an implementation of the
+<code>TcpConnectionNotify</code> trait that we implement next:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">struct</span> <span class="tok-nc">Server</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">impl</span><span class="tok-w"> </span><span class="tok-n">TcpConnectionNotify</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">Server</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">accepted</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">_connection</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">mut</span><span class="tok-w"> </span><span class="tok-n">TcpConnection</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">received</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">connection</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">mut</span><span class="tok-w"> </span><span class="tok-n">TcpConnection</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">data</span>: <span class="tok-nb">Vec</span><span class="tok-o">&lt;</span><span class="tok-kt">u8</span><span class="tok-o">&gt;</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">request</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-nb">String</span>::<span class="tok-n">from_utf8</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">).</span><span class="tok-n">unwrap_or_else</span><span class="tok-p">(</span><span class="tok-o">|</span><span class="tok-n">_</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nb">String</span>::<span class="tok-n">new</span><span class="tok-p">());</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-n">lines</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">request</span><span class="tok-p">.</span><span class="tok-n">lines</span><span class="tok-p">();</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">first_line</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">lines</span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-p">().</span><span class="tok-n">unwrap_or</span><span class="tok-p">(</span><span class="tok-s">&quot;GET&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-n">parts</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">first_line</span><span class="tok-p">.</span><span class="tok-n">split_whitespace</span><span class="tok-p">();</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">_method</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">parts</span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-p">().</span><span class="tok-n">unwrap_or</span><span class="tok-p">(</span><span class="tok-s">&quot;GET&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">url</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">parts</span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-p">().</span><span class="tok-n">unwrap_or</span><span class="tok-p">(</span><span class="tok-s">&quot;/&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-n">url_parts</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">url</span><span class="tok-p">.</span><span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-sc">&#39;?&#39;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">path</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">url_parts</span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-p">().</span><span class="tok-n">unwrap_or</span><span class="tok-p">(</span><span class="tok-s">&quot;/&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">query_string</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">url_parts</span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-p">().</span><span class="tok-n">unwrap_or</span><span class="tok-p">(</span><span class="tok-s">&quot;&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">content</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-fm">format!</span><span class="tok-p">(</span><span class="tok-s">&quot;You&#39;re on page {} and you queried {}&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">path</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">query_string</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">len</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">content</span><span class="tok-p">.</span><span class="tok-n">len</span><span class="tok-p">();</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">response</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-fm">format!</span><span class="tok-p">(</span><span class="tok-s">&quot;HTTP/1.1 200 OK</span><span class="tok-se">\r\n</span><span class="tok-s">Content-Length: {}</span><span class="tok-se">\r\n</span><span class="tok-s">Content-Type: text/html</span><span class="tok-se">\r\n\r\n</span><span class="tok-s">{}&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">len</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">content</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-n">connection</span><span class="tok-p">.</span><span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">response</span><span class="tok-p">.</span><span class="tok-n">into_bytes</span><span class="tok-p">());</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">closed</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">_connection</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">mut</span><span class="tok-w"> </span><span class="tok-n">TcpConnection</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here again, we have methods that corresponds to network events.
+The <code>received</code> method is call when we received data on the socket.</p>
+</div>
+<div class="paragraph">
+<p>After implementing these two traits, we can simply start the server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">extern</span><span class="tok-w"> </span><span class="tok-k">crate</span><span class="tok-w"> </span><span class="tok-n">mini</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">use</span><span class="tok-w"> </span><span class="tok-n">std</span>::<span class="tok-n">net</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">use</span><span class="tok-w"> </span><span class="tok-n">mini</span>::<span class="tok-n">aio</span>::<span class="tok-n">handler</span>::<span class="tok-n">Loop</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-k">use</span><span class="tok-w"> </span><span class="tok-n">mini</span>::<span class="tok-n">aio</span>::<span class="tok-n">net</span>::<span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">TcpConnection</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">TcpConnectionNotify</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">TcpListenNotify</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-p">};</span><span class="tok-w"></span>
+<span class="tok-k">use</span><span class="tok-w"> </span><span class="tok-n">mini</span>::<span class="tok-n">aio</span>::<span class="tok-n">net</span>::<span class="tok-n">TcpListener</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fn</span> <span class="tok-nf">main</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-n">event_loop</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">Loop</span>::<span class="tok-n">new</span><span class="tok-p">().</span><span class="tok-n">expect</span><span class="tok-p">(</span><span class="tok-s">&quot;event loop&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">TcpListener</span>::<span class="tok-n">ip4</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-n">event_loop</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;127.0.0.1:1337&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">Listener</span><span class="tok-w"> </span><span class="tok-p">{}).</span><span class="tok-n">expect</span><span class="tok-p">(</span><span class="tok-s">&quot;listen&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">event_loop</span><span class="tok-p">.</span><span class="tok-n">run</span><span class="tok-p">().</span><span class="tok-n">expect</span><span class="tok-p">(</span><span class="tok-s">&quot;event loop run&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Simple, isn&#8217;t?</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more_complex_usage">More complex usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For more complex use cases, <code>mini-aio</code> provides the <code>Handler</code> trait,
+inspired by the trait from my <a href="https://github.com/antoyo/relm">relm crate</a>.
+This trait allows you to receive messages that can be sent from
+anywhere else in your code.</p>
+</div>
+<div class="paragraph">
+<p>For instance, if you were to develop a
+<a href="https://github.com/adgear/mini-rs/blob/master/examples/chat_server.rs">chat
+server</a>, you could create a handler to manage the clients in order to
+be able to send the message you receive to all clients.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">enum</span> <span class="tok-nc">Msg</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">Accepted</span><span class="tok-p">(</span><span class="tok-n">TcpConnection</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">Received</span><span class="tok-p">(</span><span class="tok-nb">Vec</span><span class="tok-o">&lt;</span><span class="tok-kt">u8</span><span class="tok-o">&gt;</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">Closed</span><span class="tok-p">(</span><span class="tok-n">TcpConnection</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">struct</span> <span class="tok-nc">ChatHandler</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">clients</span>: <span class="tok-nb">Vec</span><span class="tok-o">&lt;</span><span class="tok-n">TcpConnection</span><span class="tok-o">&gt;</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">event_loop</span>: <span class="tok-nc">Loop</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">impl</span><span class="tok-w"> </span><span class="tok-n">ChatHandler</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">new</span><span class="tok-p">(</span><span class="tok-n">event_loop</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">Loop</span><span class="tok-p">)</span><span class="tok-w"> </span>-&gt; <span class="tok-nc">Self</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-bp">Self</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-n">clients</span>: <span class="tok-nc">vec</span><span class="tok-o">!</span><span class="tok-p">[],</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-n">event_loop</span>: <span class="tok-nc">event_loop</span><span class="tok-p">.</span><span class="tok-n">clone</span><span class="tok-p">(),</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">impl</span><span class="tok-w"> </span><span class="tok-n">Handler</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">ChatHandler</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">type</span> <span class="tok-nc">Msg</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">Msg</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-w">    </span><span class="tok-k">fn</span> <span class="tok-nf">update</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">_stream</span>: <span class="tok-kp">&amp;</span><span class="tok-nc">Stream</span><span class="tok-o">&lt;</span><span class="tok-n">Msg</span><span class="tok-o">&gt;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">msg</span>: <span class="tok-nc">Self</span>::<span class="tok-n">Msg</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-k">match</span><span class="tok-w"> </span><span class="tok-n">msg</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-n">Accepted</span><span class="tok-p">(</span><span class="tok-n">tcp_connection</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">.</span><span class="tok-n">clients</span><span class="tok-p">.</span><span class="tok-n">push</span><span class="tok-p">(</span><span class="tok-n">tcp_connection</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-n">Received</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">client</span><span class="tok-w"> </span><span class="tok-k">in</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-bp">self</span><span class="tok-p">.</span><span class="tok-n">clients</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-nb">Err</span><span class="tok-p">(</span><span class="tok-n">error</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">client</span><span class="tok-p">.</span><span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-p">.</span><span class="tok-n">clone</span><span class="tok-p">())</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                        </span><span class="tok-fm">eprintln!</span><span class="tok-p">(</span><span class="tok-s">&quot;Error send message: {}&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">error</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">                    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-n">data</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">b&quot;/quit</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                    </span><span class="tok-bp">self</span><span class="tok-p">.</span><span class="tok-n">event_loop</span><span class="tok-p">.</span><span class="tok-n">stop</span><span class="tok-p">();</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-p">},</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-n">Closed</span><span class="tok-p">(</span><span class="tok-n">tcp_connection</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                </span><span class="tok-bp">self</span><span class="tok-p">.</span><span class="tok-n">clients</span><span class="tok-p">.</span><span class="tok-n">retain</span><span class="tok-p">(</span><span class="tok-o">|</span><span class="tok-n">client</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-n">client</span><span class="tok-p">.</span><span class="tok-n">as_raw_fd</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-o">!=</span><span class="tok-w"> </span><span class="tok-n">tcp_connection</span><span class="tok-p">.</span><span class="tok-n">as_raw_fd</span><span class="tok-p">());</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-p">},</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you can just spawn this handler on the event loop:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">stream</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">event_loop</span><span class="tok-p">.</span><span class="tok-n">spawn</span><span class="tok-p">(</span><span class="tok-n">handler</span><span class="tok-p">);</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the returned stream is what you use to send messages to the
+handler.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are many other <a href="https://github.com/adgear/mini-rs/tree/master/examples">examples here</a>
+and there&#8217;s even a reimplementation of the FTP server shown in my book
+<a href="https://www.packtpub.com/application-development/rust-programming-example">Rust Programming by Example</a>
+in this <a href="https://github.com/FTP-rs/ftp-server-mini-aio">github repository</a>.</p>
+</div>
+<div class="paragraph">
+<p>Please note that this library is in alpha stage and may contain bugs;
+it was not optimized yet and may be rough around the edge for error
+handling and resource cleanup.
+Also, there&#8217;s no documentation for now, but you can look at the
+documentation of Pony for more details, for instance
+<a href="https://stdlib.ponylang.org/net-TCPListenNotify/">this page for
+TcpListenNotify</a>.
+I invite you to try it anyway in order to tell me if it works well for
+you and if you find it simple to use.
+You can find the code <a href="https://github.com/adgear/mini-rs/tree/master/src/aio">here</a>.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Development of rustc_codegen_gcc</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Development of rustc_codegen_gcc</h2>
+    <time datetime="2024-09-17T00:00:00+00:00" class="by-line">17 Sep 2024</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>It&#8217;s been a while since I wrote my last <a href="/rustc_codegen_gcc-progress-report-33">progress report about
+<code>rustc_codegen_gcc</code></a>
+(if you don&#8217;t know what this project is about, please look at <a href="/rustc_codegen_gcc-progress-report-33">the description in the last project report</a>).
+We&#8217;ve been having some trouble making big progress lately, so I wanted to take a break from the usual article format that only
+showed what progress has been made and instead write something more technical so you see what&#8217;s making it hard for us
+to focus on making <code>rustc_codegen_gcc</code> ready to use.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sync_with_upstream_rust">Sync with upstream Rust</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In today&#8217;s article, I wanted to talk about what we need to do to sync with the Rust compiler.
+Like what happened <a href="/rustc_codegen_gcc-progress-report-33#state_of_rustc_codegen_gcc">at the beginning of the summer</a>,
+we&#8217;re still having issues with making the sync with the Rust compiler.</p>
+</div>
+<div class="sect2">
+<h3 id="what_is_a_sync">What is a sync?</h3>
+<div class="paragraph">
+<p>So, what&#8217;s a sync with the Rust compiler?
+Before I explain what it is, I&#8217;ll explain how the GCC codegen works: it is a shared library that is loaded by the rust compiler.
+It implements a bunch of traits from the <code>rustc_codegen_ssa</code> crate:
+the functions in them specify how the specific backend generates code for a specific operation, for instance how to add 2 integers.
+<code>rustc_codegen_gcc</code> pins a specific nightly version of the Rust compiler so that it continues to work even if the API changes on the <code>rustc</code> side.
+So when I say I "sync with the Rust compiler", I mean that I increment this nightly version to one that is closer to today and pull the changes from the Rust repo:
+<code>rustc_codegen_gcc</code> indeed lives in a <a href="https://github.com/rust-lang/rustc_codegen_gcc">separate repo</a> and the Rust repo includes the project via a <code>git subtree</code>.
+I can also sync back the changes from the <code>subtree</code> into the Rust repo (it&#8217;s much easier to sync this way).
+We need to do this to stay up-to-date with the most recent changes of the Rust compiler and get the new features implemented.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what_makes_it_hard_to_do_a_sync">What makes it hard to do a sync?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this blog post, I&#8217;ll only talk about why the <a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/556">current sync</a> is hard to do.
+I might write other blog posts in the future about other issues with the sync and the different aspects of the development of <code>rustc_codegen_gcc</code> if there&#8217;s an interest.</p>
+</div>
+<div class="paragraph">
+<p>In the CI of the GCC codegen repo, we run many tests to make sure the codegen keeps working.
+However, most of the time when we do a sync, some of these tests will fail, so we need to investigate why and the reason of those failures can take a long time to understand and to fix.
+As mentioned in the last progress report, we even disabled some tests to be able to finish the sync and move on: none of those tests were re-enabled yet since we&#8217;re busy trying to do this sync.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what_do_we_need_to_do_to_sync_with_the_rust_compiler">What do we need to do to sync with the Rust compiler?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first thing that we usually need to do is to update the <a href="https://github.com/rust-lang/rustc_codegen_gcc/tree/master/patches">patches</a> we have.
+Most of them are related to testing: some will disable a few tests, others will allow us to run the tests of some sysroot crate more easily.
+It is fortunately easy to update these patches.</p>
+</div>
+<div class="paragraph">
+<p>As mentioned previously, a sync will often break things.
+In this case, we had the following errors when compiling a program using the standard library:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib<span class="tok-o">(</span>std.std.c6df57227ece985b-cgu.11.rcgu.o<span class="tok-o">)</span>:<span class="tok-o">(</span>.data.rel._rust_extern_with_linkage_pidfd_spawnp+0x0<span class="tok-o">)</span>:
+undefined reference to <span class="tok-sb">`</span>pidfd_spawnp<span class="tok-s1">&#39;</span>
+<span class="tok-s1">/usr/bin/ld: /home/runner/work/rustc_codegen_gcc/rustc_codegen_gcc/build/build_sysroot/sysroot/lib/rustlib/x86_64-unknown-linux-gnu/lib/libstd.rlib(std.std.c6df57227ece985b-cgu.11.rcgu.o):(.data.rel._rust_extern_with_linkage_pidfd_getpid+0x0):</span>
+<span class="tok-s1">undefined reference to `pidfd_getpid&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This required a bit of investigation to figure out why this was happening.
+We found out that we needed to add the support for the <a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/556/commits/0bdc5ffd685db3d1506dbf21c8df5daaf68aeaac"><code>weak</code> variable attribute</a> in order to fix this particular issue and to make some progress on the sync.
+This required adding support for it <a href="https://github.com/rust-lang/gcc/commit/bcafd46296f7898dac02d127e441b1d838ef2afc">in libgccjit</a> which is a bit of work.</p>
+</div>
+<div class="paragraph">
+<p>The next thing that was a problem for this sync is that there were many AVX-512 intrinsics that were added.
+Why is this a problem for us? It&#8217;s because they do not map 1-to-1 between GCC and LLVM.
+As such, we need to maintain a mapping between them:
+not only their name is different, but sometimes, their number of arguments or their order is different.
+So we end up with code <a href="https://github.com/rust-lang/rustc_codegen_gcc/blob/65e8717e4559bdfd30a0c6a05eb7f1241f53221e/src/intrinsic/llvm.rs#L70-L80">like this</a> to rearrange the arguments.
+We also sometimes need to adjust the return value as can be seen below in this file.</p>
+</div>
+<div class="paragraph">
+<p>The process to create this mapping is cumbersome:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>We compile <code>stdarch</code> (which takes close to 1 minute to complete with the GCC codegen on my PC).</p>
+</li>
+<li>
+<p>We look at the error telling us which intrinsic is missing.</p>
+</li>
+<li>
+<p>We add the mapping for this intrinsic.</p>
+</li>
+<li>
+<p>We go back to step 1.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Since in the current sync (which updates from Rust <code>nightly-2024-07-02</code> to <code>nightly-2024-08-11</code>) there were <a href="https://github.com/rust-lang/rustc_codegen_gcc/compare/d3c9cc57d291efa09963add37b11cc52edcae19e..cb36d78d7ba5ddd1b148db955121f43aad9f5db4#diff-4fb378dd283a8400f8f8defde08413dc31a55b1a776c3fa2473e3f059061740c">more than 100 new intrinsics</a>, this process can take time.</p>
+</div>
+<div class="paragraph">
+<p>To help go a bit faster, I modified a bit the code so that it doesn&#8217;t panic on the first missing intrinsic, but it will rarely show more than 5 missing intrinsics at a time since it will eventually fail with a type mismatch error in GCC at some point when I do that.</p>
+</div>
+<div class="paragraph">
+<p>To help us with this process, we created a script that will try to auto-generate this mapping: it generates <a href="https://github.com/rust-lang/rustc_codegen_gcc/blob/master/src/intrinsic/archs.rs">this file</a>.
+However, since it uses files from LLVM, it&#8217;s not perfect: it&#8217;s missing many intrinsics and, sometimes, the name of the GCC builtins is wrong.
+This also doesn&#8217;t help when the arguments need to be rearranged.</p>
+</div>
+<div class="paragraph">
+<p>And that&#8217;s mostly where we&#8217;re at for the current sync: we&#8217;re close to being done with it (more than a month after we started).
+There are still errors when running the <code>stdarch</code> tests, though.
+One of them is actually a bug in GCC since it generates invalid assembly when using the <a href="https://en.wikipedia.org/wiki/X86_assembly_language#Syntax">Intel syntax</a>: we now get this error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>/tmp/libgccjit-4MRR1f/fake.s: Assembler messages:
+/tmp/libgccjit-4MRR1f/fake.s:171999: Error: operand size mismatch <span class="tok-k">for</span> <span class="tok-sb">`</span>vfpclasssd<span class="tok-s1">&#39;</span>
+<span class="tok-s1">/tmp/libgccjit-4MRR1f/fake.s:172085: Error: operand size mismatch for `vfpclassss&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is not the first time I see this since the Intel syntax is much less tested in GCC than the AT&amp;T syntax: in fact, I already <a href="https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=e484755aecd543b4c9e2adb4f348118c1e43cfd0">fixed a similar issue in the past</a>.
+Since I&#8217;m less familiar with the backend part of GCC, it&#8217;s going to take some time before I find how to fix this bug.</p>
+</div>
+<div class="paragraph">
+<p>We also have another error that we need to fix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>libgccjit.so: crates/core_arch/src/x86/avx512ifma.rs:136:5: error: :
+‘__builtin_ia32_vpmadd52huq256_mask’ needs isa option -mavx512ifma -mavx512vl</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This seems to suggest that we do something wrong with enabling target features at the function level: I haven&#8217;t started investigating this issue yet, though, so I might be wrong.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prioritization">Prioritization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All of that made me think perhaps it would help quite a bit to shift our priorities.
+For instance, focusing on the latest AVX-512 intrinsics could perhaps be delayed so that the sync can be made faster and more easily.
+Doing so would allow us to work on other, more important, features.
+I&#8217;d still like to keep running the <code>stdarch</code> tests in our CI, though, so that what we have continues to work:
+I&#8217;ll try to find a way to make sure the tests compile even without the missing intrinsics and to ignore the tests in this case.
+Doing so could also create relatively simple tasks for new potential contributors: they could add a few missing intrinsics every now and then, a few at a time.</p>
+</div>
+<div class="paragraph">
+<p>As I continue to do this exercise of explaining the work we do on <code>rustc_codegen_gcc</code>, I might think about other prioritization issues we might have.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As you can see, we&#8217;re struggling to keep up with the changes in rustc. For the current sync, the issue mostly was trying to stay up-to-date to support the newest AVX-512 intrinsics. Doing so, we found a bug in the GCC backend which we&#8217;ll need to fix to complete this sync.</p>
+</div>
+<div class="paragraph">
+<p>I also proposed a solution to help us go faster with these sync by prioritizing more important work.</p>
+</div>
+<div class="paragraph">
+<p>When we&#8217;ll have more tests running in the CI of the Rust repo, it will help us with these sync because we&#8217;ll be able to fix one issue at a time without having to investigate much about what&#8217;s the cause of the issue.
+Some of these issues might even be fixed by the contributor making the PR if it&#8217;s easy.</p>
+</div>
+<div class="paragraph">
+<p>I might write more blog posts like this in the future, so stay tuned!</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

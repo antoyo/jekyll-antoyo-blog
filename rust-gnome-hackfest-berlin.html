@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Rust+GNOME Hackfest #5</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Rust+GNOME Hackfest #5</h2>
+    <time datetime="2019-05-14T00:00:00+00:00" class="by-line">14 May 2019</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Last week, I went to the fifth Rust+GNOME hackfest which was in Berlin
+again.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="generate_builder_for_widgets">Generate builder for widgets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>My goal for this hackfest was to fix this <a href="https://github.com/gtk-rs/gir/issues/286">issue</a> I opened nearly three years ago.
+The problem is that sometimes you want to create a widget or an object
+and set some properties at <strong>construction time</strong>.
+This might be needed when you want to set construct-only properties.
+For instance, you might want to create a <code>webkit2gtk::WebView</code> with a
+<code>WebContext</code> and a <code>UserContentManager</code> at the same time.
+That&#8217;s why a <a href="https://github.com/gtk-rs/webkit2gtk-rs/blob/master/src/web_view.rs#L42">constructor</a> was manually written for this use case.</p>
+</div>
+<div class="paragraph">
+<p>Now, these manual implementations will become useless thanks to <a href="https://github.com/gtk-rs/gir/pull/757">work</a> I
+did during the Hackfest.</p>
+</div>
+<div class="paragraph">
+<p>Now, whenever we tell <code>gir</code> to generate a specific builder, it will,
+so for the <code>WebView</code>, we&#8217;ll be able to do something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">webview</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">WebViewBuilder</span>::<span class="tok-n">new</span><span class="tok-p">()</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">user_content_manager</span><span class="tok-p">(</span><span class="tok-n">user_content_manager</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">web_context</span><span class="tok-p">(</span><span class="tok-n">context</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">build</span><span class="tok-p">();</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This PR allows generating builders for construct, construct-only and
+writable properties as well as the properties of any of the ancestors
+of the object.</p>
+</div>
+<div class="paragraph">
+<p>Another good point of this work is that all of this is type-safe. If
+you look at the <a href="https://github.com/gtk-rs/webkit2gtk-rs/blob/master/src/web_view.rs#L44">manual implementation</a>
+more closely, you&#8217;ll see that it uses strings to specify which
+properties to set. That means the previous code was error-prone as
+there were no way to check at compile-time that the right type was
+used for the values.</p>
+</div>
+<div class="paragraph">
+<p>A builder setter method looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">fn</span> <span class="tok-nf">text_lock</span><span class="tok-p">(</span><span class="tok-k">mut</span><span class="tok-w"> </span><span class="tok-bp">self</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">text_lock</span>: <span class="tok-kp">&amp;</span><span class="tok-kt">str</span><span class="tok-p">)</span><span class="tok-w"> </span>-&gt; <span class="tok-nc">Self</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-bp">self</span><span class="tok-p">.</span><span class="tok-n">text_lock</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-nb">Some</span><span class="tok-p">(</span><span class="tok-n">text_lock</span><span class="tok-p">.</span><span class="tok-n">to_string</span><span class="tok-p">());</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-bp">self</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So the user must provide the correct type.</p>
+</div>
+<div class="paragraph">
+<p>We will generate the builders on a case-by-case basis: for instance,
+the next version of <code>webkit2gtk</code> will have a <code>WebViewBuilder</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="progress_on_relm">Progress on relm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I also worked on <code>relm</code> to fix two long-standing issues:
+reduce the number of crates and remove a reference cycle.</p>
+</div>
+<div class="sect2">
+<h3 id="merge_crates">Merge crates.</h3>
+<div class="paragraph">
+<p>The <code>relm</code> project had a very big number of crates which was confusing
+for users: it used to have 9 crates.
+Now, the number is reduced to 3:
+<code>relm</code> itself, <code>relm-derive</code> which provides the procedural macros and
+<code>relm-test</code> to do GUI testing.
+The reason <code>relm</code> had such a big number of crates was because
+sometimes you might want to use it in a <code>glib</code> context without a
+graphical user interface.
+That&#8217;s what I did in a <a href="https://github.com/antoyo/titanium/tree/master/titanium-web-extension">web browser extension</a>.
+In this case, since there is no GUI, you don&#8217;t want to use all
+features of <code>relm</code>.</p>
+</div>
+<div class="paragraph">
+<p>One remaining thing I need to do is to make some crates like <code>gtk</code>
+optional for this use case.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reference_cycle">Reference cycle</h3>
+<div class="paragraph">
+<p>Another issue I wanted to fix was the <a href="https://github.com/antoyo/relm/issues/127">reference cycle issue</a>.
+Since the <a href="https://github.com/antoyo/relm/blob/4ade1dc8b4530d579c81774a2910b3ce06cab0d9/src/core/mod.rs#L162"><code>EventStream</code></a>
+type contains a <code>Rc&lt;T&gt;</code> and it was cloned in GTK+ callbacks without
+downgrading them to a <a href="https://doc.rust-lang.org/stable/std/rc/struct.Weak.html"><code>Weak</code></a> reference,
+this stream was never released.</p>
+</div>
+<div class="paragraph">
+<p>This <a href="https://github.com/antoyo/relm/pull/171">pull request</a> now uses a
+<a href="https://github.com/antoyo/relm/pull/171/files#diff-ad369e8c88b22ab972c1c24ccad4d22fR51">weak reference</a>
+which fixes the issue.</p>
+</div>
+<div class="paragraph">
+<p>I also simplified the way the messages are processed which will also
+make the integration with other toolkits (like <code>Qt</code>) much simpler.</p>
+</div>
+<div class="paragraph">
+<p>This pull request is not merged yet because there&#8217;s still an issue to
+fix, but it will be hopefully resolved soon.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks">Thanks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A big thank to <a href="https://github.com/zeenix">Zeeshan Ali</a> for organizing the
+Hackfest, a big thank to <a href="https://kinvolk.io/">Kinvolk</a> for the venue and a
+<strong>huge</strong> thank to the GNOME foundation for sponsoring my flight and
+accommodation to allow me to participate to this Hackfest.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/gnome-foundation.png" alt="GNOME Foundation"></span></p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

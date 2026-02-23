@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>rustc_codegen_gcc: Progress Report #7</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>rustc_codegen_gcc: Progress Report #7</h2>
+    <time datetime="2022-01-06T00:00:00+00:00" class="by-line">06 Jan 2022</time>
+    <div class="content">
+
+        <div class="sect1">
+<h2 id="what_is_rustc_codegen_gcc">What is rustc_codegen_gcc?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/rust-lang/rustc_codegen_gcc">rustc_codegen_gcc</a> is a
+GCC codegen for rustc, meaning that it can be loaded by the existing
+rustc frontend, but benefits from GCC by having more architectures
+supported and having access to GCC&#8217;s optimizations.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gcc_patches_status">GCC patches status</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Again this month, a lot of progress happened here!
+<a href="https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=611fdb0fc5b95ee15215e2e3679834f311919096">My third</a>,
+<a href="https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=c6b7f68bfd61fcd02842e672476f9924d5ba1d3c">my fourth</a>
+and <a href="https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=0b52083ea2c2dd9897031fdc3802a68fd4aa45ef">my fifth</a>
+patches were merged.</p>
+</div>
+<div class="paragraph">
+<p>My patch for global initializer was dropped in favor of
+<a href="https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=3736837806fdb26daa51300bee1554bef89db9fe">this patch</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="state_of_rustc_codegen_gcc">State of rustc_codegen_gcc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This month, I continued working on supporting integer types not
+supported on some platforms.
+<a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/103">The PR</a> is
+still not merged yet because some new UI tests now fail.
+This indeed surfaced an issue with bitcasts in my libgccjit patch that I&#8217;ll have to fix.
+I also need to make the tests of libcore pass when 128-bit integers are not
+supported.</p>
+</div>
+<div class="paragraph">
+<p>To make sure this continue working in the future, I added
+<a href="https://github.com/rust-lang/rustc_codegen_gcc/runs/4735088066?check_suite_focus=true">CI</a>
+with a version of libgccjit with 128-bit integers disabled.
+As you can see <a href="https://github.com/rust-lang/rustc_codegen_gcc/runs/4735088066?check_suite_focus=true#step:17:2803">here</a>, most of them pass:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>test result: FAILED. 1359 passed; 22 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.35s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(To be noted: the tests of libcore still pass for the normal case of
+using native integers. They only fail (for now) when using non-native
+integers.)</p>
+</div>
+<div class="paragraph">
+<p>Also, a few other things were done last month:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/110">Fix discarded in-out constraint in inline asm</a></p>
+</li>
+<li>
+<p><a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/111">Switch to
+the new functions for global variable initialization</a></p>
+</li>
+<li>
+<p><a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/112">Update to newer nightly</a> and <a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/114">sync from rustc</a> (thanks to bjorn3)</p>
+</li>
+<li>
+<p><a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/113">Remove unnecessary report_symbol_names call</a> (thanks to bjorn3)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here are the results of running the UI tests in the <a href="https://github.com/rust-lang/rustc_codegen_gcc/runs/4680185287?check_suite_focus=true#step:15:8766">CI</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>test result: FAILED. 4446 passed; 77 failed; 55 ignored; 0 measured; 0 filtered out; finished in 603.56s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the next month, I&#8217;ll continue working on non-native integers and
+hopefully merge this PR.
+I also want to do some cleanup of the code in this PR and also of the
+code it generates.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how_to_contribute">How to contribute</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="rustc_codegen_gcc"><code>rustc_codegen_gcc</code></h3>
+<div class="paragraph">
+<p>If you want to help on the project itself, please do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the tests locally.</p>
+</li>
+<li>
+<p>Choose a test that fails.</p>
+</li>
+<li>
+<p>Investigate why it fails.</p>
+</li>
+<li>
+<p>Fix the problem.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Even if you can&#8217;t fix the problem, your investigation could help, so
+if you enjoy staring at assembly code, have fun!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crates_and_rustc">Crates and rustc</h3>
+<div class="paragraph">
+<p>If you would like to contribute on adding support for Rust on
+currently unsupported platforms, you can help by adding the support
+for those platforms in some crates like <code>libc</code> and <code>object</code> and also
+in the rust compiler itself.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="test_this_project">Test this project</h3>
+<div class="paragraph">
+<p>Otherwise, you can test this project on new platforms and also compare
+the assembly with LLVM to see if some optimization is missing.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="good_first_issue">Good first issue</h3>
+<div class="paragraph">
+<p>Finally, another good way to help is to look at <a href="https://github.com/rust-lang/rustc_codegen_gcc/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">good first issues</a>. Those are issues that should be easier to start with.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks_for_your_support">Thanks for your support!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I wanted to personally thank all the people that sponsor this project:
+your support is very much appreciated.</p>
+</div>
+<div class="paragraph">
+<p>A special thanks to the following sponsors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>igrr</p>
+</li>
+<li>
+<p>saethlin</p>
+</li>
+<li>
+<p>embark-studios</p>
+</li>
+<li>
+<p>Traverse-Research</p>
+</li>
+<li>
+<p>Shnatsel</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A big thank you to bjorn3 for his help and reviews.
+And a big thank you to lqd and <a href="https://github.com/GuillaumeGomez">GuillaumeGomez</a> for answering my
+questions about rustc&#8217;s internals.
+Another big thank you to Commeownist for his contributions.</p>
+</div>
+<div class="paragraph">
+<p>Also, a big thank you to the rest of my sponsors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>kpp</p>
+</li>
+<li>
+<p>repi</p>
+</li>
+<li>
+<p>nevi-me</p>
+</li>
+<li>
+<p>Alovchin91</p>
+</li>
+<li>
+<p>oleid</p>
+</li>
+<li>
+<p>acshi</p>
+</li>
+<li>
+<p>joshtriplett</p>
+</li>
+<li>
+<p>djc</p>
+</li>
+<li>
+<p>TimNN</p>
+</li>
+<li>
+<p>sdroege</p>
+</li>
+<li>
+<p>pcn</p>
+</li>
+<li>
+<p>steven-joruk</p>
+</li>
+<li>
+<p>davidlattimore</p>
+</li>
+<li>
+<p>Nehliin</p>
+</li>
+<li>
+<p>colelawrence</p>
+</li>
+<li>
+<p>zmanian</p>
+</li>
+<li>
+<p>alexkirsz</p>
+</li>
+<li>
+<p>regiontog</p>
+</li>
+<li>
+<p>berkus</p>
+</li>
+<li>
+<p>wezm</p>
+</li>
+<li>
+<p>belzael</p>
+</li>
+<li>
+<p>vincentdephily</p>
+</li>
+<li>
+<p>mexus</p>
+</li>
+<li>
+<p>jam1garner</p>
+</li>
+<li>
+<p>Shoeboxam</p>
+</li>
+<li>
+<p>evanrichter</p>
+</li>
+<li>
+<p>stuhood</p>
+</li>
+<li>
+<p>yerke</p>
+</li>
+<li>
+<p>bes</p>
+</li>
+<li>
+<p>raymanfx</p>
+</li>
+<li>
+<p>seanpianka</p>
+</li>
+<li>
+<p>srijs</p>
+</li>
+<li>
+<p>0xdeafbeef</p>
+</li>
+<li>
+<p>kkysen</p>
+</li>
+<li>
+<p>messense</p>
+</li>
+<li>
+<p>riking</p>
+</li>
+<li>
+<p>rafaelcaricio</p>
+</li>
+<li>
+<p>Lemmih</p>
+</li>
+<li>
+<p>memoryruins</p>
+</li>
+<li>
+<p>pthariensflame</p>
+</li>
+<li>
+<p>senden9</p>
+</li>
+<li>
+<p>Hofer-Julian</p>
+</li>
+<li>
+<p>robjtede</p>
+</li>
+<li>
+<p>Jonas Platte</p>
+</li>
+<li>
+<p>spike grobstein</p>
+</li>
+<li>
+<p>Oliver Marshall</p>
+</li>
+<li>
+<p>Sam Harrington</p>
+</li>
+<li>
+<p>Cass</p>
+</li>
+<li>
+<p>Jonas</p>
+</li>
+<li>
+<p>Jeff Muizelaar</p>
+</li>
+<li>
+<p>Robin Moussu</p>
+</li>
+<li>
+<p>Chris Butler</p>
+</li>
+<li>
+<p>Dakota Brink</p>
+</li>
+<li>
+<p>sierrafiveseven</p>
+</li>
+<li>
+<p>Joseph Garvin</p>
+</li>
+<li>
+<p>Paul Ellenbogen</p>
+</li>
+<li>
+<p>icewind</p>
+</li>
+<li>
+<p>Sebastian Zivota</p>
+</li>
+<li>
+<p>Oskar Nehlin</p>
+</li>
+<li>
+<p>Nicolas Barbier</p>
+</li>
+<li>
+<p>Daniel</p>
+</li>
+<li>
+<p>Justin Ossevoort</p>
+</li>
+<li>
+<p>sstadick</p>
+</li>
+<li>
+<p>luizirber</p>
+</li>
+<li>
+<p>kiyoshigawa</p>
+</li>
+<li>
+<p>robinmoussu</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and a few others who preferred to stay anonymous.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

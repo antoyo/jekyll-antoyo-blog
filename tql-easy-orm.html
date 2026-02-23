@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>TQL, an easy-to-use ORM for Rust</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>TQL, an easy-to-use ORM for Rust</h2>
+    <time datetime="2017-12-11T00:00:00+00:00" class="by-line">11 Dec 2017</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Two years after I finished my school last year project, which consisted in a compiler plugin to provide a DSL for SQL in Rust, I can finally update it to use <code>proc-macro</code> and benefit from the same features as the original version, while also working on the stable version of Rust!</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/antoyo/tql">TQL</a> is an ORM inspired by the Django ORM:
+it provides an easy-to-use syntax that is similar to the Django ORM.
+However, as it is implemented as a procedural macro, I improved it in some cases to get a better syntax.
+For instance, while in Django you&#8217;d need something like this to use conditions and operators:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">Table</span><span class="tok-o">.</span><span class="tok-n">objects</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">Q</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-o">=</span><span class="tok-s2">&quot;value1&quot;</span><span class="tok-p">)</span> <span class="tok-o">|</span> <span class="tok-n">Q</span><span class="tok-p">(</span><span class="tok-n">field2__lt</span><span class="tok-o">=</span><span class="tok-mi">100</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <code>tql</code>, you can use the normal Rust syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-o">||</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which is more convenient.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementation">Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All of this is possible thanks to the use of procedural macros.
+Actually, the above code should be written inside a <code>sql!()</code> macro like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">items</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">Table</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">field1</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-s">&quot;value1&quot;</span><span class="tok-w"> </span><span class="tok-o">||</span><span class="tok-w"> </span><span class="tok-n">field2</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">100</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This procedural macro will analyze the query to make sure that the fields exist and the type of the expressions match.
+It will also generate the SQL query at compile-time, so there&#8217;s no run-time cost associated with creating a query.
+Thus, it is the perfect example of a zero-cost abstraction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="database_support">Database support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, <code>tql</code> only supports PostgreSQL, but it will soon support Sqlite.
+Other database backends might be added in the future if people are interested.
+Also, some features of SQL are not yet supported and these will be added in the future.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage">Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is very easy to use <code>tql</code>.
+First of all, you need to annotate your model with the <code>#[derive(SqlTable)]</code> attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-cp">#[derive(SqlTable)]</span><span class="tok-w"></span>
+<span class="tok-k">struct</span> <span class="tok-nc">TodoItem</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">id</span>: <span class="tok-nc">PrimaryKey</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">text</span>: <span class="tok-nb">String</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">date_added</span>: <span class="tok-nc">DateTime</span><span class="tok-o">&lt;</span><span class="tok-n">Utc</span><span class="tok-o">&gt;</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">done</span>: <span class="tok-kt">bool</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The fields are of normal Rust types, except for <code>PrimaryKey</code> and <code>ForeignKey&lt;T&gt;</code>.
+Next, you can simply use the <code>sql!()</code> macro to execute queries.
+For instance, this will create the table in the database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">create</span><span class="tok-p">());</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This macro assumes that there&#8217;s a variable named <code>connection</code> in scope and will use it to execute the query.
+This variable should be of type <code>postgres::Connection</code>.
+Let&#8217;s see the other queries we can do.
+To do a <code>SELECT</code> query, with <code>WHERE</code>, <code>ORDER BY</code> and <code>LIMIT</code> clauses, we can use the methods <code>filter()</code>, <code>sort()</code> and indexing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-kd">let</span><span class="tok-w"> </span><span class="tok-n">items</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">done</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-kc">false</span><span class="tok-p">).</span><span class="tok-n">sort</span><span class="tok-p">(</span><span class="tok-o">-</span><span class="tok-n">date_added</span><span class="tok-p">)[</span><span class="tok-o">..</span><span class="tok-mi">10</span><span class="tok-p">]);</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will select the first 10 <code>TodoItem</code>, sorted from the newest date to the latest and select only the items where the field <code>done</code> is equal to <code>false</code>.
+Selecting all items can be done with <code>TodoItem.all()</code> and selecting one item by primary key can be done with <code>TodoItem.get(primary_key)</code>.
+We can do even more complex queries with aggregates, for instance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">Person</span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">age</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">50</span><span class="tok-p">).</span><span class="tok-n">values</span><span class="tok-p">(</span><span class="tok-n">name</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">.</span><span class="tok-n">aggregate</span><span class="tok-p">(</span><span class="tok-n">age_average</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">avg</span><span class="tok-p">(</span><span class="tok-n">age</span><span class="tok-p">))</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">age_average</span><span class="tok-w"> </span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-mi">30</span><span class="tok-p">)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, <code>tql</code> supports <code>JOIN</code> with the <code>join()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>To update a row, simply use the <code>update()</code> method, optionally with some filters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">id</span><span class="tok-p">).</span><span class="tok-n">update</span><span class="tok-p">(</span><span class="tok-n">done</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-kc">true</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we set the field <code>done</code> to <code>true</code> for the row where the primary key is equal to the content of the variable <code>id</code>.</p>
+</div>
+<div class="paragraph">
+<p>Deleting rows can be done by calling the method <code>delete()</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">id</span><span class="tok-p">).</span><span class="tok-n">delete</span><span class="tok-p">());</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, you can insert rows with the <code>insert()</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">sql</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-n">TodoItem</span><span class="tok-p">.</span><span class="tok-n">insert</span><span class="tok-p">(</span><span class="tok-n">text</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">text</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">date_added</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">Utc</span>::<span class="tok-n">now</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">done</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-kc">false</span><span class="tok-p">));</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more details of the supported syntax and examples in the <a href="https://github.com/antoyo/tql">tql repository</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how_good_are_error_messages">How good are error messages?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One issue people have with such tools in Rust is the error messages.
+For instance, here&#8217;s part of a message you can get when you do a type error with <code>diesel</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>error[E0277]: the trait bound `str: diesel::Expression` is not satisfied
+  --&gt; src/main.rs:69:41
+   |
+69 |         diesel::update(sql_table::table.find(&quot;id&quot;))
+   |                                         ^^^^ the trait `diesel::Expression` is not implemented for `str`
+   |
+   = note: required because of the requirements on the impl of `diesel::Expression` for `&amp;str`
+   = note: required because of the requirements on the impl of `diesel::Expression` for `diesel::expression::operators::Eq&lt;schema::__diesel_infer_schema::infer_sql_table::sql_table::columns::id, &amp;str&gt;`
+   = note: required because of the requirements on the impl of `diesel::EqAll&lt;&amp;str&gt;` for `schema::__diesel_infer_schema::infer_sql_table::sql_table::columns::id`
+   = note: required because of the requirements on the impl of `diesel::query_dsl::filter_dsl::FindDsl&lt;&amp;str&gt;` for `schema::__diesel_infer_schema::infer_sql_table::sql_table::table`
+
+…</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(there are actually 3 other error messages caused by the simple mistake of writing <code>"id"</code> instead of <code>id</code>)</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s the error message provided by <code>tql</code> for the very same error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>error: mismatched types:
+ expected `i32`,
+    found `String`
+  --&gt; src/main.rs:87:39
+   |
+87 |         let table = sql!(SqlTable.get(&quot;id&quot;)).unwrap();
+   |                                       ^^^^
+   |
+   = note: in this expansion of sql! (defined in tql)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>How can <code>tql</code> show good error messages?
+It can do that because the procedural macro is actually doing a whole semantic analysis, like a compiler would do.
+<code>TQL</code> will also provide help message like the Rust compiler can do:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>error: `SlTable` does not name an SQL table
+  --&gt; src/main.rs:83:23
+   |
+83 |         let id = sql!(SlTable.insert(field1 = &amp;string, field2 = number));
+   |                       ^^^^^^^
+   |
+   = help: did you mean SqlTable?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, <code>tql</code> proposed a name that is similar to the one written in this example.</p>
+</div>
+<div class="paragraph">
+<p>This macro can even warn you when you do something dubious, like deleting your whole table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>warning: delete() without filters
+  --&gt; examples/todo.rs:60:32
+   |
+60 |     let result = sql!(TodoItem.delete());
+   |                                ^^^^^^</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nothing is perfect, however.
+Currently, this only works on nightly and the error messages are not as precise when you use <code>tql</code> on the stable version of the compiler.
+However, this is not a big deal, because you can easily develop your project on nightly, and then switch to stable for your deployment since you&#8217;re not supposed to have compiler errors when you&#8217;re ready to deploy (and you will still see them anyway on stable).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="optimizations">Optimizations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, <code>tql</code> support a very basic query optimization: constant propagation.
+But nothing prevents it to support other and more useful optimizations in the future.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="future">Future</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As I said earlier, I plan to add support for other databases to <code>tql</code> and more SQL features.
+Also, I will improve some rough edges like the connection management and the error handling of the generated code.
+Take note that <code>tql</code> is not ready for production use, it&#8217;s alpha quality and not thoroughly tested (especially the stable version), so use it at your own risk.</p>
+</div>
+<div class="paragraph">
+<p>This version has not been published yet, because it depends on the master branch of the <code>syn</code> crate, but I&#8217;ll publish it as soon as it is possible.</p>
+</div>
+<div class="paragraph">
+<p>If you want more information about <code>tql</code>, you can find <a href="/rapport_tql.pdf">my school report here</a> and <a href="http://tql.tuxfamily.org/presentation/">the slides of the talk I gave about it</a>, both of which are in french and slightly outdated (these date back from 2015, when <code>tql</code> was a compiler plugin).
+(Don&#8217;t be afraid by the size of the report, it contains the whole code of <code>tql</code>.)</p>
+</div>
+<div class="paragraph">
+<p>Please comment on <a href="https://www.reddit.com/r/rust/comments/7j7sc7/tql_an_easytouse_orm_for_rust/">reddit</a>.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

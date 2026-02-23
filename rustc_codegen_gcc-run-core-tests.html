@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>rustc_codegen_gcc can now run libcore&#8217;s tests and pass most of them!</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>rustc_codegen_gcc can now run libcore&#8217;s tests and pass most of them!</h2>
+    <time datetime="2021-05-23T00:00:00+00:00" class="by-line">23 May 2021</time>
+    <div class="content">
+
+        <div class="sect1">
+<h2 id="what_is_rustc_codegen_gcc">What is rustc_codegen_gcc?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/antoyo/rustc_codegen_gcc">rustc_codegen_gcc</a> is a
+shared library that can be loaded by the Rust compiler to replace the
+code generation done by LLVM by another code generator: in this case,
+it generates code using GCC or, more precisely, its library
+libgccjit. Despite its name, libgccjit can generate code ahead-of-time
+(aot) too.</p>
+</div>
+<div class="paragraph">
+<p>This is very exiting that we can do this because it will allow us to
+generate code for architectures that are not supported by LLVM.
+Also, it will be nice to see the difference in performance, both in
+terms of compile time, but also in terms of run-time of the generated
+binaries.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="libcores_tests">libcore&#8217;s tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Recently, rustc_codegen_gcc was improved enough that it can now run
+the tests of libcore.
+This is a very important milestone as it means that rustc_codegen_gcc
+can compile and run correctly programs of medium complexity.
+Moreover, it will allow me to see more easily what bugs need to be
+fixed.</p>
+</div>
+<div class="paragraph">
+<p>Here are the results of running the tests of libcore:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">test</span> result: FAILED. <span class="tok-m">1127</span> passed<span class="tok-p">;</span> <span class="tok-m">114</span> failed<span class="tok-p">;</span> <span class="tok-m">0</span> ignored<span class="tok-p">;</span> <span class="tok-m">0</span> measured<span class="tok-p">;</span> <span class="tok-m">1</span> filtered out<span class="tok-p">;</span> finished <span class="tok-k">in</span> <span class="tok-m">0</span>.00s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>The tests of libcore running in 0s… Just kidding, that must be
+another bug in the code generation.</em></p>
+</div>
+<div class="paragraph">
+<p>(The one test that was filtered out was because it was stalling:
+another bug to fix.)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="state_of_rustc_codegen_gcc">State of rustc_codegen_gcc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to reach this milestone, multiple features needed to be added
+to libgccjit.
+I had to write as much as 7 <a href="https://github.com/antoyo/rustc_codegen_gcc/tree/master/gcc-patches">gcc patches</a> that
+needs to be applied to upstream gcc in order to run this GCC codegen
+for Rust.
+Among other things, support was added for thread-local-storage
+variables, specifying the link section of a variable, sized integer
+types (including 128-bit integers).
+Also a reflection API was added and a few bugs were fixed.</p>
+</div>
+<div class="paragraph">
+<p>In terms of features supported by rustc_codegen_gcc, the following
+were added recently and works with varying degrees of stability:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Atomics</p>
+</li>
+<li>
+<p>Inline assembly</p>
+</li>
+<li>
+<p>Thread-local storage variables</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This project is currently at the point where many programs can be
+compiled, but run incorrectly, so my focus will be on fixing this and
+adding the other missing features.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Improvement to the compile time of a crate</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Improvement to the compile time of a crate</h2>
+    <time datetime="2019-09-07T00:00:00+00:00" class="by-line">07 Sep 2019</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>For one of my projects, I need to use LLVM so I tried this cool <code>inkwell</code> crate that provides a mostly safe wrapper over LLVM.</p>
+</div>
+<div class="paragraph">
+<p>To my dismay, though, compiling this crate takes… a lot of time:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 1m 05s
+Release build: 3m 34s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By the way, I write this article for the sole purpose of trying to fix some problems there is in the crate ecosystem and by no mean I want to incriminate the author of this crate (or any other).
+I&#8217;ve been guilty of doing the same mistakes, but I learned from them and want other people to learn from them as well.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="procedural_macros">Procedural macros</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So, I started to remove some crates to see how it would improve the compile time.
+I decided to start by <a href="https://github.com/TheDan64/inkwell/commit/584c8fd4d6368c6d72fb1c3e658d46e2cea7e7ef">removing the procedural macro</a> included in a sub-crate of <code>inkwell</code>.</p>
+</div>
+<div class="paragraph">
+<p>After removing it, we get the following build times:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 26.56s
+Release build: 57.19s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wow, just by removing this procedural macro, we get 2x to 3x improvement in compile time!</p>
+</div>
+<div class="paragraph">
+<p>Even more worrying is this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>304 insertions(+), 986 deletions(-)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means the procedural macros were actually bigger than the code it generated!
+So please, think about the complexity you&#8217;re adding to your projects.
+Is it really worth it to write a procedural macro in your case?
+Think about it, because they can quickly become a mess (<a href="https://github.com/antoyo/relm/blob/master/relm-derive/src/gen/parser.rs#L539-L598">hum, hum…</a>) and increase a lot compile time.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="regex">Regex</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The next crate <a href="https://github.com/TheDan64/inkwell/commit/089925447dca6631a55db390fc98bb3ee1a2e890">I removed was the <code>regex</code> crate</a>, which gave this new build time:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 25.85s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;s not much faster because <code>regex</code> is still a transitive dependency: don&#8217;t worry, it will be removed completely later.</p>
+</div>
+<div class="paragraph">
+<p>One thing I do want to mention, though, is to avoid pulling a crate, especially if it has many dependencies and increase compile time, for a one-time usage that you could write with a few more lines of code.
+Here&#8217;s the patch, which removed the usage of the crate, which was only used in a single function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="diff"><span></span> impl StringRadix {
+     /// Create a Regex that matches valid strings for the given radix.
+<span class="tok-gd">-    pub fn to_regex(&amp;self) -&gt; Regex {</span>
+<span class="tok-gi">+    pub fn is_match(&amp;self, slice: &amp;str) -&gt; bool {</span>
+<span class="tok-gi">+        if slice.is_empty() {</span>
+<span class="tok-gi">+            return false;</span>
+<span class="tok-gi">+        }</span>
+<span class="tok-gi">+        let mut chars = slice.chars();</span>
+<span class="tok-gi">+        if slice.starts_with(&amp;[&#39;-&#39;, &#39;+&#39;] as &amp;[char]) {</span>
+<span class="tok-gi">+            if slice.len() == 1 {</span>
+<span class="tok-gi">+                return false;</span>
+<span class="tok-gi">+            }</span>
+<span class="tok-gi">+            chars.next();</span>
+<span class="tok-gi">+        }</span>
+         match self {
+<span class="tok-gd">-            StringRadix::Binary =&gt; Regex::new(r&quot;^[-+]?[01]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Octal =&gt; Regex::new(r&quot;^[-+]?[0-7]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Decimal =&gt; Regex::new(r&quot;^[-+]?[0-9]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Hexadecimal =&gt; Regex::new(r&quot;^[-+]?[0-9abcdefABCDEF]+$&quot;).unwrap(),</span>
+<span class="tok-gd">-            StringRadix::Alphanumeric =&gt; Regex::new(r&quot;^[-+]?[0-9[:alpha:]]+$&quot;).unwrap(),</span>
+<span class="tok-gi">+            StringRadix::Binary =&gt; chars.all(|char| char.is_digit(2)),</span>
+<span class="tok-gi">+            StringRadix::Octal =&gt; chars.all(|char| char.is_digit(8)),</span>
+<span class="tok-gi">+            StringRadix::Decimal =&gt; chars.all(|char| char.is_digit(10)),</span>
+<span class="tok-gi">+            StringRadix::Hexadecimal =&gt; chars.all(|char| char.is_digit(16)),</span>
+<span class="tok-gi">+            StringRadix::Alphanumeric =&gt; chars.all(|char| char.is_ascii_alphanumeric()),</span>
+         }
+     }
+ }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Is that really clearer with regexes?
+In my opinion, the clarity is roughly the same, even though the code is a bit longer without regexes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="remove_some_other_crates">Remove some other crates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After that, <a href="https://github.com/TheDan64/inkwell/commit/9e122d9a8ce24fb98bad29f98f8be8a924e4b69f">I removed the <code>enum-methods</code> crate</a>, which resulted in a noticeable compile time improvement:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 22.11s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, <a href="https://github.com/TheDan64/inkwell/commit/43f7ebb4f74b611d8324c9da7c41948fdebc49f4">I removed the <code>either</code> crate</a>, which didn&#8217;t really improved compile time:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 22.07s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ve never really seen a use case for this crate, because I used the <code>Result</code> type for errors and I simply create a new type when I need a <code>Either</code> type, which will have a clearer name than <code>Either</code> anyway.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="regex_continued">Regex (continued)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Finally, I truly and completely <a href="https://github.com/antoyo/llvm-sys.rs/commit/408511cfd7b78cca6094fb933a1fe8c953e0e693">removed the <code>regex</code> crate from <code>llvm-sys</code></a>.
+That was in another crate and again, we can see that the parsing done was simple enough to do it without regexes.
+The improvement in compile time is huge, though:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Debug build: 9.97s
+Release build: 16.57s</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First of all, the code might be slightly different than the original, might miss some feature attributes and may even be buggy, but all the tests pass and it would be easy to fix these issues.</p>
+</div>
+<div class="paragraph">
+<p>Overall, it&#8217;s a 13x improvement in compile time in a release build.
+That&#8217;s enormous.</p>
+</div>
+<div class="paragraph">
+<p>I know sometimes it&#8217;s hard to remove dependencies from a project.
+But, one thing I want to mention is that it only took me a couple of hours, in a code base I didn&#8217;t even know, in order to vastly improve the compilation time and reduce the complexity.
+Which means that sometimes it&#8217;s really easy and you, as a crate author, will be able to do it even more quickly for your own crate.</p>
+</div>
+<div class="paragraph">
+<p>One thing to remember is to avoid procedural macros in order to reduce compile time and code complexity.
+Also, avoid using crates with many dependencies (like <code>regex</code>), especially if you only use it once or twice.
+Moreover, some crates, like <code>either</code> are so simple you can recreate it in your code in a few minutes.</p>
+</div>
+<div class="paragraph">
+<p>People tell me to not reinvent the wheel, but I vastly prefer to reinvent a small wheel than to create a whole new big truck.</p>
+</div>
+<div class="paragraph">
+<p>Why am I telling you that?
+Simply because the resulting code is smaller than the original, as GitHub says:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>680 additions and 1,110 deletions.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So please, stop using many dependencies for the sake of not reinventing the wheel: that might not result in you writing less code, which is the goal of libraries, right?</p>
+</div>
+<div class="paragraph">
+<p>So how to become aware of changes that could increase compile time by adding new dependencies?
+Well, the first thing I look at when I review a pull request is the <code>Cargo.lock</code> file.
+Why?
+Because it lists all transitive dependencies, so that&#8217;s a quick way to see how many new dependencies were added by this pull request.
+One might not even notice this file, because some people decided to hide it by default in GitHub pull requests, so it&#8217;s important to remember to take a look at this file.
+Perhaps we should show it by default…</p>
+</div>
+<div class="paragraph">
+<p>Maybe we could think of some goals for a 2020 roadmap for Rust…
+<a href="https://github.com/rust-lang/crates.io/pull/1455">One step was attempted in the past</a>, but that was rejected. Perhaps it&#8217;s time to bring it back…</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Rust+GNOME Hackfest #4</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Rust+GNOME Hackfest #4</h2>
+    <time datetime="2018-11-25T00:00:00+00:00" class="by-line">25 Nov 2018</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Less than 2 weeks ago, I was working on improving the integration of Rust with GNOME libraries at the fourth Hackfest, which happened this time in Thessaloniki.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="improving_ergonomics_of_gnome_class">Improving ergonomics of gnome-class</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As I said in <a href="/rust-gnome-hackfest-madrid">my previous blog post</a>, there is a issue when inheriting from a <code>gtk::Widget</code>:</p>
+</div>
+<div class="paragraph">
+<p>As a reminder, we need to specify both the wrapper widget and its ffi counterpart.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-p">[</span><span class="tok-n">Widget</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkWidget</span><span class="tok-p">];)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What I did not specify last time is that we also need to specify all parents.
+So, if we were to inherit from a <code>gtk::Button</code>, we would need something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-p">[</span><span class="tok-n">Button</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkButton</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">Widget</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkWidget</span><span class="tok-p">];)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But, we do not want the user to have to specify all of this extra information; it would be more ergonomic if the user has to write only <code>Button</code> and the proc-macro would figure the rest.
+During this Hackfest, I worked on this issue:
+thanks to the work of <a href="https://blog.guillaume-gomez.fr/articles/2018-04-21+Rust%2BGNOME+Hackfest+in+Madrid">Guillaume Gomez</a> during the previous Hackfest, I was able to use <code>gir</code> as a library and with it, I was able to query the needed info.
+<a href="https://gitlab.gnome.org/federico/gnome-class/merge_requests/40">Here</a> is the pull request for this ergonomic improvement.</p>
+</div>
+<div class="paragraph">
+<p>I also <a href="https://gitlab.gnome.org/federico/gnome-class/merge_requests/36">updated the dependencies of gnome-class</a> and <a href="https://gitlab.gnome.org/federico/gnome-class/merge_requests/42">fixed it to be able to use it in an older nightly which was needed in order to combine it with Servo</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating_gnome_class_for_servo_web_view">Creating GNOME class for Servo Web View</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As I said in my previous blog article, it would be awesome to have a GNOME class for the Servo web view for these reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We will be able to use Servo from another language.</p>
+</li>
+<li>
+<p>The users won&#8217;t have to compile Servo themselves as we will be able to create a shared library with a C API (which is a huge benefit).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since I fixed the issues we had in gnome-class that were blocking us from creating such a GNOME class, I also worked on creating a GNOME class for the Servo web view.
+My work is in <a href="https://github.com/antoyo/servo-gtk/tree/feature/gnome-class">this branch</a> and you can see the almost working example <a href="https://github.com/antoyo/servo-gtk/blob/feature/gnome-class/examples/gnome-class.rs">here</a>.
+For some reason, Servo broke after this change, perhaps because I had to update a dependency in order to make it work with <code>gnome-class</code>:
+the code compiles but the widget remains black.
+So, we&#8217;re nearly there and when this branch and the one in <code>gnome-class</code> will be merged, we will have the opportunity to have this cool servo GNOME class!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="relm_improvements">Relm improvements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I&#8217;ve also worked on <a href="https://github.com/antoyo/relm"><code>relm</code></a> during the Hackfest.</p>
+</div>
+<div class="paragraph">
+<p>One of the biggest improvement is <a href="https://github.com/antoyo/relm/pull/147">the switch to <code>syn</code> 0.15</a> which dramatically improved the error messages.
+Before this update, a syntax error in <code>relm</code> looked this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>error: custom attribute panicked
+  --&gt; examples/buttons-attribute.rs:58:1
+   |
+58 | #[widget]
+   | ^^^^^^^^^
+   |
+   = help: message: parse() Widget: ParseError(None)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, it looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>error: expected `,`
+  --&gt; examples/buttons-attribute.rs:93:26
+   |
+93 |                     text &amp;self.model.counter.to_string(),
+   |                          ^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(the message could be better, but at least we know where the error is)</p>
+</div>
+<div class="paragraph">
+<p>I also fixed a <a href="https://github.com/antoyo/relm/issues/20">long standing issue</a> in <code>relm</code> which was that the only way to distinguish a <code>gtk</code> widget from a <code>relm</code> widget in the <code>view!</code> macro was whether its name was a path or an identifier.
+This was limiting because you needed to import every <code>relm</code> widget you created in order to use them in your views.
+Now, you can use the <a href="https://github.com/antoyo/relm/pull/149"><code>$</code> symbol in order to specify that it is a <code>relm</code> widget</a>.</p>
+</div>
+<div class="paragraph">
+<p>There was also a bug with <a href="https://github.com/antoyo/relm/issues/137"><code>EventStream</code> that could panic because of a BorrowMut error</a> if shared between multiple threads.
+<a href="https://relm.antoyo.xyz/relm-intro#state-mutation">Remember that it was <code>relm</code> was created to have no error of this kind</a>, so it was a bit of a shame to still have that kind of issues.
+But, it was a very easy fix because it was caused by the Rust compiler to wrongly auto-generate a <code>Send impl</code> for this type that should not be shared with other threads.
+Indeed, when you want to send a message from another thread in <code>relm</code>, you should not use an <code>EventStream</code> but a <a href="https://github.com/antoyo/relm/blob/master/examples/multithread.rs#L62">Channel</a>.
+So <a href="https://github.com/antoyo/relm/pull/148">the fix</a> was simply to make this type non-Send.</p>
+</div>
+<div class="paragraph">
+<p>I also <a href="https://github.com/antoyo/relm/commit/83f518f2b59843a232ecfd5ad25216e599eb3cb0">fixed some links in the documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks">Thanks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A big thank to <a href="https://github.com/sdroege">Sebastian Dröge</a> and Vivia for organizing the Hackfest and a <strong>huge</strong> thank to the GNOME foundation for sponsoring my flight and accommodation to allow me to participate to this Hackfest.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/gnome-foundation.png" alt="GNOME Foundation"></span></p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Rust+GNOME Hackfest #3</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Rust+GNOME Hackfest #3</h2>
+    <time datetime="2018-04-24T00:00:00+00:00" class="by-line">24 Apr 2018</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Last week, I was working on improving the integration of Rust with GNOME libraries at the third Hackfest, which happened this time in Madrid.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="improvement_of_the_position_of_error_messages">Improvement of the position of error messages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thanks to my experience in <a href="https://relm.antoyo.xyz/relm-better-error-message">improving the error messages in relm</a>, I was able to help Federico improving the error message of <a href="https://gitlab.gnome.org/federico/gnome-class">gnome-class</a> which is a project providing a procedural macro to create new GTK classes from Rust.
+With this project, these new classes written in Rust could be used in other languages as well because it follows the conventions of GObject.
+What is interesting with gnome-class is that it generates all the boilerplate that is required so that the users of this crate only need to write the code that really matters and is specific to a new class.
+In the future, it will be possible to create new widgets with gnome-class in Rust and it will be possible to use these new widgets from other languages as well.</p>
+</div>
+<div class="paragraph">
+<p>One possibility which would be very interesting would be to create a new widget for servo.
+While it&#8217;s currently possible <a href="https://github.com/antoyo/servo-gtk">to use it with <code>gtk-rs</code> already</a>, this will have multiple benefits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We will be able to use Servo from another language.</p>
+</li>
+<li>
+<p>The users won&#8217;t have to compile Servo themselves as we will be able to create a shared library with a C API (which is a huge benefit).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So, Federico and I first made <a href="https://gitlab.gnome.org/federico/gnome-class/commit/083d68dcb5b4cddbbb73265e06edc0cdf95a31e0">some fixes</a> to show the errors at the good position.
+This commit shows how we now use the <code>Diagnostic</code> API instead of panic to show the error at the correct span (think of a span as the position and the context of a token).</p>
+</div>
+<div class="paragraph">
+<p>Then, we worked on <a href="https://gitlab.gnome.org/federico/gnome-class/commit/1ff8b460c2417f4bae3cebbeced9360f7206d8d8">showing better syntax error</a>.
+As you may have guessed by now, gnome-class is similar to a compiler:
+it has a parser, an analyzer and a code generator.
+And in this commit, we see that we do something similar to the Rust compiler itself:
+if we see an unexpected token, we show an error (with the Diagnostic API again) and, importantly, we <a href="https://gitlab.gnome.org/federico/gnome-class/commit/60e7877e0c11ec10143db2bb36337b5ca4aaf8ea">skip some tokens</a> in order to avoid having other useless parsing errors afterward.</p>
+</div>
+<div class="paragraph">
+<p>While it&#8217;s not fixed everywhere, we now have the basic things working and will be able to have better errors everywhere in the future.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="experiments_with_creating_custom_widgets">Experiments with creating custom widgets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>During the Hackfest, I tried to create custom widgets with gnome-class, but we&#8217;re not there yet.
+My goal was to get a basic Servo widget by the end of the Hackfest, but it was too optimistic, unfortunately.
+Indeed, I faced two issues and one of them requires a good amount of work to fix.
+But let&#8217;s first talk about the more simple issue.</p>
+</div>
+<div class="paragraph">
+<p><code>gnome-class</code> not only emit the code with the C ABI, but also the Rust wrapper.
+To do so, it uses the <a href="https://github.com/gtk-rs/glib/blob/master/src/wrapper.rs#L243"><code>glib_wrapper</code></a> macro.
+When inheriting from another Widget, it generates a code like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-nc">Widget</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c1">// …</span>
+<span class="tok-p">)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The problem is that this is trying to implement traits of another crate on types defined in another crate (<code>Widget</code> is from the <code>gtk</code> crate) and we cannot do that.
+I took me some time to understand that this issue was already known and fixed within this macro:
+we need to use the alternate syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="rust"><span></span><span class="tok-n">glib_wrapper</span><span class="tok-o">!</span><span class="tok-p">(</span><span class="tok-k">pub</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">MyWidget</span><span class="tok-p">(</span><span class="tok-n">Object</span><span class="tok-o">&lt;</span><span class="tok-n">MyWidgetFFI</span><span class="tok-o">&gt;</span><span class="tok-p">)</span>: <span class="tok-p">[</span><span class="tok-n">Widget</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-n">GtkWidget</span><span class="tok-p">];)</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>GtkWidget</code> is the "ffi" struct, meaning that it&#8217;s the structure representing the one in C (i.e. not the wrapper).
+The problem we faced is that we don&#8217;t want the user to specify both <code>Widget</code> and <code>GtkWidget</code> when inheriting from a widget.
+But, we cannot really guessed that <code>Widget</code> maps to <code>GtkWidget</code> as it could come from another library.
+However, this should be easy to solve thanks to the work of <a href="https://blog.guillaume-gomez.fr/articles/2018-04-21+Rust%2BGNOME+Hackfest+in+Madrid">Guillaume Gomez</a>:
+now that <code>gir</code> was separated into a library, we will be able to query this info from <code>gir</code> itself and the user won&#8217;t have to specify the ffi struct.</p>
+</div>
+<div class="paragraph">
+<p>The bigger problem is that we don&#8217;t generate complete "ffi" struct.
+Indeed, as <a href="https://github.com/rust-lang/rfcs/issues/314">Rust does not support bit fields</a>, we don&#8217;t generate these fields in the structures that has some.
+And this causes a problem because we need to know the size of these structs in order to allocate them, which is useful for inheritence (I&#8217;m skipping the explanations about why it&#8217;s needed for the ABI, but trust me, we need the size).
+So, I started to change <code>gir</code> to generate dummy fields for the bit fields in order to have the right struct size.
+However, I quickly ran into some issue:
+bit fields are implementation dependant, so I had many issues to get the correct sizes and alignment.
+Thus, I started the bigger work of computing the alignment of the fields by looking at the types.
+We might end up with a working solution, but it will be a lot of work to support all the platforms we support.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="relm_tests">Relm tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Finally, I had some time to finish the work of my <a href="https://github.com/antoyo/relm/pull/100"><code>relm-test</code> crate</a>.
+This is a crate to be able to write UI tests for relm applications.
+Now, all examples have a test to make sure they actually work.
+What this crate allows us to do is simulating user input like a mouse click or keyboard key press to check that the view is updated accordingly.
+In the future, we will extract some features from <code>relm-test</code> to create <code>gtk-test</code> which will only contain the gtk-only (i.e. non-relm specific) features of <code>relm-test</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thanks">Thanks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A big thank to <a href="https://github.com/aruiz">Alberto Ruiz</a> for organizing the Hackfest, to <a href="https://www.openshine.com/">OpenShine</a> for hosting the event and a <strong>huge</strong> thank to the GNOME foundation for sponsoring my flight and accomodation to allow me to participate to this Hackfest.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/gnome-foundation.png" alt="GNOME Foundation"></span></p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

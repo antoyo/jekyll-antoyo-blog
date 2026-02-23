@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Antoyo's Blog</title>
+ <link href="https://blog.antoyo.xyz/atom.xml" rel="self"/>
+ <id>https://blog.antoyo.xyz</id>
+ <updated>2026-02-23T01:30:45+00:00</updated>
+ <author>
+   <name>Antoni Boucher</name>
+   <uri>https://blog.antoyo.xyz</uri>
+   <email>bouanto@zoho.com</email>
+ </author>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #40</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-40"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-40</id>
+   <updated>2026-02-21T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #39</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-39"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-39</id>
+   <updated>2025-12-17T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #38</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-38"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-38</id>
+   <updated>2025-10-12T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #37</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-37"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-37</id>
+   <updated>2025-08-21T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #36</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-36"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-36</id>
+   <updated>2025-06-11T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #35</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-35"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-35</id>
+   <updated>2025-04-08T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Development of rustc_codegen_gcc #2</title>
+   <link href="https://blog.antoyo.xyz/development-rustc_codegen_gcc-2"/>
+   <id>https://blog.antoyo.xyz/development-rustc_codegen_gcc-2</id>
+   <updated>2025-01-30T00:00:00+00:00</updated>
+   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;A couple months ago, &lt;a href=&quot;https://blog.antoyo.xyz/development-rustc_codegen_gcc&quot;&gt;I wrote an article&lt;/a&gt; that described the challenges we had to do the previous sync from the Rust repo to &lt;code&gt;rustc_codegen_gcc&lt;/code&gt;. (if you don&amp;#8217;t know what a sync is, please read that &lt;a href=&quot;https://blog.antoyo.xyz/development-rustc_codegen_gcc&quot;&gt;blog article&lt;/a&gt;). We also had many...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #34</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-34"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-34</id>
+   <updated>2024-11-29T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>Development of rustc_codegen_gcc</title>
+   <link href="https://blog.antoyo.xyz/development-rustc_codegen_gcc"/>
+   <id>https://blog.antoyo.xyz/development-rustc_codegen_gcc</id>
+   <updated>2024-09-17T00:00:00+00:00</updated>
+   <content type="html">&lt;div id=&quot;preamble&quot;&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;It&amp;#8217;s been a while since I wrote my last &lt;a href=&quot;/rustc_codegen_gcc-progress-report-33&quot;&gt;progress report about &lt;code&gt;rustc_codegen_gcc&lt;/code&gt;&lt;/a&gt; (if you don&amp;#8217;t know what this project is about, please look at &lt;a href=&quot;/rustc_codegen_gcc-progress-report-33&quot;&gt;the description in the last project report&lt;/a&gt;). We&amp;#8217;ve been having some trouble making big progress lately, so...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>rustc_codegen_gcc: Progress Report #33</title>
+   <link href="https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-33"/>
+   <id>https://blog.antoyo.xyz/rustc_codegen_gcc-progress-report-33</id>
+   <updated>2024-07-05T00:00:00+00:00</updated>
+   <content type="html">&lt;div class=&quot;sect1&quot;&gt; &lt;h2 id=&quot;what_is_rustc_codegen_gcc&quot;&gt;What is rustc_codegen_gcc?&lt;/h2&gt; &lt;div class=&quot;sectionbody&quot;&gt; &lt;div class=&quot;paragraph&quot;&gt; &lt;p&gt;&lt;a href=&quot;https://github.com/rust-lang/rustc_codegen_gcc&quot;&gt;rustc_codegen_gcc&lt;/a&gt; is a GCC &lt;a href=&quot;https://en.wikipedia.org/wiki/Ahead-of-time_compilation&quot;&gt;ahead-of-time&lt;/a&gt; codegen for rustc, meaning that it can be loaded by the existing rustc frontend, but benefits from GCC by having more architectures supported and having access to GCC&amp;#8217;s optimizations. It is not to...</content>
+ </entry>
+
+ 
+
+</feed>

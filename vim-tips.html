@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Vim tips</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Vim tips</h2>
+    <time datetime="2020-02-07T00:00:00+00:00" class="by-line">07 Feb 2020</time>
+    <div class="content">
+
+        <div class="paragraph">
+<p>Here&#8217;s a list of vim tips that I&#8217;ve learned over the years.
+I tried to put the ones I find the most useful or less known first.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To cycle throught the delete registers, first type <code>"1p</code> and then you can cycle through the delete registers with <code>u.</code>.</p>
+</li>
+<li>
+<p>You can use numbers to fetch the delete registers. For instance <code>"1p</code> will paste the last delete, <code>"2p</code> will paste the last but one…</p>
+</li>
+<li>
+<p>Put a count before a <code>&lt;action&gt;i(</code> to go at a parent level of parentheses. For instance, if you&#8217;re here:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">function</span><span class="tok-p">(</span><span class="tok-n">param1</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">param2</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">param2</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">                             </span><span class="tok-o">^</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Do <code>2di(</code> to delete the content of the condition.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the register <code>+</code> and <code>*</code> to access the system clipboard and selection. You need vim to be compiled with <code>+clipboard</code> for that to work or neovim + xclip.</p>
+</li>
+<li>
+<p>Use capital <code>W</code> (like <code>diW</code> instead of <code>diw</code>) in your actions to do it on every character connected to the current one instead of the "word".</p>
+</li>
+<li>
+<p>Use <code>=%</code> to indent a block of code.</p>
+</li>
+<li>
+<p>Type <code>Ctrl-o &lt;normal mode command&gt;</code> to execute a normal mode command in insert mode. (<em><strong>edit</strong>: added March 8th 2020</em>)</p>
+</li>
+<li>
+<p>Use <code>C-o</code> (or <code>C-i</code>) to go back (or forward) in the jump history.</p>
+</li>
+<li>
+<p>Use <code>g;</code> to go to a previous edit location, <code>g,</code> to go to the next one. The command <code>:changes</code> shows the list of changes, with a number for each that you can put in front of <code>g;</code> or <code>g,</code> to go to that specific change. (<em><strong>edit</strong>: added February 5th 2021</em>)</p>
+</li>
+<li>
+<p>Do <code>''</code> (go to the mark <code>'</code>, which is an implicit mark) to go to the latest position in the jump history.</p>
+</li>
+<li>
+<p>You can search with word boundary by doing <code>/\&lt;word\&gt;</code>.</p>
+</li>
+<li>
+<p>Use <code>f&lt;char&gt;</code> to move to a character in the current line. It&#8217;s useful when combining with actions like <code>df)</code>.</p>
+</li>
+<li>
+<p>In addition to the visual mode, there&#8217;s a line visual mode that you enable with <code>Shift+v</code> and a block visual mode that you enable with <code>Ctrl+v</code>. You can switch from one mode to the other without going back to normal mode by pressing the corresponding bindings.</p>
+</li>
+<li>
+<p><code>@@</code> executes the last executed macro.</p>
+</li>
+<li>
+<p>Use <code>C-^</code> to go to the alternate (previous) file. (It&#8217;s very useful when you often need to toggle between two files you&#8217;re working on.)</p>
+</li>
+<li>
+<p>Use <code>gv</code> to recreate the last selection.</p>
+</li>
+<li>
+<p>Use <code>C-]</code> to navigate through a link in the help pages.</p>
+</li>
+<li>
+<p>Use <code>gf</code> to open the file with the name coming from the word under the cursor.</p>
+</li>
+<li>
+<p>Use <code>{</code> (or <code>}</code>) to go to the previous (next) blank line.</p>
+</li>
+<li>
+<p>Once you jump to a character on the same line with <code>f&lt;char&gt;</code>, you can jump to the next occurrence with <code>;</code>.</p>
+</li>
+<li>
+<p>When you selected a block with <code>vi{</code> you can select the outer block by typing <code>i{</code> and you can do this as much as you want. (Sounds useful for lisp programmers.)</p>
+</li>
+<li>
+<p>Use <code>:retab</code> to convert the buffer to your setup for indentation. For instance, if you configured vim to have 4 spaces for indentation, it will convert the tabs to 4 spaces.</p>
+</li>
+<li>
+<p>Enable the <code>relativenumber</code> option to have relative line numbers. It makes it easier to do actions with a count prefix.</p>
+</li>
+<li>
+<p>In neovim, use the option <code>set inccommand=split</code> to get an incremental visual feedback when doing the substitude command.</p>
+</li>
+<li>
+<p>Move by visual line (instead of actual line) with <code>gj</code> and <code>gk</code>. If you prefer that way of moving, you can remap <code>j</code> and <code>k</code> to these.</p>
+</li>
+<li>
+<p>Use K on a word to open its manpage. Very useful when reading C code.</p>
+</li>
+<li>
+<p>You can hide all windows except the focused one with <code>:only</code>.</p>
+</li>
+<li>
+<p>You can hide a window with the <code>:hide</code> command.</p>
+</li>
+<li>
+<p>Increase (decrease) the size of a window with <code>C-w +</code> (<code>C-w -</code>). You can use the count before to specify how many lines (or columns) to increase/decrease at once.</p>
+</li>
+<li>
+<p>You can remove trailing spaces with the command <code>:%s/\s\+$/</code>.</p>
+</li>
+<li>
+<p>Pressing <code>o</code> in visual mode switches the cursor at the other end of the selection</p>
+</li>
+<li>
+<p>Pressing <code>%</code> in normal mode goes to the matching parens.</p>
+</li>
+<li>
+<p>To go to the end of the previous word, type <code>ge</code>.</p>
+</li>
+<li>
+<p>Use <code>zt</code>, <code>zz</code> or <code>zb</code> to respectively move the the view towards to the top, the center or the bottom.</p>
+</li>
+<li>
+<p>In addition to being able to do <code>/search/e</code> you can do <code>/search/e+2</code> to go 2 characters after the end. It also works with <code>-</code> as in <code>/search/e-2</code> and from the beginning with <code>b</code> like <code>/search/b+2</code>.</p>
+</li>
+<li>
+<p><code>_</code> can be used instead of <code>^</code> to go to the first non-blank character.</p>
+</li>
+<li>
+<p>Use <code>=</code> to indent your code. Most useful if combined with visual mode or with a count parameter before.</p>
+</li>
+<li>
+<p>In command or search mode, type <code>Ctrl-r 0</code> to paste from the yank register. This also works in insert mode. (<em><strong>edit</strong>: completed on March 23th 2020</em>)</p>
+</li>
+<li>
+<p>You can enable the option <code>gdefault</code> to have global substitute by default (all matches in a line will be substituted).</p>
+</li>
+<li>
+<p>Use the option <code>scrolloff</code> to keep a context of a certain number of lines when you scroll or move the cursor. For instance, with <code>set scrolloff=3</code>, vim will keep 3 lines visible below the cursor when you scroll down.</p>
+</li>
+<li>
+<p>Use <code>C-a</code> (<code>C-x</code>) to increment (decrement) the next number. It&#8217;s very useful in macros.</p>
+</li>
+<li>
+<p><code>0</code> goes to the beginning of the line, but if you want to go to the first non-space character of the line, use <code>^</code>.</p>
+</li>
+<li>
+<p>In normal mode, use <code>C-e</code> and <code>C-y</code> to move the view up and down.</p>
+</li>
+<li>
+<p>In visual mode, filter your selection with a shell command by typing <code>!cmd</code>. It&#8217;s useful to sort your file, for instance: <code>V&lt;move&gt;!sort</code>.</p>
+</li>
+<li>
+<p>You can have global marks (i.e. marks for other files than the current one) but using capital-letter marks (like <code>mA</code>).</p>
+</li>
+<li>
+<p>Map the leader key to some accessible key like space (<code>let mapleader = "\&lt;Space&gt;"</code>) or comma and create bindings to be able to do common actions quicker like: <code>nnoremap &lt;Leader&gt;w :w&lt;CR&gt;</code>.</p>
+</li>
+<li>
+<p>You can create a session with <code>:mksession &lt;name&gt;</code> and reload that session later with <code>:source &lt;name&gt;</code>. There are many parameters to configure what goes into the session file.</p>
+</li>
+<li>
+<p>You can configure what you want to save in a session. For instance, if you only want to save the opened buffers and the current directory, use <code>set sessionoptions=buffers,curdir</code>.</p>
+</li>
+<li>
+<p>Quit vim by setting exit code with <code>:cq</code>. That is useful to exit the vim opened by <code>git rebase</code> to cancel the rebase, for instance.</p>
+</li>
+<li>
+<p><code>vit</code> to select XML tags. And you can type <code>it</code> again to select the parent tag.</p>
+</li>
+<li>
+<p><code>_</code> is the black hole register. You can use it to delete stuff without overwriting a buffer as in <code>"_dd</code>.</p>
+</li>
+<li>
+<p>Enter the command <code>:set spell</code> to enable spell checking the the buffer. You can specify the language with <code>:set spelllang=fr</code> for french.</p>
+</li>
+<li>
+<p>You can repeat the last command entered with <code>:</code> by typing <code>@:</code> and the subsequent repeats can be done with <code>@@</code>.</p>
+</li>
+<li>
+<p>Add this option <code>set matchpairs+=&lt;:&gt;</code> to be able to use <code>%</code> to jump from <code>&lt;</code> to <code>&gt;</code>.</p>
+</li>
+<li>
+<p>In command or search mode, use the up arrow (or <code>ctrl-p</code>) to select the previous command.</p>
+</li>
+<li>
+<p>In insert mode, use <code>C-e</code> to type the same character as the line below and <code>C-y</code> to type the same character as the one above.</p>
+</li>
+<li>
+<p>You can open .gz files containing text in vim (seems to come from a built-in plugin). Also works for .tar files.</p>
+</li>
+<li>
+<p>If you want to scroll all your split windows at the same time, bind them together with: <code>:windo set scrollbind</code>.</p>
+</li>
+<li>
+<p><code>&lt;C-g&gt;</code> show some info (less than <code>g&lt;C-g&gt;</code>) about the current file.</p>
+</li>
+<li>
+<p>If you want to save a read-only file (forget to open vim with sudo), use the following command: <code>:w !sudo tee %</code></p>
+</li>
+</ul>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

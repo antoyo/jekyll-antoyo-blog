@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="generator" content="Jekyll">
+
+    <title>Development of rustc_codegen_gcc #2</title>
+  <meta name="description" content="Antoyo's Personal Blog">
+
+    <!-- CSS & fonts -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/asciidoc-pygments.css">
+
+    <!-- RSS -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+
+<body>
+    <div id="wrap">
+
+        <!-- Navigation -->
+        <nav id="nav">
+    <div id="nav-list">
+        <a href="/">Home</a>
+
+        <!-- Nav pages -->
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+    <!-- Nav links -->
+      <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </div>
+
+  <!-- Nav footer -->
+    
+      <footer>
+
+    <span>version 1.0.0</span>
+
+</footer>
+
+    
+
+</nav>
+
+
+    <!-- Icon menu -->
+      <a id="nav-menu">
+        <div id="menu"></div>
+      </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">
+      <a href="/">
+        <h1>
+            Antoyo's Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      <!-- Nav links -->
+        <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+<a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+  </svg>
+  <span>Sponsor me</span>
+</a>
+<a class="btn" href="https://github.com/antoyo">Github</a>
+
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+      <div id="container">
+
+        <main>
+
+            <article id="post-page">
+    <h2>Development of rustc_codegen_gcc #2</h2>
+    <time datetime="2025-01-30T00:00:00+00:00" class="by-line">30 Jan 2025</time>
+    <div class="content">
+
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A couple months ago, <a href="https://blog.antoyo.xyz/development-rustc_codegen_gcc">I wrote an article</a> that described the challenges we had to do the previous sync from the Rust repo to <code>rustc_codegen_gcc</code>.
+(if you don&#8217;t know what a sync is, please read that <a href="https://blog.antoyo.xyz/development-rustc_codegen_gcc">blog article</a>).
+We also had many issues with the <a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/578">latest sync</a> and this post will describe what they were and how they were fixed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="undefined_function_errors">Undefined function errors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first error we had was about some functions that could not be found by the linker, including some alloc functions like <code>__rust_alloc</code>.
+It turned out that this was caused by some changes made in the LLVM codegen regarding the visibility set on functions that were not copied in the GCC codegen.
+We plan some day to reduce the duplication between both codegens in order to avoid this kind of issues in the future.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="avx_512_tests_failing">AVX-512 tests failing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like I explained in the previous article about the development of this project, we had some issues with AVX-512.
+While I mentioned in that article that I might pause the work on AVX-512 to be able to progress faster on the project, I&#8217;m glad I didn&#8217;t skip fixing this issue since I learned something important.
+Indeed, while some AVX-512 tests were failing, it wasn&#8217;t caused by these intrinsics.
+It was actually caused by this fact that I didn&#8217;t know: GCC seems to allocate some expressions on the stack even when I do not specifically ask it to do so.
+The tests would crash with a stack overflow and upon inspection, I saw that they tried to allocate way too much space on the stack.
+By looking at the GIMPLE dumps, I noticed that it would create thousands of vector variables, many of them being constants and having the same value.
+I don&#8217;t know why GCC wasn&#8217;t able to optimize that: perhaps it just gives up when there are too many variables?
+In the end, I fixed this issue by explicitly asking GCC to create a variable instead of reusing the same expression in multiple places in order to control how many variables would actually be created on the stack. I suspect I have this issue in other places and I&#8217;ll fix it when I see this problem again.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="failures_caused_by_the_switch_to_lld">Failures caused by the switch to <code>lld</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A couple months ago, Rust made the switch to use a <a href="https://blog.rust-lang.org/2024/05/17/enabling-rust-lld-on-linux.html">new linker by default on Linux: lld</a>.
+When doing this sync, we had a few issues that surfaced with this change and they were quite hard to diagnosed.</p>
+</div>
+<div class="paragraph">
+<p>The first issue was a linking error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>  <span class="tok-o">=</span> note: rust-lld: error: relocation R_X86_64_64 cannot be used against <span class="tok-nb">local</span> symbol<span class="tok-p">;</span> recompile with -fPIC
+          &gt;&gt;&gt; defined <span class="tok-k">in</span> /home/user/projects/rustc_codegen_gcc/build/build_sysroot/target/x86_64-unknown-linux-gnu/debug/deps/libadler-23df15ba7ec65be8.rlib<span class="tok-o">(</span>adler-23df15ba7ec65be8.adler.f06cf9c6e30e0791-cgu.0.rcgu.o<span class="tok-o">)</span>
+          &gt;&gt;&gt; referenced by fake.c
+          &gt;&gt;&gt;               adler-23df15ba7ec65be8.adler.f06cf9c6e30e0791-cgu.0.rcgu.o:<span class="tok-o">(</span>global.1<span class="tok-o">)</span> <span class="tok-k">in</span> archive /home/user/projects/rustc_codegen_gcc/build/build_sysroot/target/x86_64-unknown-linux-gnu/debug/deps/libadler-23df15ba7ec65be8.rlib</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An error about a relocation. I had to dive into how GCC generates relocations to understand what was going on.</p>
+</div>
+<div class="sect2">
+<h3 id="what_are_relocations">What are relocations?</h3>
+<div class="paragraph">
+<p>Let&#8217;s say you have a program that takes a reference to a global variable.
+When we compile an object file, we don&#8217;t know what will be the address of this variable before linking, so the compiler inserts what we call a relocation, an information that can be used at link-time to compute the actual address of the variable. That&#8217;s called a static relocation.</p>
+</div>
+<div class="paragraph">
+<p>Relocation can also happen at run-time: in this case, it&#8217;s called a dynamic relocation.</p>
+</div>
+<div class="paragraph">
+<p>In my first issue, I first noticed that the variable was put in the section <code>.rodata</code>, while Rust with LLVM would put it in the section <code>.data.rel.ro</code>.
+At some point, I realized GCC didn&#8217;t generate the relocation that was needed.
+After debugging the code in GCC that generates the relocation, I noticed that using the GCC equivalent of <code>transmute</code> in the initial value of a global variable would cause this issue.
+So, I was using <code>transmute</code> there for pointer to integer conversion, because, at the time, <code>libgccjit</code> didn&#8217;t allow casting between pointers and integers.
+By switching to a normal cast, this fixed this issue.</p>
+</div>
+<div class="paragraph">
+<p>The second issue caused some global variables to be uninitialized.
+Again, this was an issue with relocations: this time, it was producing a static relocation, but it needed a dynamic relocation.
+This time, the issue was that I was creating duplicate global variables of the same name, in different codegen units (so in different object files), instead of creating it once and importing it in other modules.
+It took me a while to figure that out.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lto_issues">LTO issues</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After that, I had some LTO issues, where some tests would fail with LTO enabled.
+The issue turned out that I was not handling the relocation model when doing LTO.
+Now, we correctly send <code>-fPIC</code>, <code>-fPIE</code> or <code>-fno-pie</code> depending on the requested relocation model.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once again, we&#8217;re struggling to keep up with the changes in rustc. <a href="https://github.com/rust-lang/rustc_codegen_gcc/pull/578">This sync</a> was to be up-to-date with nightly-2024-12-11.
+But we started to see some of these issues when trying to do the sync for nightly-2024-10-08: again, it took us a few months to be able to investigate and fix these issues.
+We were able to do a few more syncs afterwards and we&#8217;re now at nightly-2025-01-12.</p>
+</div>
+<div class="paragraph">
+<p>Hopefully, this taught us a few things that might be useful in the future about relocations and LTO: perhaps debugging this LTO issue would help us to resolve the last issues that we have with LTO.</p>
+</div>
+<div class="paragraph">
+<p>Some people helped me to investigate these issues and I&#8217;d like to thank them: David Lattimore, Jessica Clarke, lqd, bjorn3, Kobzol, Saethlin, tgross35, GuillaumeGomez and possibly a few others.</p>
+</div>
+</div>
+</div>
+
+    </div>
+</article>
+
+
+
+      </main>
+
+          <!-- Pagination links -->
+      
+
+      </div>
+
+        <!-- Footer -->
+        <footer>
+  <div class="footer">
+    <a href="https://www.patreon.com/antoyo"><img class="patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+    <a class="btn sponsor" aria-label="Sponsor @antoyo" href="https://github.com/sponsors/antoyo">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+      </svg>
+      <span>Sponsor me</span>
+    </a>
+  </div>
+  <span>© 2017-2026 - Antoni Boucher</span>
+</footer>
+
+
+        <!-- Script -->
+      <script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
