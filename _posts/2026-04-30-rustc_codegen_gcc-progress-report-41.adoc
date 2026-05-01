@@ -33,9 +33,9 @@ Here's what has been done during the past months:
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/874[Fix asm pointer inputs] (thanks to cijiugechu!)
  * https://github.com/rust-lang/rustc_codegen_gcc/pull/878[Sync from rust 2026/04/29]
 
-I had some trouble again with the, so we'll try to run more tests in the CI of the Rust repo in order to prevent having to fix issues multiple times since they can come back when changes are made in the Rust repo.
+I had some trouble again with the sync, so we'll try to run more tests in the CI of the Rust repo in order to prevent having to fix issues multiple times since they can come back when changes are made in the Rust repo.
 This is hard on the motivation to have to keep fixing issues that should never come up if only we ran all the tests we have.
-The plan is to compile the standard library and run the tests of libcore in the CI of the Rust repo which is one of the few tests we currently don't run there.
+The plan is to compile the standard library with rustc_codegen_gcc and run the tests of libcore in the CI of the Rust repo which is one of the few tests we currently don't run there.
 
 I also started looking at the issue we have when using a std compiled with a LLVM-based rustc.
 In the next months, I'll attempt to fix this or at least provide a temporary workaround to make sure that the version distributed by rustup works as well as the version in the project repository.
@@ -288,7 +288,6 @@ Also, a big thank you to the rest of my sponsors:
  * Daniel Sheehan
  * Marvin Löbel
  * nacaclanga
- * 0x0177b11f
  * L.apz
  * JockeTF
  * davidcornu
@@ -389,3 +388,4 @@ Former sponsors/patreons:
  * Shoeboxam
  * teohhanhui
  * g4titanx
+ * 0x0177b11f
