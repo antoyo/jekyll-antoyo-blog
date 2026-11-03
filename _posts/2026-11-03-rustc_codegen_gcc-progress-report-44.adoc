@@ -1,4 +1,4 @@
-= rustc_codegen_gcc: Progress Report #44
+= Progress Report #44: rustc_codegen_gcc can now bootstrap rustc on Aarch64!
 :page-navtitle: Progress Report #44: rustc_codegen_gcc can now bootstrap rustc on Aarch64!
 :page-liquid:
 
